@@ -7,5 +7,3 @@ You might need to install certain libraries on your device in order to insure ru
 1) npm install -g yarn
 2) yarn add expo
 3) yarn add react-native@0.73.4
-
-test
