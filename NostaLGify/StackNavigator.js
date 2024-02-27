@@ -7,7 +7,6 @@ import { FontAwesome } from '@expo/vector-icons';
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
 
-
 const Tab = createBottomTabNavigator();
 
 function BottomTabs() {
