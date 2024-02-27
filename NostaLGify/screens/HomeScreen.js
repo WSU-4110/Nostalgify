@@ -9,5 +9,5 @@ const HomeScreen = () => {
     )
 }
 
-export default HomeScreeng
+export default HomeScreen
 const styles = StyleSheet.create({})
