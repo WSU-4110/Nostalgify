@@ -11,6 +11,7 @@
   "dependencies": {
     "@expo/webpack-config": "~19.0.1",
     "@react-native-masked-view/masked-view": "0.3.0",
+    "@react-navigation/native": "^6.1.12",
     "expo": "^50.0.6",
     "expo-splash-screen": "~0.26.4",
     "expo-status-bar": "~1.11.1",
