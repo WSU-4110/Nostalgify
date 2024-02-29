@@ -65,7 +65,7 @@ function Navigation(){
     return(
         <NavigationContainer>
             <Stack.Navigator>
-                <Stack.Screen name="Login" component={(LoginScreen)} options={{headerShown:false}}/>
+                
                 <Stack.Screen name="Main" component={BottomTabs} options={{headerShown: false}}/>
             </Stack.Navigator>
         </NavigationContainer>
@@ -73,3 +73,4 @@ function Navigation(){
 }
 
 export default Navigation
+// <Stack.Screen name="Login" component={(LoginScreen)} options={{headerShown:false}}/>
