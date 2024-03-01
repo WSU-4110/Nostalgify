@@ -8,6 +8,8 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
 import LoginScreen from "./screens/LoginScreen";
 import CamScreen from "./screens/CamScreen";
+import SearchScreen from "./screens/SearchScreen";
+import { Ionicons } from '@expo/vector-icons';
 
 const Tab = createBottomTabNavigator();
 
@@ -41,6 +43,19 @@ function BottomTabs() {
                     <Entypo name="home" size={24} color="white" />
                 ) : (
                     <AntDesign name="home" size={24} color="white" />
+                )
+            }} />
+            <Tab.Screen
+                name="Search"
+                component={SearchScreen}
+                options={{ tabBarLabel: "Search", 
+                headerShown: false, 
+                tabBarLabelStyle: { color: "white" },
+                tabBarIcon:({focused}) =>
+                focused?(
+                    <Ionicons name="search-circle-sharp" size={24} color="white" />
+                ) : (
+                    <Ionicons name="search-circle-outline" size={24} color="white" />
                 )
             }} />
             <Tab.Screen

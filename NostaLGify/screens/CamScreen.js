@@ -4,7 +4,7 @@ import React from 'react'
 const CamScreen = () => {
     return (
         <View>
-            <Text>HomeScreen</Text>
+            <Text>CamScreen</Text>
         </View>
     )
 }
