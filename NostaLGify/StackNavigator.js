@@ -7,6 +7,7 @@ import { FontAwesome } from '@expo/vector-icons';
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
 import LoginScreen from "./screens/LoginScreen";
+import CamScreen from "./screens/CamScreen";
 
 const Tab = createBottomTabNavigator();
 
@@ -42,7 +43,19 @@ function BottomTabs() {
                     <AntDesign name="home" size={24} color="white" />
                 )
             }} />
-            
+            <Tab.Screen
+                name="Camera"
+                component={CamScreen}
+                options={{ tabBarLabel: "Camera", 
+                headerShown: false, 
+                tabBarLabelStyle: { color: "white" },
+                tabBarIcon:({focused}) =>
+                focused?(
+                    <AntDesign name="camera" size={24} color="white" />
+                ) : (
+                    <AntDesign name="camerao" size={24} color="white" />
+                )
+            }} />
             <Tab.Screen
                 name="Profile"
                 component={ProfileScreen}
@@ -65,7 +78,6 @@ function Navigation(){
     return(
         <NavigationContainer>
             <Stack.Navigator>
-                <Stack.Screen name="Login" component={(LoginScreen)} options={{headerShown:false}}/>
                 <Stack.Screen name="Main" component={BottomTabs} options={{headerShown: false}}/>
             </Stack.Navigator>
         </NavigationContainer>
