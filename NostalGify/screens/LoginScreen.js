@@ -2,6 +2,13 @@ import { StyleSheet, Text, View, SafeAreaView, Pressable } from 'react-native';
 import React from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Entypo } from '@expo/vector-icons';
+<<<<<<< HEAD
+=======
+import * as AppAuth from 'expo-auth-session';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
+
+>>>>>>> 102af7d69d75e03c039adc6224916d45b6c1855a
 
 const LoginScreen = () => {
     return (
