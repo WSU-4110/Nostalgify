@@ -7,12 +7,11 @@ import { FontAwesome6 } from '@expo/vector-icons';
 
 const HomeScreen = () => {
     return (
-        <View>
         <View style={{backgroundColor: '#cca2b7'}}>
-            <View style={{ flexDirection: 'row', marginTop: 50}}>
+            <View style={{ flexDirection: 'row', marginBotton: 100}}>
                 <AntDesign
                     name="hearto"
-                    size={100}
+                    size={50}
                     color="black"
                     style={{
                         marginLeft: 30,
@@ -26,7 +25,7 @@ const HomeScreen = () => {
             <View style={{ flexDirection: 'row' }}>
                 <MaterialCommunityIcons
                     name="playlist-music-outline"
-                    size={100}
+                    size={50}
                     color="black"
                     style={{
                         marginLeft: 30,
@@ -40,7 +39,7 @@ const HomeScreen = () => {
             <View style={{ flexDirection: 'row' }}>
                 <FontAwesome6
                     name="record-vinyl"
-                    size={100}
+                    size={50}
                     color="black"
                     style={{
                         marginLeft: 30,
@@ -54,7 +53,7 @@ const HomeScreen = () => {
             <View style={{ flexDirection: 'row', marginBottom: 120}}>
                 <MaterialCommunityIcons
                     name="microphone-variant"
-                    size={100}
+                    size={50}
                     color="black"
                     style={{
                         marginLeft: 30,
@@ -62,10 +61,9 @@ const HomeScreen = () => {
                     }}
                 />
 
-                <Text style={{ marginTop: 80, marginLeft: 30, fontSize: 30, fontWeight: "bold" }}>Artists</Text>
+                <Text style={{ marginTop: 80, marginLeft: 30, fontSize: 30, fontWeight: "bold"}}>Artists</Text>
             </View>
             
-        </View>
         </View>
     )
 }
