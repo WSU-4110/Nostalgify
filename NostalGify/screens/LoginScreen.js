@@ -2,8 +2,19 @@ import { StyleSheet, Text, View, SafeAreaView, Pressable } from 'react-native';
 import React from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Entypo } from '@expo/vector-icons';
+//import createNativeStackNavigator from './StackNavigator';
+import { useNavigation } from '@react-navigation/native';
 
 const LoginScreen = () => {
+    const navigation = useNavigation();
+
+    const handleSignInPress = () => {
+
+        //put anything related to authentication here
+
+
+        navigation.navigate("Main");
+    };
     return (
         <LinearGradient colors={["#040306", "#131624"]} style={{ flex: 1 }}>
             <SafeAreaView>
@@ -28,6 +39,7 @@ const LoginScreen = () => {
 
                 <View style={{ height: 80 }} />
                 <Pressable
+                    onPress={handleSignInPress}
                     style={{
                         backgroundColor: "#1DB954",
                         padding: 10,
