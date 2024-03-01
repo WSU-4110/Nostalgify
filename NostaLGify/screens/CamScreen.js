@@ -4,7 +4,7 @@ import React from 'react'
 const CamScreen = () => {
     return (
         <View>
-            <Text>CamScreen</Text>
+            <Text>Kassem Build the camera aspect to the project and forgot to push everything onto github before coming to class.</Text>
         </View>
     )
 }
