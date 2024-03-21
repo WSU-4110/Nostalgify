@@ -1,12 +1,35 @@
 import { StyleSheet, Text, View, SafeAreaView, Pressable } from 'react-native';
-import React from 'react';
+import React ,{useEffect} from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Entypo } from '@expo/vector-icons';
 //import createNativeStackNavigator from './StackNavigator';
 import { useNavigation } from '@react-navigation/native';
 import * as AppAuth from "expo-app-auth";
+import AsyncStorage from "@react-native-async-storage/async-storage"
+
 
 const LoginScreen = () => {
+    const navigation = useNavigation();
+    useEffect(() => {
+        const checkTokenValidity = async () => {
+            const accessToken = await AsyncStorage.getItem("token");
+            const expirationDate = await AsyncStorage.getItem("expirationDate");
+            console.log("access token", accessToken);
+            console.log("expiration date", expirationDate);
+
+            if (accessToken && expirationDate) {
+                const currentTime = Date.now();
+                if (currentTime < parseInt(expirationDate)) { // Token is still valid
+                    navigation.replace("Main");
+                } else { // Token expired, remove from async storage
+                    AsyncStorage.removeItem("token");
+                    AsyncStorage.removeItem("expirationDate");
+                }
+            }
+        }
+
+        checkTokenValidity
+    },[])
     // Authentication
     async function authenticate () {
         const config = {
@@ -31,17 +54,21 @@ const LoginScreen = () => {
         }
         const result = await AppAuth.authAsync(config);
         console.log(result);
-        
+        if (result.accessToken) {
+            const expirationDate = new Date(result.accessTokenExpirationDate).getTime();
+            AsyncStorage.setItem("token",result.accessToken);
+            AsyncStorage.setItem("expirationDate",expirationDate.toString());
+            navigation.navigate("Main")
+        } 
     }
 
-    const navigation = useNavigation();
 
     //const handleSignInPress = () => {
 
         //put anything related to authentication here
 
 
-        navigation.navigate("Main");
+        // navigation.navigate("Main");
     //};
     return (
         <LinearGradient colors={["#040306", "#131624"]} style={{ flex: 1 }}>
@@ -67,7 +94,7 @@ const LoginScreen = () => {
 
                 <View style={{ height: 80 }} />
                 <Pressable
-                    onPress={handleSignInPress}
+                    onPress={authenticate}
                     style={{
                         backgroundColor: "#1DB954",
                         padding: 10,
