@@ -4,17 +4,45 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { Entypo } from '@expo/vector-icons';
 //import createNativeStackNavigator from './StackNavigator';
 import { useNavigation } from '@react-navigation/native';
+import * as AppAuth from "expo-app-auth";
 
 const LoginScreen = () => {
+    // Authentication
+    async function authenticate () {
+        const config = {
+            issuer:"https://accounts.spotify.com",
+            clientId: "06335027a9a548db97dae585531719dd",
+            scopes: [
+                "user-read-email",
+                "user-library-read",
+                "user-read-recently-played",
+                "user-read-currently-playing",
+                "user-top-read",
+                "playlist-read-private",
+                "playlist-read-collaborative",
+                "playlist-modify-public",
+                "playlist-modify-private",
+                "playlist-read-public",
+                "playlist-read-private",
+                "app-remote-control",
+                "streaming"
+            ],
+            redirectUrl:"exp://localhost:19000/--/spotify-auth-callback"
+        }
+        const result = await AppAuth.authAsync(config);
+        console.log(result);
+        
+    }
+
     const navigation = useNavigation();
 
-    const handleSignInPress = () => {
+    //const handleSignInPress = () => {
 
         //put anything related to authentication here
 
 
         navigation.navigate("Main");
-    };
+    //};
     return (
         <LinearGradient colors={["#040306", "#131624"]} style={{ flex: 1 }}>
             <SafeAreaView>
