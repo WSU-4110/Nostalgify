@@ -8,7 +8,9 @@ import LoginScreen from './screens/LoginScreen';
 import CamScreen from './screens/CamScreen';
 import SearchScreen from './screens/SearchScreen';
 import SettingsScreen from './screens/SettingsScreen';
+import LikedSongsScreen from './screens/LikedSongsScreen';
 import { Entypo, AntDesign, FontAwesome, Ionicons } from '@expo/vector-icons';
+
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -137,6 +139,11 @@ const Navigation = () => {
               backgroundColor: 'rgba(0,0,0,0.5)',
             },
           })}
+        />
+        <Stack.Screen
+            name="Liked"
+            component={LikedSongsScreen}
+            options={{headerShown:false}}
         />
       </Stack.Navigator>
     </NavigationContainer>
