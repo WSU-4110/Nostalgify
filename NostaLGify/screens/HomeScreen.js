@@ -7,7 +7,7 @@ import { FontAwesome6 } from '@expo/vector-icons';
 
 const HomeScreen = () => {
     return (
-        <View style={{backgroundColor: '#cca2b7'}}>
+        <View style={{flex: 1, backgroundColor: '#cca2b7', paddingTop: 50}}>
             <View style={{ flexDirection: 'row', marginBotton: 100}}>
                 <AntDesign
                     name="hearto"
