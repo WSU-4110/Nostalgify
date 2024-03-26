@@ -23,10 +23,12 @@ const SearchScreen = () => {
     );
 
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, { backgroundColor: '#cca2b7' }]}>
             <TextInput
-                style={styles.input}
+                style={[styles.input, { color: '#583b55' }]}
                 placeholder="Search..."
+                placeholderTextColor="#7f5a83"
+                marginTop={25}
             />
             <FlatList
                 data={data}
@@ -44,7 +46,7 @@ const styles = StyleSheet.create({
     },
     input: {
         height: 40,
-        borderColor: 'gray',
+        borderColor: '#6a5874',
         borderWidth: 1,
         borderRadius: 5,
         paddingHorizontal: 10,
@@ -55,7 +57,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between',
         padding: 10,
-        backgroundColor: '#e0e0e0',
+        backgroundColor: '#583b55',
         borderRadius: 5,
         marginBottom: 10,
     },
@@ -64,16 +66,16 @@ const styles = StyleSheet.create({
     },
     text: {
         fontSize: 16,
-        fontWeight: 'bold',
+        color: '#cca2b7',
     },
     button: {
-        backgroundColor: 'blue',
+        backgroundColor: '#cca2b7',
         borderRadius: 5,
         paddingVertical: 5,
         paddingHorizontal: 10,
     },
     buttonText: {
-        color: 'white',
+        color: '#6a5874',
         fontWeight: 'bold',
     },
 });
