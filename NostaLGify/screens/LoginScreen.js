@@ -6,7 +6,6 @@ import { useNavigation } from '@react-navigation/native';
 import { makeRedirectUri, useAuthRequest } from 'expo-auth-session';
 import * as WebBrowser from 'expo-web-browser';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {AuthSession} from 'expo'
 
 WebBrowser.maybeCompleteAuthSession();
 
