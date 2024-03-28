@@ -9,8 +9,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 WebBrowser.maybeCompleteAuthSession();
 
-
-
 const LoginScreen = () => {
     //console.log(AuthSession.getRedirectUrl());
     const navigation = useNavigation();
