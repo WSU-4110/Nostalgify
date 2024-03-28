@@ -1,68 +1,55 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
-
-// Component for displaying user information
-const UserInfo = () => {
-    return (
-        <View style={styles.userInfoContainer}>
-            <Image
-                source={{uri: 'https://via.placeholder.com/150'}}
-                style={styles.profileImage}
-            />
-            <Text style={styles.name}>John Doe</Text>
-            <Text style={styles.bio}>Mr.</Text>
-            <TouchableOpacity style={styles.button}>
-                <Text style={styles.buttonText}>Edit Profile</Text>
-            </TouchableOpacity>
-        </View>
-    );
-}
-
-// Component for displaying navigation options
-// Component for displaying navigation options
-const NavigationBar = () => {
-    const trackAnalytics = (option) => {
-        console.log(`Selected option: ${option}`);
-        // Replace this with actual analytics tracking code
-    };
-
-    return (
-        <View style={styles.navigationBar}>
-            <TouchableOpacity
-                style={styles.navButton}
-                onPress={() => trackAnalytics('Photos')}
-            >
-                <Text style={styles.navButtonText}>Photos</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-                style={styles.navButton}
-                onPress={() => trackAnalytics('Favorite Music')}
-            >
-                <Text style={styles.navButtonText}>Favorite Music</Text>
-            </TouchableOpacity>
-            {/* Add more navigation options as needed */}
-        </View>
-    );
-}
+import { LinearGradient } from 'expo-linear-gradient';
+// make sure to download lin grad expo
 
 
 const ProfileScreen = () => {
     return (
-        <View style={styles.container}>
-            <UserInfo />
-            <NavigationBar />
-        </View>
+        <LinearGradient
+            colors={['rgba(113,77,120,1)', 'rgba(146,99,154,1)', 'rgba(181,139,188,1)']}
+            style={styles.container}
+        >
+            <View style={styles.userInfoContainer}>
+                <Image
+                    source={{uri: 'https://via.placeholder.com/150'}}
+                    style={styles.profileImage}
+                />
+                
+                <Text style={styles.name}>John Doe</Text>
+                <Text style={styles.bio}>Mr.</Text>
+                <TouchableOpacity style={styles.button}>
+                    <Text style={styles.buttonText}>Edit Profile</Text>
+                </TouchableOpacity>
+            </View>
+            <View style={styles.navigationBar}>
+                <TouchableOpacity
+                    style={styles.navButton}
+                    onPress={() => trackAnalytics('Photos')}
+                >
+                    <Text style={styles.navButtonText}>Photos</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    style={styles.navButton}
+                    onPress={() => trackAnalytics('Favorite Music')}
+                >
+                    <Text style={styles.navButtonText}>Favorite Music</Text>
+                </TouchableOpacity>
+                {/* Add more navigation options as needed */}
+            </View>
+        </LinearGradient>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
     },
     userInfoContainer: {
+        flex: 1,
         alignItems: 'center',
-        padding: 20,
+        justifyContent: 'top',
+        padding: 50,
     },
     profileImage: {
         width: 150,
@@ -107,6 +94,7 @@ const styles = StyleSheet.create({
         color: '#007bff',
     },
 });
+
 
 export default ProfileScreen;
 
