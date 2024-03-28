@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { View, ScrollView, TouchableOpacity, Image, Text, Alert, StyleSheet } from 'react-native';
 import { Camera } from 'expo-camera';
 import * as ImagePicker from 'expo-image-picker';
-import { listFiles, uploadToFirebase } from './firebase-config';
+import { listFiles, uploadToFirebase } from '../firebase-config';
 
 const CamScreen = () => {
   const [hasPermission, setHasPermission] = useState(null);
@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     position: 'absolute',
-    bottom: 20,
+    bottom: 70,
     left: 0,
     right: 0,
     flexDirection: 'row',
@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
   },
   galleryContainer: {
     position: 'absolute',
-    bottom: 90, // Position gallery container at the bottom
+    bottom: 150, // Position gallery container at the bottom
     left: 0,
     right: 0,
     height: 120, // Adjust the height as needed
