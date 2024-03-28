@@ -1,81 +1,86 @@
+import { StyleSheet, Text, View, TextInput, FlatList, TouchableOpacity, Image, Pressable, ScrollView } from 'react-native';
 import React from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, FlatList } from 'react-native';
+import { AntDesign } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { FontAwesome6 } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const SearchScreen = () => {
-    // Dummy data for demonstration
-    const data = [
-        { id: 1, artist: 'Artist 1', song: 'Song 1' },
-        { id: 2, artist: 'Artist 2', song: 'Song 2' },
-        { id: 3, artist: 'Artist 3', song: 'Song 3' },
-        // Add more data as needed
-    ];
+    const navigation = useNavigation();
+    return (   
+        <View style={{ backgroundColor: '#cca2b7', flex: 1, paddingTop: 20 }}>
+            <Text style={{ marginLeft: 10, fontSize:30, fontWeight: "bold", color: "white"}}> Your Library </Text>
+            <View style={{backgroundColor: '#cca2b7', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 20, paddingTop: 20}}>
+                <View style={{ flexDirection: 'row' }}>
+                    <MaterialCommunityIcons
+                        name="playlist-music-outline"
+                        size={20}
+                        color="white"
+                    />
 
-    const renderItem = ({ item }) => (
-        <View style={styles.card}>
-            <View style={styles.item}>
-                <Text style={styles.text}>{item.artist}</Text>
-                <Text style={styles.text}>{item.song}</Text>
+                    <Text style={{ color: "white", fontSize: 15, fontWeight: "bold" }}>Playlists</Text>
+                </View>
+
+                <View style={{ flexDirection: 'row' }}>
+                    <FontAwesome6
+                        name="record-vinyl"
+                        size={20}
+                        color="white"
+                    />
+
+                    <Text style={{ color: "white", fontSize: 15, fontWeight: "bold" }}>Albums</Text>
+                </View>
+
+                <View style={{ flexDirection: 'row' }}>
+                    <MaterialCommunityIcons
+                        name="microphone-variant"
+                        size={20}
+                        color="white"
+                    />
+
+                    <Text style={{ color: "white", fontSize: 15, fontWeight: "bold"}}>Artists</Text>
+                </View>
             </View>
-            <TouchableOpacity style={styles.button}>
-                <Text style={styles.buttonText}>Play</Text>
-            </TouchableOpacity>
-        </View>
-    );
 
-    return (
-        <View style={styles.container}>
-            <TextInput
-                style={styles.input}
-                placeholder="Search..."
-            />
-            <FlatList
-                data={data}
-                renderItem={renderItem}
-                keyExtractor={item => item.id.toString()}
-            />
+            <ScrollView>
+                <Pressable
+                    style={{
+                    marginTop: 20,
+                    flexDirection: "row",
+                    alignItems: "center",
+                    gap: 10,
+                    flex: 1,
+                    marginHorizontal: 15,
+                    backgroundColor: "#cca2b7",
+                    borderRadius: 4,
+                    elevation: 3,
+                    }}
+                >
+                    <LinearGradient colors={["#33006F", "#FFFFFF"]}>
+                    <Pressable
+                        style={{
+                        width: 55,
+                        height: 55,
+                        justifyContent: "center",
+                        alignItems: "center",
+                        }}
+                    >
+                        <AntDesign name="heart" size={24} color="white" />
+                    </Pressable>
+                    </LinearGradient>
+
+                    <Text style={{ color: "white", fontSize: 13, fontWeight: "bold" }}>
+                        Liked Songs
+                    </Text>
+                </Pressable>
+
+               
+
+            </ScrollView>
         </View>
-    );
+    )
 };
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        padding: 10,
-    },
-    input: {
-        height: 40,
-        borderColor: 'gray',
-        borderWidth: 1,
-        borderRadius: 5,
-        paddingHorizontal: 10,
-        marginBottom: 10,
-    },
-    card: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        padding: 10,
-        backgroundColor: '#e0e0e0',
-        borderRadius: 5,
-        marginBottom: 10,
-    },
-    item: {
-        flex: 1,
-    },
-    text: {
-        fontSize: 16,
-        fontWeight: 'bold',
-    },
-    button: {
-        backgroundColor: 'blue',
-        borderRadius: 5,
-        paddingVertical: 5,
-        paddingHorizontal: 10,
-    },
-    buttonText: {
-        color: 'white',
-        fontWeight: 'bold',
-    },
-});
-
 export default SearchScreen;
+const styles = StyleSheet.create({})
