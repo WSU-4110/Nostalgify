@@ -1,4 +1,5 @@
-import React from 'react';
+
+import React, { useState, useEffect } from 'react';
 import { 
     StyleSheet, 
     Text, 
@@ -10,8 +11,9 @@ import {
     StatusBar, } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { BlurView } from 'expo-blur';
+import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 // make sure to download lin grad expo, expo blur
-
 
 const userTextStyle = {
     fontSize: 25,
@@ -28,7 +30,57 @@ const categoryTextStyle = {
     // Add more text styles as needed
 };
 
-const ProfileScreen = () => {
+async function fetchWebApi(endpoint, method, body, token) {
+    const headers = {
+        Authorization: `Bearer ${token}`,
+    };
+    let url = `https://api.spotify.com/${endpoint}`;
+    if (method === 'GET' && body) {
+        // If it's a GET request and there's a body, encode it into the URL
+        const queryParams = new URLSearchParams(body).toString();
+        url += `?${queryParams}`;
+    }
+    const res = await fetch(url, {
+        headers,
+        method,
+        body: method !== 'GET' ? JSON.stringify(body) : undefined, // Only include body for non-GET requests
+    });
+    return await res.json();
+}
+
+async function getUserInfo(token) {
+    const profilePictureEndpoint = 'https://api.spotify.com/v1/me';
+    const userNameEndpoint = 'https://api.spotify.com/v1/me'; // Replace this with the endpoint to fetch user name
+    
+    const profilePicture = await fetchWebApi(profilePictureEndpoint, 'GET', null, token);
+    const userName = await fetchWebApi(userNameEndpoint, 'GET', null, token);
+    
+    return { profilePicture, userName };
+}
+
+const ProfileScreen = () => { 
+    const [profilePicture, setProfilePicture] = useState(null);
+    const [userName, setUserName] = useState('');
+
+    useEffect(() => {
+        fetchUserInfo();
+    }, []);
+
+    const fetchUserInfo = async () => {
+        try {
+            const accessToken = await AsyncStorage.getItem('accessToken');
+            if (accessToken) {
+                const { profilePicture, userName } = await getUserInfo(accessToken);
+                setProfilePicture(profilePicture);
+                setUserName(userName);
+            } else {
+                console.error('Access token not found in AsyncStorage');
+            }
+        } catch (error) {
+            console.error('Error fetching user info:', error);
+        }
+    };
+    
     return (
         
         <LinearGradient
@@ -39,11 +91,11 @@ const ProfileScreen = () => {
             <ScrollView alwaysBounceVertical={false} alwaysBounceHorizontal={false}>
             <View style={styles.userInfoContainer}>
                 <Image
-                    source={{uri: 'https://via.placeholder.com/150'}}
+                    source={{uri: profilePicture || 'https://via.placeholder.com/150'}}
                     style={styles.profileImage}
                 />
                 
-                <Text style={[styles.name, userTextStyle]}>John Doe</Text>
+                <Text style={[styles.name, userTextStyle]}>{userName}</Text>
                 
             </View>
 
