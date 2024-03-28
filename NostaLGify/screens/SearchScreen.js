@@ -11,36 +11,36 @@ const SearchScreen = () => {
     const navigation = useNavigation();
     return (   
         <View style={{ backgroundColor: '#cca2b7', flex: 1, paddingTop: 20 }}>
-            <Text style={{ marginLeft: 10, fontSize:30, fontWeight: "bold", color: "white"}}> Your Library </Text>
+            <Text style={{ marginLeft: 10, fontSize:30, fontWeight: "bold", color: "#583b55"}}> Your Library </Text>
             <View style={{backgroundColor: '#cca2b7', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 20, paddingTop: 20}}>
                 <View style={{ flexDirection: 'row' }}>
                     <MaterialCommunityIcons
                         name="playlist-music-outline"
                         size={20}
-                        color="white"
+                        color="#6a5874"
                     />
 
-                    <Text style={{ color: "white", fontSize: 15, fontWeight: "bold" }}>Playlists</Text>
+                    <Text style={{ color: "#6a5874", fontSize: 15, fontWeight: "bold" }}>Playlists</Text>
                 </View>
 
                 <View style={{ flexDirection: 'row' }}>
                     <FontAwesome6
                         name="record-vinyl"
                         size={20}
-                        color="white"
+                        color="#6a5874"
                     />
 
-                    <Text style={{ color: "white", fontSize: 15, fontWeight: "bold" }}>Albums</Text>
+                    <Text style={{ color: "#6a5874", fontSize: 15, fontWeight: "bold" }}>Albums</Text>
                 </View>
 
                 <View style={{ flexDirection: 'row' }}>
                     <MaterialCommunityIcons
                         name="microphone-variant"
                         size={20}
-                        color="white"
+                        color="#6a5874"
                     />
 
-                    <Text style={{ color: "white", fontSize: 15, fontWeight: "bold"}}>Artists</Text>
+                    <Text style={{ color: "#6a5874", fontSize: 15, fontWeight: "bold"}}>Artists</Text>
                 </View>
             </View>
 
@@ -67,11 +67,11 @@ const SearchScreen = () => {
                         alignItems: "center",
                         }}
                     >
-                        <AntDesign name="heart" size={24} color="white" />
+                        <AntDesign name="heart" size={24} color="#ab8ca4" />
                     </Pressable>
                     </LinearGradient>
 
-                    <Text style={{ color: "white", fontSize: 13, fontWeight: "bold" }}>
+                    <Text style={{ color: "#6a5874", fontSize: 13, fontWeight: "bold" }}>
                         Liked Songs
                     </Text>
                 </Pressable>
@@ -89,9 +89,9 @@ const SearchScreen = () => {
                     elevation: 3,
                     }}
                 >
-                    <Feather name="square" size={70} color="white" />
+                    <Feather name="square" size={70} color="#7f6581" />
 
-                    <Text style={{ color: "white", fontSize: 13, fontWeight: "bold" }}>
+                    <Text style={{ color: "#6a5874", fontSize: 13, fontWeight: "bold" }}>
                         Playlist 1
                     </Text>
                 </Pressable>
@@ -109,9 +109,9 @@ const SearchScreen = () => {
                     elevation: 3,
                     }}
                 >
-                    <Feather name="square" size={70} color="white" />
+                    <Feather name="square" size={70} color="#7f6581" />
 
-                    <Text style={{ color: "white", fontSize: 13, fontWeight: "bold" }}>
+                    <Text style={{ color: "#6a5874", fontSize: 13, fontWeight: "bold" }}>
                         Playlist 2
                     </Text>
                 </Pressable>
@@ -129,9 +129,9 @@ const SearchScreen = () => {
                     elevation: 3,
                     }}
                 >
-                    <Feather name="square" size={70} color="white" />
+                    <Feather name="square" size={70} color="#7f6581" />
 
-                    <Text style={{ color: "white", fontSize: 13, fontWeight: "bold" }}>
+                    <Text style={{ color: "#6a5874", fontSize: 13, fontWeight: "bold" }}>
                         Playlist 3
                     </Text>
                 </Pressable>
@@ -149,9 +149,9 @@ const SearchScreen = () => {
                     elevation: 3,
                     }}
                 >
-                    <Feather name="square" size={70} color="white" />
+                    <Feather name="square" size={70} color="#7f6581" />
 
-                    <Text style={{ color: "white", fontSize: 13, fontWeight: "bold" }}>
+                    <Text style={{ color: "#6a5874", fontSize: 13, fontWeight: "bold" }}>
                         Playlist 4
                     </Text>
                 </Pressable>
@@ -169,9 +169,9 @@ const SearchScreen = () => {
                     elevation: 3,
                     }}
                 >
-                    <Feather name="square" size={70} color="white" />
+                    <Feather name="square" size={70} color="#7f6581" />
 
-                    <Text style={{ color: "white", fontSize: 13, fontWeight: "bold" }}>
+                    <Text style={{ color: "#6a5874", fontSize: 13, fontWeight: "bold" }}>
                         Playlist 5
                     </Text>
                 </Pressable>
@@ -189,9 +189,9 @@ const SearchScreen = () => {
                     elevation: 3,
                     }}
                 >
-                    <Feather name="square" size={70} color="white" />
+                    <Feather name="square" size={70} color="#7f6581" />
 
-                    <Text style={{ color: "white", fontSize: 13, fontWeight: "bold" }}>
+                    <Text style={{ color: "#6a5874", fontSize: 13, fontWeight: "bold" }}>
                         Playlist 6
                     </Text>
                 </Pressable>
@@ -209,9 +209,9 @@ const SearchScreen = () => {
                     elevation: 3,
                     }}
                 >
-                    <Feather name="square" size={70} color="white" />
+                    <Feather name="square" size={70} color="#7f6581" />
 
-                    <Text style={{ color: "white", fontSize: 13, fontWeight: "bold" }}>
+                    <Text style={{ color: "#6a5874", fontSize: 13, fontWeight: "bold" }}>
                         Playlist 7
                     </Text>
                 </Pressable>
@@ -229,9 +229,9 @@ const SearchScreen = () => {
                     elevation: 3,
                     }}
                 >
-                    <Feather name="square" size={70} color="white" />
+                    <Feather name="square" size={70} color="#7f6581" />
 
-                    <Text style={{ color: "white", fontSize: 13, fontWeight: "bold" }}>
+                    <Text style={{ color: "#6a5874", fontSize: 13, fontWeight: "bold" }}>
                         Playlist 8
                     </Text>
                 </Pressable>
