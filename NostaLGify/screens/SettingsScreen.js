@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Button } from 'react-native';
+import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 
@@ -14,11 +14,43 @@ const SettingsScreen = () => {
     navigation.navigate('Login');
   };
 
+  const changeTheme = () => {
+    console.log('Changing theme');
+    // Implement theme changing logic here
+  };
+
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Button title="Sign Out of Spotify" onPress={signOut} />
+    <View style={styles.container}>
+      <TouchableOpacity style={styles.button} onPress={signOut}>
+        <Text style={styles.buttonText}>Sign Out of Spotify</Text>
+      </TouchableOpacity>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#cca2b7',
+  },
+  button: {
+    backgroundColor: '#6a5874',
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+    borderRadius: 5,
+    marginBottom: 10,
+  },
+  buttonMargin: {
+    marginTop: 10,
+  },
+  buttonText: {
+    color: '#cca2b7',
+    fontSize: 16,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+});
 
 export default SettingsScreen;
