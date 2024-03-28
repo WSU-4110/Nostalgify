@@ -14,15 +14,9 @@ const SettingsScreen = () => {
     navigation.navigate('Login');
   };
 
-  const changeTheme = () => {
-    console.log('Changing theme');
-    // Implement theme changing logic here
-  };
-
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <Button title="Sign Out of Spotify" onPress={signOut} />
-      <Button title="Change Theme" onPress={changeTheme} />
     </View>
   );
 };
