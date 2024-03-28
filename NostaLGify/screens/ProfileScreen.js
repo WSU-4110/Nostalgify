@@ -13,6 +13,21 @@ import { BlurView } from 'expo-blur';
 // make sure to download lin grad expo, expo blur
 
 
+const userTextStyle = {
+    fontSize: 25,
+    color: '#ffffff', // Modify the color as needed
+    fontFamily: 'Gothic', // Modify the font family as needed
+    // Add more text styles as needed
+};
+
+const categoryTextStyle = {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#ffffff', // Modify the color as needed
+    fontFamily: 'Gothic', // Modify the font family as needed
+    // Add more text styles as needed
+};
+
 const ProfileScreen = () => {
     return (
         
@@ -28,12 +43,12 @@ const ProfileScreen = () => {
                     style={styles.profileImage}
                 />
                 
-                <Text style={styles.name}>John Doe</Text>
+                <Text style={[styles.name, userTextStyle]}>John Doe</Text>
                 
             </View>
 
             <View style={styles.recentlyPlayedContainer}>
-                <Text>Recently Played</Text>
+                <Text style ={categoryTextStyle}>Recently Played</Text>
                 <ScrollView 
                     style={styles.scrollView}
                     horizontal={true}
@@ -61,7 +76,7 @@ const ProfileScreen = () => {
             </View>
 
             <View style={styles.recentlyPlayedContainer}>
-                <Text>Top Songs</Text>
+                <Text style={categoryTextStyle}>Top Songs</Text>
                 <ScrollView 
                     style={styles.scrollView}
                     horizontal={true}
@@ -90,7 +105,7 @@ const ProfileScreen = () => {
 
 
             <View style={styles.recentlyPlayedContainer}>
-                <Text>More Content</Text>
+                <Text style={categoryTextStyle}>More Content</Text>
                 <ScrollView 
                     style={styles.scrollView}
                     horizontal={true}
@@ -118,7 +133,7 @@ const ProfileScreen = () => {
             </View>
 
             <View style={styles.recentlyPlayedContainer}>
-                <Text>Memories</Text>
+                <Text style={categoryTextStyle}>Memories</Text>
                 <BlurView 
                     intensity={80} 
                     tint="dark"
@@ -183,8 +198,8 @@ const styles = StyleSheet.create({
         padding: 20,
     },
     profileImage: {
-        width: 150,
-        height: 150,
+        width: 100,
+        height: 100,
         borderRadius: 75,
         marginBottom: 20,
     },
