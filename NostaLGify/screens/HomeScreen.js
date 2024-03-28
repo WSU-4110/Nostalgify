@@ -1,69 +1,84 @@
-import { StyleSheet, Text, View, TextInput, FlatList, TouchableOpacity, Image } from 'react-native';
+import { StyleSheet, Text, View, TextInput, FlatList, TouchableOpacity, Image, Pressable, ScrollView } from 'react-native';
 import React from 'react';
 import { AntDesign } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { FontAwesome6 } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
+import { LinearGradient } from 'expo-linear-gradient';
 
 
 const HomeScreen = () => {
-    return (
-        <View style={{backgroundColor: '#cca2b7'}}>
-            <View style={{ flexDirection: 'row', marginBotton: 100}}>
-                <AntDesign
-                    name="hearto"
-                    size={50}
-                    color="black"
+    const navigation = useNavigation();
+    return (   
+        <View style={{ backgroundColor: '#cca2b7', flex: 1, paddingTop: 20 }}>
+            <Text style={{ marginLeft: 10, fontSize:30, fontWeight: "bold", color: "white"}}> Your Library </Text>
+            <View style={{backgroundColor: '#cca2b7', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 20, paddingTop: 20}}>
+                <View style={{ flexDirection: 'row' }}>
+                    <MaterialCommunityIcons
+                        name="playlist-music-outline"
+                        size={20}
+                        color="white"
+                    />
+
+                    <Text style={{ color: "white", fontSize: 15, fontWeight: "bold" }}>Playlists</Text>
+                </View>
+
+                <View style={{ flexDirection: 'row' }}>
+                    <FontAwesome6
+                        name="record-vinyl"
+                        size={20}
+                        color="white"
+                    />
+
+                    <Text style={{ color: "white", fontSize: 15, fontWeight: "bold" }}>Albums</Text>
+                </View>
+
+                <View style={{ flexDirection: 'row' }}>
+                    <MaterialCommunityIcons
+                        name="microphone-variant"
+                        size={20}
+                        color="white"
+                    />
+
+                    <Text style={{ color: "white", fontSize: 15, fontWeight: "bold"}}>Artists</Text>
+                </View>
+            </View>
+
+            <ScrollView>
+                <Pressable
                     style={{
-                        marginLeft: 30,
-                        marginTop: 50,
+                    marginTop: 20,
+                    flexDirection: "row",
+                    alignItems: "center",
+                    gap: 10,
+                    flex: 1,
+                    marginHorizontal: 15,
+                    backgroundColor: "#cca2b7",
+                    borderRadius: 4,
+                    elevation: 3,
                     }}
-                />
+                >
+                    <LinearGradient colors={["#33006F", "#FFFFFF"]}>
+                    <Pressable
+                        style={{
+                        width: 55,
+                        height: 55,
+                        justifyContent: "center",
+                        alignItems: "center",
+                        }}
+                    >
+                        <AntDesign name="heart" size={24} color="white" />
+                    </Pressable>
+                    </LinearGradient>
 
-                <Text style={{ marginTop: 80, marginLeft: 30, fontSize: 30, fontWeight: "bold" }}>Liked Songs</Text>
-            </View>
-            
-            <View style={{ flexDirection: 'row' }}>
-                <MaterialCommunityIcons
-                    name="playlist-music-outline"
-                    size={50}
-                    color="black"
-                    style={{
-                        marginLeft: 30,
-                        marginTop: 50
-                     }}
-                />
+                    <Text style={{ color: "white", fontSize: 13, fontWeight: "bold" }}>
+                        Liked Songs
+                    </Text>
+                </Pressable>
 
-                <Text style={{ marginTop: 80, marginLeft: 30, fontSize: 30, fontWeight: "bold" }}>Playlists</Text>
-            </View>
+               
 
-            <View style={{ flexDirection: 'row' }}>
-                <FontAwesome6
-                    name="record-vinyl"
-                    size={50}
-                    color="black"
-                    style={{
-                        marginLeft: 30,
-                        marginTop: 50
-                    }}
-                />
-
-                <Text style={{ marginTop: 80, marginLeft: 30, fontSize: 30, fontWeight: "bold" }}>Albums</Text>
-            </View>
-
-            <View style={{ flexDirection: 'row', marginBottom: 120}}>
-                <MaterialCommunityIcons
-                    name="microphone-variant"
-                    size={50}
-                    color="black"
-                    style={{
-                        marginLeft: 30,
-                        marginTop: 50
-                    }}
-                />
-
-                <Text style={{ marginTop: 80, marginLeft: 30, fontSize: 30, fontWeight: "bold"}}>Artists</Text>
-            </View>
-            
+            </ScrollView>
         </View>
     )
 }
