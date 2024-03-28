@@ -9,17 +9,19 @@ import {
     ScrollView,
     StatusBar, } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-// make sure to download lin grad expo
+import { BlurView } from 'expo-blur';
+// make sure to download lin grad expo, expo blur
 
 
 const ProfileScreen = () => {
     return (
+        
         <LinearGradient
             colors={['rgba(113,77,120,1)', 'rgba(146,99,154,1)', 'rgba(181,139,188,1)']}
             style={styles.container}
         >        
         <SafeAreaView style={styles.container}> 
-
+            <ScrollView alwaysBounceVertical={false} alwaysBounceHorizontal={false}>
             <View style={styles.userInfoContainer}>
                 <Image
                     source={{uri: 'https://via.placeholder.com/150'}}
@@ -27,9 +29,7 @@ const ProfileScreen = () => {
                 />
                 
                 <Text style={styles.name}>John Doe</Text>
-                <TouchableOpacity style={styles.button}>
-                    <Text style={styles.buttonText}>Edit Profile</Text>
-                </TouchableOpacity>
+                
             </View>
 
             <View style={styles.recentlyPlayedContainer}>
@@ -60,8 +60,95 @@ const ProfileScreen = () => {
 
             </View>
 
+            <View style={styles.recentlyPlayedContainer}>
+                <Text>Top Songs</Text>
+                <ScrollView 
+                    style={styles.scrollView}
+                    horizontal={true}
+                >
+                        <View style={styles.imageContainer}>
+                            <Image
+                                source={{uri: 'https://via.placeholder.com/150'}}
+                                style={styles.recentImage}
+                            />
+                            <Image
+                                source={{uri: 'https://via.placeholder.com/150'}}
+                                style={styles.recentImage}
+                            />
+                            <Image
+                                source={{uri: 'https://via.placeholder.com/150'}}
+                                style={styles.recentImage}
+                            />
+                            <Image
+                                source={{uri: 'https://via.placeholder.com/150'}}
+                                style={styles.recentImage}
+                            />
+                        </View>
+                </ScrollView>
+
+            </View>
 
 
+            <View style={styles.recentlyPlayedContainer}>
+                <Text>More Content</Text>
+                <ScrollView 
+                    style={styles.scrollView}
+                    horizontal={true}
+                >
+                        <View style={styles.imageContainer}>
+                            <Image
+                                source={{uri: 'https://via.placeholder.com/150'}}
+                                style={styles.recentImage}
+                            />
+                            <Image
+                                source={{uri: 'https://via.placeholder.com/150'}}
+                                style={styles.recentImage}
+                            />
+                            <Image
+                                source={{uri: 'https://via.placeholder.com/150'}}
+                                style={styles.recentImage}
+                            />
+                            <Image
+                                source={{uri: 'https://via.placeholder.com/150'}}
+                                style={styles.recentImage}
+                            />
+                        </View>
+                </ScrollView>
+
+            </View>
+
+            <View style={styles.recentlyPlayedContainer}>
+                <Text>Memories</Text>
+                <BlurView 
+                    intensity={80} 
+                    tint="dark"
+                    style={styles.blurContainer}
+                >
+                    <ScrollView 
+                        style={styles.scrollView}
+                        horizontal={true}
+                    >
+                        <View style={styles.imageContainer}>
+                            <Image
+                                source={{ uri: 'https://via.placeholder.com/150' }}
+                                style={styles.recentImage}
+                            />
+                            <Image
+                                source={{ uri: 'https://via.placeholder.com/150' }}
+                                style={styles.recentImage}
+                            />
+                            <Image
+                                source={{ uri: 'https://via.placeholder.com/150' }}
+                                style={styles.recentImage}
+                            />
+                            <Image
+                                source={{ uri: 'https://via.placeholder.com/150' }}
+                                style={styles.recentImage}
+                            />
+                        </View>
+                    </ScrollView>
+                </BlurView>
+            </View>
 
             <View style={styles.navigationBar}>
                 <TouchableOpacity
@@ -77,10 +164,11 @@ const ProfileScreen = () => {
                     <Text style={styles.navButtonText}>Favorite Music</Text>
                 </TouchableOpacity>
                 {/* Add more navigation options as needed */}
-            </View>
+            </View>        
+            </ScrollView>
             </SafeAreaView>
         </LinearGradient>
-        
+
     );
 }
 
@@ -108,6 +196,15 @@ const styles = StyleSheet.create({
     bio: {
         fontSize: 18,
         marginBottom: 20,
+    },
+    blurContainer: {
+        padding: 10,
+        marginTop: 10,
+        marginLeft: 10,
+        marginRight: 10,
+        justifyContent: 'left',
+        overflow: 'hidden',
+        borderRadius: 10,
     },
     button: {
         backgroundColor: '#007bff',
