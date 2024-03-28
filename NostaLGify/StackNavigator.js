@@ -52,7 +52,7 @@ const BottomTabs = () => {
         name="Search"
         component={SearchScreen}
         options={{
-          tabBarLabel: 'Search',
+          tabBarLabel: 'Library',
           headerShown: false,
           tabBarLabelStyle: { color: 'white' },
           tabBarIcon: ({ focused }) =>
