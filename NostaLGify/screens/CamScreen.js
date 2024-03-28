@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   button: {
-    backgroundColor: '#4CAF50',
+    backgroundColor: '#583b55',
     paddingHorizontal: 20,
     paddingVertical: 12,
     borderRadius: 8,
@@ -155,9 +155,9 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   buttonText: {
-    color: '#FFFFFF',
+    color: '#cca2b7',
     fontSize: 16,
-    fontWeight: 'bold',
+    //fontWeight: 'bold',
     textAlign: 'center',
   },
   galleryContainer: {
