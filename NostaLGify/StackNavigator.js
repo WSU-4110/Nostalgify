@@ -10,6 +10,7 @@ import SearchScreen from './screens/SearchScreen';
 import SettingsScreen from './screens/SettingsScreen';
 import { Entypo, AntDesign, FontAwesome, Ionicons } from '@expo/vector-icons';
 
+
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 

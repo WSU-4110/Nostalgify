@@ -5,6 +5,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { FontAwesome6 } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
+import { Feather } from '@expo/vector-icons';
 
 const SearchScreen = () => {
     const navigation = useNavigation();
@@ -72,6 +73,166 @@ const SearchScreen = () => {
 
                     <Text style={{ color: "white", fontSize: 13, fontWeight: "bold" }}>
                         Liked Songs
+                    </Text>
+                </Pressable>
+
+                <Pressable
+                    style={{
+                    marginTop: 20,
+                    flexDirection: "row",
+                    alignItems: "center",
+                    gap: 10,
+                    flex: 1,
+                    marginHorizontal: 7,
+                    backgroundColor: "#cca2b7",
+                    borderRadius: 4,
+                    elevation: 3,
+                    }}
+                >
+                    <Feather name="square" size={70} color="white" />
+
+                    <Text style={{ color: "white", fontSize: 13, fontWeight: "bold" }}>
+                        Playlist 1
+                    </Text>
+                </Pressable>
+
+                <Pressable
+                    style={{
+                    marginTop: 20,
+                    flexDirection: "row",
+                    alignItems: "center",
+                    gap: 10,
+                    flex: 1,
+                    marginHorizontal: 7,
+                    backgroundColor: "#cca2b7",
+                    borderRadius: 4,
+                    elevation: 3,
+                    }}
+                >
+                    <Feather name="square" size={70} color="white" />
+
+                    <Text style={{ color: "white", fontSize: 13, fontWeight: "bold" }}>
+                        Playlist 2
+                    </Text>
+                </Pressable>
+
+                <Pressable
+                    style={{
+                    marginTop: 20,
+                    flexDirection: "row",
+                    alignItems: "center",
+                    gap: 10,
+                    flex: 1,
+                    marginHorizontal: 7,
+                    backgroundColor: "#cca2b7",
+                    borderRadius: 4,
+                    elevation: 3,
+                    }}
+                >
+                    <Feather name="square" size={70} color="white" />
+
+                    <Text style={{ color: "white", fontSize: 13, fontWeight: "bold" }}>
+                        Playlist 3
+                    </Text>
+                </Pressable>
+
+                <Pressable
+                    style={{
+                    marginTop: 20,
+                    flexDirection: "row",
+                    alignItems: "center",
+                    gap: 10,
+                    flex: 1,
+                    marginHorizontal: 7,
+                    backgroundColor: "#cca2b7",
+                    borderRadius: 4,
+                    elevation: 3,
+                    }}
+                >
+                    <Feather name="square" size={70} color="white" />
+
+                    <Text style={{ color: "white", fontSize: 13, fontWeight: "bold" }}>
+                        Playlist 4
+                    </Text>
+                </Pressable>
+
+                <Pressable
+                    style={{
+                    marginTop: 20,
+                    flexDirection: "row",
+                    alignItems: "center",
+                    gap: 10,
+                    flex: 1,
+                    marginHorizontal: 7,
+                    backgroundColor: "#cca2b7",
+                    borderRadius: 4,
+                    elevation: 3,
+                    }}
+                >
+                    <Feather name="square" size={70} color="white" />
+
+                    <Text style={{ color: "white", fontSize: 13, fontWeight: "bold" }}>
+                        Playlist 5
+                    </Text>
+                </Pressable>
+
+                <Pressable
+                    style={{
+                    marginTop: 20,
+                    flexDirection: "row",
+                    alignItems: "center",
+                    gap: 10,
+                    flex: 1,
+                    marginHorizontal: 7,
+                    backgroundColor: "#cca2b7",
+                    borderRadius: 4,
+                    elevation: 3,
+                    }}
+                >
+                    <Feather name="square" size={70} color="white" />
+
+                    <Text style={{ color: "white", fontSize: 13, fontWeight: "bold" }}>
+                        Playlist 6
+                    </Text>
+                </Pressable>
+
+                <Pressable
+                    style={{
+                    marginTop: 20,
+                    flexDirection: "row",
+                    alignItems: "center",
+                    gap: 10,
+                    flex: 1,
+                    marginHorizontal: 7,
+                    backgroundColor: "#cca2b7",
+                    borderRadius: 4,
+                    elevation: 3,
+                    }}
+                >
+                    <Feather name="square" size={70} color="white" />
+
+                    <Text style={{ color: "white", fontSize: 13, fontWeight: "bold" }}>
+                        Playlist 7
+                    </Text>
+                </Pressable>
+
+                <Pressable
+                    style={{
+                    marginTop: 20,
+                    flexDirection: "row",
+                    alignItems: "center",
+                    gap: 10,
+                    flex: 1,
+                    marginHorizontal: 7,
+                    backgroundColor: "#cca2b7",
+                    borderRadius: 4,
+                    elevation: 3,
+                    }}
+                >
+                    <Feather name="square" size={70} color="white" />
+
+                    <Text style={{ color: "white", fontSize: 13, fontWeight: "bold" }}>
+                        Playlist 8
                     </Text>
                 </Pressable>
 
