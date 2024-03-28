@@ -10,3 +10,11 @@ You might need to install certain libraries on your device in order to insure ru
 4) yarn install
 5) yarn add @react-native-async-storage/async-storage
 6) yarn add expo-auth-session
+7) npm install react-native-dotenv
+8) npm install expo-camera
+9) npm install firebase
+10) npm install firebase-config
+
+
+
+
