@@ -1,5 +1,13 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
+import { 
+    StyleSheet, 
+    Text, 
+    View, 
+    Image, 
+    TouchableOpacity,
+    SafeAreaView,
+    ScrollView,
+    StatusBar, } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 // make sure to download lin grad expo
 
@@ -9,7 +17,9 @@ const ProfileScreen = () => {
         <LinearGradient
             colors={['rgba(113,77,120,1)', 'rgba(146,99,154,1)', 'rgba(181,139,188,1)']}
             style={styles.container}
-        >
+        >        
+        <SafeAreaView style={styles.container}> 
+
             <View style={styles.userInfoContainer}>
                 <Image
                     source={{uri: 'https://via.placeholder.com/150'}}
@@ -17,11 +27,42 @@ const ProfileScreen = () => {
                 />
                 
                 <Text style={styles.name}>John Doe</Text>
-                <Text style={styles.bio}>Mr.</Text>
                 <TouchableOpacity style={styles.button}>
                     <Text style={styles.buttonText}>Edit Profile</Text>
                 </TouchableOpacity>
             </View>
+
+            <View style={styles.recentlyPlayedContainer}>
+                <Text>Recently Played</Text>
+                <ScrollView 
+                    style={styles.scrollView}
+                    horizontal={true}
+                >
+                        <View style={styles.imageContainer}>
+                            <Image
+                                source={{uri: 'https://via.placeholder.com/150'}}
+                                style={styles.recentImage}
+                            />
+                            <Image
+                                source={{uri: 'https://via.placeholder.com/150'}}
+                                style={styles.recentImage}
+                            />
+                            <Image
+                                source={{uri: 'https://via.placeholder.com/150'}}
+                                style={styles.recentImage}
+                            />
+                            <Image
+                                source={{uri: 'https://via.placeholder.com/150'}}
+                                style={styles.recentImage}
+                            />
+                        </View>
+                </ScrollView>
+
+            </View>
+
+
+
+
             <View style={styles.navigationBar}>
                 <TouchableOpacity
                     style={styles.navButton}
@@ -37,19 +78,21 @@ const ProfileScreen = () => {
                 </TouchableOpacity>
                 {/* Add more navigation options as needed */}
             </View>
+            </SafeAreaView>
         </LinearGradient>
+        
     );
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        paddingTop: StatusBar.currentHeight,
     },
     userInfoContainer: {
-        flex: 1,
         alignItems: 'center',
         justifyContent: 'top',
-        padding: 50,
+        padding: 20,
     },
     profileImage: {
         width: 150,
@@ -77,9 +120,28 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: 'bold',
     },
+    imageContainer: {
+        flexDirection: 'row',
+    },
+    recentImage: {
+        width: 100,
+        height: 100,
+        marginRight: 10,
+        borderRadius: 10,
+    },
+
+    recentlyPlayedContainer: {
+        marginLeft: 20,
+        marginTop: 20,
+        marginBottom: 30,
+        },
+    scrollView: {
+        marginTop: 10,
+        marginBottom: 10,
+    },
     navigationBar: {
         flexDirection: 'row',
-        justifyContent: 'center',
+        justifyContent: 'bottom',
         alignItems: 'center',
         borderTopWidth: 1,
         borderTopColor: '#ccc',
