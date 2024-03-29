@@ -10,6 +10,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 WebBrowser.maybeCompleteAuthSession();
 
 const LoginScreen = () => {
+    //console.log(AuthSession.getRedirectUrl());
     const navigation = useNavigation();
 
     // Define the Spotify authentication endpoint and client ID
@@ -22,9 +23,9 @@ const LoginScreen = () => {
     const [request, response, promptAsync] = useAuthRequest(
         {
             clientId: 'e1316c7324f34e9baad599caa68aadd2',
-            scopes: ['user-read-email', 'playlist-modify-public'],
+            scopes: ['user-read-email', 'playlist-modify-public', 'user-read-currently-playing'],
             usePKCE: false,
-            redirectUri: makeRedirectUri({ scheme: 'nostalgify' }),
+            redirectUri: makeRedirectUri({ scheme: 'nostalgify', native: "exp://localhost:8081" ,native: "http://localhost:8081"}),
         },
         discovery
     );
@@ -36,7 +37,7 @@ const LoginScreen = () => {
                 const { code } = response.params;
                 // Exchange the authorization code for an access token
                 const tokenEndpoint = 'https://accounts.spotify.com/api/token';
-                const redirectUri = makeRedirectUri({ scheme: 'nostalgify' });
+                const redirectUri = makeRedirectUri({ scheme: 'nostalgify', native: "exp://localhost:8081",native: "http://localhost:8081"  });
                 const clientId = 'e1316c7324f34e9baad599caa68aadd2';
                 const clientSecret = '6a8d779d312a437f947755e810610357'; // Your Spotify app's client secret
                 const requestBody = {
