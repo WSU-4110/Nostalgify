@@ -1,71 +1,70 @@
-import { StyleSheet, Text, View, TextInput, FlatList, TouchableOpacity, Image } from 'react-native';
-import React from 'react';
-import { AntDesign } from '@expo/vector-icons';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { FontAwesome6 } from '@expo/vector-icons';
-
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, Text, View, ActivityIndicator } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const HomeScreen = () => {
+  const [userInfo, setUserInfo] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchUserInfo = async () => {
+      try {
+        const accessToken = await AsyncStorage.getItem('accessToken');
+        const response = await fetch('https://api.spotify.com/v1/me', {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
+        const data = await response.json();
+        setUserInfo(data);
+        setIsLoading(false);
+      } catch (error) {
+        console.error('Error fetching user info:', error);
+        setIsLoading(false);
+      }
+    };
+    fetchUserInfo();
+  }, []);
+
+  if (isLoading) {
     return (
-        <View style={{backgroundColor: '#cca2b7'}}>
-            <View style={{ flexDirection: 'row', marginBotton: 100}}>
-                <AntDesign
-                    name="hearto"
-                    size={50}
-                    color="black"
-                    style={{
-                        marginLeft: 30,
-                        marginTop: 50,
-                    }}
-                />
+      <View style={[styles.container, styles.center]}>
+        <ActivityIndicator size="large" color="#1DB954" />
+      </View>
+    );
+  }
 
-                <Text style={{ marginTop: 80, marginLeft: 30, fontSize: 30, fontWeight: "bold" }}>Liked Songs</Text>
-            </View>
-            
-            <View style={{ flexDirection: 'row' }}>
-                <MaterialCommunityIcons
-                    name="playlist-music-outline"
-                    size={50}
-                    color="black"
-                    style={{
-                        marginLeft: 30,
-                        marginTop: 50
-                     }}
-                />
+  return (
+    <View style={styles.container}>
+      <Text style={styles.greeting}>Welcome, {userInfo.display_name}!</Text>
+      <Text style={styles.info}>Full Name: {userInfo.display_name}</Text>
+      <Text style={styles.info}>Email: {userInfo.email}</Text>
+      {/* Add more user information as needed */}
+    </View>
+  );
+};
 
-                <Text style={{ marginTop: 80, marginLeft: 30, fontSize: 30, fontWeight: "bold" }}>Playlists</Text>
-            </View>
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+  },
+  center: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  greeting: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  info: {
+    fontSize: 18,
+    marginBottom: 5,
+  },
+});
 
-            <View style={{ flexDirection: 'row' }}>
-                <FontAwesome6
-                    name="record-vinyl"
-                    size={50}
-                    color="black"
-                    style={{
-                        marginLeft: 30,
-                        marginTop: 50
-                    }}
-                />
-
-                <Text style={{ marginTop: 80, marginLeft: 30, fontSize: 30, fontWeight: "bold" }}>Albums</Text>
-            </View>
-
-            <View style={{ flexDirection: 'row', marginBottom: 120}}>
-                <MaterialCommunityIcons
-                    name="microphone-variant"
-                    size={50}
-                    color="black"
-                    style={{
-                        marginLeft: 30,
-                        marginTop: 50
-                    }}
-                />
-
-                <Text style={{ marginTop: 80, marginLeft: 30, fontSize: 30, fontWeight: "bold"}}>Artists</Text>
-            </View>
-            
-        </View>
-    )
-}
 export default HomeScreen;
-const styles = StyleSheet.create({})
