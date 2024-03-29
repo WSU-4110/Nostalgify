@@ -47,15 +47,31 @@ async function fetchWebApi(endpoint, method, body, token) {
     });
     return await res.json();
 }
-
 async function getUserInfo(token) {
     const profilePictureEndpoint = 'https://api.spotify.com/v1/me';
     const userNameEndpoint = 'https://api.spotify.com/v1/me'; // Replace this with the endpoint to fetch user name
     
-    const profilePicture = await fetchWebApi(profilePictureEndpoint, 'GET', null, token);
-    const userName = await fetchWebApi(userNameEndpoint, 'GET', null, token);
-    
-    return { profilePicture, userName };
+    try {
+        const profilePictureResponse = await fetchWebApi(profilePictureEndpoint, 'GET', null, token);
+        const userNameResponse = await fetchWebApi(userNameEndpoint, 'GET', null, token);
+
+        // Check for errors in profile picture response
+        if (profilePictureResponse.error) {
+            throw new Error(`Error fetching profile picture: ${profilePictureResponse.error.message}`);
+        }
+        
+        // Check for errors in user name response
+        if (userNameResponse.error) {
+            throw new Error(`Error fetching user name: ${userNameResponse.error.message}`);
+        }
+
+        const profilePicture = profilePictureResponse; // Assuming profile picture response is a valid URI
+        const userName = userNameResponse.display_name; // Assuming user name is stored in the "display_name" field
+        
+        return { profilePicture, userName };
+    } catch (error) {
+        throw new Error(`Error fetching user info: ${error.message}`);
+    }
 }
 
 const ProfileScreen = () => { 
@@ -90,12 +106,13 @@ const ProfileScreen = () => {
         <SafeAreaView style={styles.container}> 
             <ScrollView alwaysBounceVertical={false} alwaysBounceHorizontal={false}>
             <View style={styles.userInfoContainer}>
-                <Image
-                    source={{uri: profilePicture || 'https://via.placeholder.com/150'}}
-                    style={styles.profileImage}
-                />
+                        <Image
+                            source={{ uri: userInfo?.images?.[0]?.url || 'https://via.placeholder.com/150' }}
+                            style={styles.profileImage}
+                        />
+
                 
-                <Text style={[styles.name, userTextStyle]}>{userName}</Text>
+                <Text style={[styles.name, userTextStyle]}>{userName.display_name}</Text>
                 
             </View>
 
@@ -323,4 +340,3 @@ const styles = StyleSheet.create({
 
 
 export default ProfileScreen;
-
