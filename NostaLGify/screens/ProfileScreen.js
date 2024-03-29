@@ -8,7 +8,8 @@ import {
     TouchableOpacity,
     SafeAreaView,
     ScrollView,
-    StatusBar, } from 'react-native';
+    StatusBar,
+    ActivityIndicator  } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { BlurView } from 'expo-blur';
 import { useNavigation } from '@react-navigation/native';
@@ -18,7 +19,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const userTextStyle = {
     fontSize: 25,
     color: '#ffffff', // Modify the color as needed
-    fontFamily: 'Gothic', // Modify the font family as needed
     // Add more text styles as needed
 };
 
@@ -26,76 +26,60 @@ const categoryTextStyle = {
     fontSize: 20,
     fontWeight: 'bold',
     color: '#ffffff', // Modify the color as needed
-    fontFamily: 'Gothic', // Modify the font family as needed
     // Add more text styles as needed
 };
 
 async function fetchWebApi(endpoint, method, body, token) {
     const headers = {
         Authorization: `Bearer ${token}`,
-    };
-    let url = `https://api.spotify.com/${endpoint}`;
-    if (method === 'GET' && body) {
+      };
+      let url = `https://api.spotify.com/${endpoint}`;
+      if (method === 'GET' && body) {
         // If it's a GET request and there's a body, encode it into the URL
         const queryParams = new URLSearchParams(body).toString();
         url += `?${queryParams}`;
-    }
-    const res = await fetch(url, {
+      }
+      const res = await fetch(url, {
         headers,
         method,
         body: method !== 'GET' ? JSON.stringify(body) : undefined, // Only include body for non-GET requests
-    });
-    return await res.json();
-}
-async function getUserInfo(token) {
-    const profilePictureEndpoint = 'https://api.spotify.com/v1/me';
-    const userNameEndpoint = 'https://api.spotify.com/v1/me'; // Replace this with the endpoint to fetch user name
-    
-    try {
-        const profilePictureResponse = await fetchWebApi(profilePictureEndpoint, 'GET', null, token);
-        const userNameResponse = await fetchWebApi(userNameEndpoint, 'GET', null, token);
+      });
+      return await res.json();
+  }
 
-        // Check for errors in profile picture response
-        if (profilePictureResponse.error) {
-            throw new Error(`Error fetching profile picture: ${profilePictureResponse.error.message}`);
-        }
-        
-        // Check for errors in user name response
-        if (userNameResponse.error) {
-            throw new Error(`Error fetching user name: ${userNameResponse.error.message}`);
-        }
-
-        const profilePicture = profilePictureResponse; // Assuming profile picture response is a valid URI
-        const userName = userNameResponse.display_name; // Assuming user name is stored in the "display_name" field
-        
-        return { profilePicture, userName };
-    } catch (error) {
-        throw new Error(`Error fetching user info: ${error.message}`);
-    }
-}
 
 const ProfileScreen = () => { 
-    const [profilePicture, setProfilePicture] = useState(null);
-    const [userName, setUserName] = useState('');
-
+    const [userInfo, setUserInfo] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
+  
+    
     useEffect(() => {
-        fetchUserInfo();
-    }, []);
-
-    const fetchUserInfo = async () => {
-        try {
+        const fetchUserInfo = async () => {
+          try {
             const accessToken = await AsyncStorage.getItem('accessToken');
-            if (accessToken) {
-                const { profilePicture, userName } = await getUserInfo(accessToken);
-                setProfilePicture(profilePicture);
-                setUserName(userName);
-            } else {
-                console.error('Access token not found in AsyncStorage');
-            }
-        } catch (error) {
+            const response = await fetch('https://api.spotify.com/v1/me', {
+              headers: {
+                Authorization: `Bearer ${accessToken}`,
+              },
+            });
+            const data = await response.json();
+            setUserInfo(data);
+            setIsLoading(false);
+          } catch (error) {
             console.error('Error fetching user info:', error);
-        }
-    };
+            setIsLoading(false);
+          }
+        };
+        fetchUserInfo();
+      }, []);
+    
+      if (isLoading) {
+        return (
+          <View style={[styles.container, styles.center]}>
+            <ActivityIndicator size="large" color="#1DB954" />
+          </View>
+        );
+      }
     
     return (
         
@@ -106,13 +90,12 @@ const ProfileScreen = () => {
         <SafeAreaView style={styles.container}> 
             <ScrollView alwaysBounceVertical={false} alwaysBounceHorizontal={false}>
             <View style={styles.userInfoContainer}>
-                        <Image
-                            source={{ uri: userInfo?.images?.[0]?.url || 'https://via.placeholder.com/150' }}
-                            style={styles.profileImage}
-                        />
-
+                <Image
+                    source={{uri: userInfo.images[0].url}}
+                    style={styles.profileImage}
+                />
                 
-                <Text style={[styles.name, userTextStyle]}>{userName.display_name}</Text>
+                <Text style={[styles.name, userTextStyle]}>{userInfo.display_name}</Text>
                 
             </View>
 
