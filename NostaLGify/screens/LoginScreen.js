@@ -9,8 +9,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 WebBrowser.maybeCompleteAuthSession();
 
-
-
 const LoginScreen = () => {
     //console.log(AuthSession.getRedirectUrl());
     const navigation = useNavigation();
@@ -25,7 +23,7 @@ const LoginScreen = () => {
     const [request, response, promptAsync] = useAuthRequest(
         {
             clientId: 'e1316c7324f34e9baad599caa68aadd2',
-            scopes: ['user-read-email', 'playlist-modify-public'],
+            scopes: ['user-read-email', 'playlist-modify-public', 'user-read-currently-playing'],
             usePKCE: false,
             redirectUri: makeRedirectUri({ scheme: 'nostalgify', native: "exp://localhost:8081" ,native: "http://localhost:8081"}),
         },

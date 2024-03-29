@@ -4247,10 +4247,17 @@ expo-web-browser@~12.8.0:
     compare-urls "^2.0.0"
     url "^0.11.0"
 
+<<<<<<< HEAD
 expo@*, expo@^50.0.14:
   version "50.0.14"
   resolved "https://registry.npmjs.org/expo/-/expo-50.0.14.tgz"
   integrity sha512-yLPdxCMVAbmeEIpzzyAuJ79wvr6ToDDtQmuLDMAgWtjqP8x3CGddXxUe07PpKEQgzwJabdHvCLP5Bv94wMFIjQ==
+=======
+expo@*, expo@~50.0.8:
+  version "50.0.8"
+  resolved "https://registry.npmjs.org/expo/-/expo-50.0.8.tgz"
+  integrity sha512-8yXsoMbFRjWyEDNuFRtH0vTFvEjFnnwP+LceS6xmXGp+IW1hKdN1X6Bj1EUocFtepH0ruHDPCof1KvPoWfUWkw==
+>>>>>>> b2da860b722c478fb3a3abeea743e5a0c682b0dc
   dependencies:
     "@babel/runtime" "^7.20.0"
     "@expo/cli" "0.17.8"
@@ -5734,7 +5741,6 @@ metro-core@^0.80.3, metro-core@0.80.8:
   version "0.80.8"
   resolved "https://registry.npmjs.org/metro-core/-/metro-core-0.80.8.tgz"
   integrity sha512-g6lud55TXeISRTleW6SHuPFZHtYrpwNqbyFIVd9j9Ofrb5IReiHp9Zl8xkAfZQp8v6ZVgyXD7c130QTsCz+vBw==
-  dependencies:
     lodash.throttle "^4.1.1"
     metro-resolver "0.80.8"
 
