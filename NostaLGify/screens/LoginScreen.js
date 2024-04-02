@@ -13,6 +13,10 @@ const LoginScreen = () => {
     //console.log(AuthSession.getRedirectUrl());
     const navigation = useNavigation();
 
+    const navigateToMain = () => {
+        navigation.navigate('Main');
+    };
+
     // Define the Spotify authentication endpoint and client ID
     const discovery = {
         authorizationEndpoint: 'https://accounts.spotify.com/authorize',
@@ -106,8 +110,23 @@ const LoginScreen = () => {
                         borderRadius: 25,
                         alignItems: 'center',
                         justifyContent: 'center',
+                        marginBottom: 20,
                     }}>
                     <Text>Sign In with Spotify</Text>
+                </Pressable>
+                <Pressable
+                    onPress={navigateToMain} // Dummy onPress handler
+                    style={{
+                        backgroundColor: '#1DB954',
+                        padding: 10,
+                        marginLeft: 'auto',
+                        marginRight: 'auto',
+                        width: 300,
+                        borderRadius: 25,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                    }}>
+                    <Text>Guest</Text>
                 </Pressable>
             </SafeAreaView>
         </LinearGradient>
