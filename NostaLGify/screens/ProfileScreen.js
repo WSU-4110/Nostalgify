@@ -1,6 +1,11 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
+import AccessTokenSingleton from '../AccessTokenSingleton';
 
+const accessTokenInstance = AccessTokenSingleton.getInstance();
+accessTokenInstance.setAccessToken('accessToken');
+
+const accessToken = accessTokenInstance.getAccessToken();
 // Component for displaying user information
 const UserInfo = () => {
     return (
