@@ -4,10 +4,10 @@ import { AntDesign } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { FontAwesome6 } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import AccessTokenSingleton from './AccessTokenSingleton';
+import AccessTokenSingleton from '../AccessTokenSingleton';
 
 const accessTokenInstance = AccessTokenSingleton.getInstance();
-accessTokenInstance.setAccessToken('your_access_token_here');
+accessTokenInstance.setAccessToken('accessToken');
 
 const accessToken = accessTokenInstance.getAccessToken();
 
