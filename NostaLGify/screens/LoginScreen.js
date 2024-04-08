@@ -6,6 +6,13 @@ import { useNavigation } from '@react-navigation/native';
 import { makeRedirectUri, useAuthRequest } from 'expo-auth-session';
 import * as WebBrowser from 'expo-web-browser';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import AccessTokenSingleton from '../AccessTokenSingleton';
+
+const accessTokenInstance = AccessTokenSingleton.getInstance();
+accessTokenInstance.setAccessToken('accessToken');
+
+const accessToken = accessTokenInstance.getAccessToken();
+
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -36,6 +43,7 @@ const LoginScreen = () => {
     );
 
     // Handle the authentication response
+    // added tokeninstance use after the log functions line 80
     useEffect(() => {
         const getToken = async () => {
             if (response?.type === 'success') {
@@ -69,6 +77,8 @@ const LoginScreen = () => {
                     console.log('Refresh token:', tokenData.refresh_token);
                     console.log('Expires in:', tokenData.expires_in);
 
+                    accessTokenInstance.setAccessToken(tokenData.access_token); 
+                    
                     await AsyncStorage.setItem('accessToken', tokenData.access_token);
 
                     navigation.navigate('Main');
