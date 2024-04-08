@@ -6,6 +6,12 @@ import { FontAwesome6 } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Feather } from '@expo/vector-icons';
+import AccessTokenSingleton from '../AccessTokenSingleton';
+
+const accessTokenInstance = AccessTokenSingleton.getInstance();
+accessTokenInstance.setAccessToken('accessToken');
+
+const accessToken = accessTokenInstance.getAccessToken();
 
 const SearchScreen = () => {
     const navigation = useNavigation();
