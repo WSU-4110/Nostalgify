@@ -2,6 +2,12 @@ import React from 'react';
 import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
+import AccessTokenSingleton from '../AccessTokenSingleton';
+
+const accessTokenInstance = AccessTokenSingleton.getInstance();
+accessTokenInstance.setAccessToken('accessToken');
+
+const accessToken = accessTokenInstance.getAccessToken();
 
 const SettingsScreen = () => {
   const navigation = useNavigation();
