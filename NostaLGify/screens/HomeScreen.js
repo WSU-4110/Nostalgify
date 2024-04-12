@@ -1,11 +1,8 @@
 import { StyleSheet, Text, View, TextInput, FlatList, TouchableOpacity, Image } from 'react-native';
 import React, { useState, useEffect } from 'react';
-import { AntDesign } from '@expo/vector-icons';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { FontAwesome6 } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-async function fetchWebApi(endpoint, method, body, token) {
+export async function fetchWebApi(endpoint, method, body, token) {
     const headers = {
         Authorization: `Bearer ${token}`,
       };
@@ -23,7 +20,7 @@ async function fetchWebApi(endpoint, method, body, token) {
       return await res.json();
   }
   
-  async function getCurrentTrack(token) {
+  export async function getCurrentTrack(token) {
     // Endpoint reference: https://developer.spotify.com/documentation/web-api/reference/player/get-the-users-currently-playing-track/
     return await fetchWebApi(
       'v1/me/player/currently-playing', 'GET', null, token
