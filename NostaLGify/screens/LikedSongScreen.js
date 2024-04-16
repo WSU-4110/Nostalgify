@@ -93,7 +93,7 @@ const LikedSongScreen = () => {
 
             <FlatList
                 data={likedSongs}
-                keyExtractor={(item) => item.id}
+                keyExtractor={(item) => item.track.id}
                 renderItem={({ item }) => (
                     <LikedSongItem item={item} />
                 )}
