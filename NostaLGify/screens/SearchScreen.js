@@ -130,13 +130,9 @@ const SearchScreen = () => {
                     </Text>
                 </Pressable>
 
-                <FlatList
-                    data={playlists}
-                    keyExtractor={(item) => item.id}
-                    renderItem={({ item }) => (
-                        <PlaylistItem item={item} />
-                    )}
-                />
+                {playlists.map((item, index) => (
+                    <PlaylistItem key={index} item={item} />
+                ))}
             </ScrollView>
         </View>
     )
