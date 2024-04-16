@@ -26,7 +26,7 @@ async function fetchWebApi(endpoint, method, body, token) {
   async function getCurrentTrack(token) {
     // Endpoint reference: https://developer.spotify.com/documentation/web-api/reference/player/get-the-users-currently-playing-track/
     return await fetchWebApi(
-      'v1/me/player/currently-playing', 'GET', null, token
+      'v1/me/player/recently-played?limit=1', 'GET', null, token
     );
   }
   
@@ -42,10 +42,12 @@ async function fetchWebApi(endpoint, method, body, token) {
         const accessToken = await AsyncStorage.getItem('accessToken');
         if (accessToken) {
           const currentTrackData = await getCurrentTrack(accessToken);
-          if (currentTrackData?.item) {
-            setCurrentTrack(currentTrackData.item);
+          if (currentTrackData.items && currentTrackData.items.length > 0) {
+            setCurrentTrack(currentTrackData.items[0].track);
+            console.log("b")
           } else {
             setCurrentTrack(null); // Set currentTrack to null if no track is playing
+            console.log("c")
           }
         } else {
           console.error('Access token not found in AsyncStorage');
