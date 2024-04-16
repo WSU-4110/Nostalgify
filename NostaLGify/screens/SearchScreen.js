@@ -98,6 +98,7 @@ const SearchScreen = () => {
 
             <ScrollView>
                 <Pressable
+                    onPress={() => navigation.navigate("Liked")}
                     style={{
                         marginTop: 20,
                         flexDirection: "row",
@@ -112,8 +113,7 @@ const SearchScreen = () => {
                     }}
                 >
                     <LinearGradient colors={["#33006F", "#FFFFFF"]}>
-                        <Pressable
-                            onPress={() => navigation.navigate("Liked")}
+                        <View
                             style={{
                                 width: 65,
                                 height: 65,
@@ -122,7 +122,7 @@ const SearchScreen = () => {
                             }}
                         >
                             <AntDesign name="heart" size={24} color="white" />
-                        </Pressable>
+                        </View>
                     </LinearGradient>
 
                     <Text style={{ color: "#6a5874", fontSize: 15, fontWeight: "bold" }}>

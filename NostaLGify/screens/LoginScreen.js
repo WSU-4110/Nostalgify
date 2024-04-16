@@ -33,7 +33,8 @@ const LoginScreen = () => {
                 'playlist-modify-public',
                 'user-read-currently-playing',
                 'user-read-recently-played',
-                'playlist-read-private'
+                'playlist-read-private',
+                'user-library-read'
             ],
             usePKCE: false,
             redirectUri: makeRedirectUri({ scheme: 'nostalgify', native: "exp://localhost:8081" ,native: "http://localhost:8081"}),
