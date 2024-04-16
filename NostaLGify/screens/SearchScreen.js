@@ -37,7 +37,6 @@ async function getPlaylists(token) {
 
 const SearchScreen = () => {
     const navigation = useNavigation();
-
     const [playlists, setPlaylists] = useState([]);
 
     useEffect(() => {
@@ -58,7 +57,7 @@ const SearchScreen = () => {
                 console.error('Access token not found in AsyncStorage');
             }
         } catch (error) {
-            console.error('Error fetching current track:', error);
+            console.error('Error fetching playlists', error);
         }
     };
 
@@ -114,6 +113,7 @@ const SearchScreen = () => {
                 >
                     <LinearGradient colors={["#33006F", "#FFFFFF"]}>
                         <Pressable
+                            onPress={() => navigation.navigate("Liked")}
                             style={{
                                 width: 65,
                                 height: 65,
@@ -121,7 +121,7 @@ const SearchScreen = () => {
                                 alignItems: "center",
                             }}
                         >
-                            <AntDesign name="heart" size={24} color="#ab8ca4" />
+                            <AntDesign name="heart" size={24} color="white" />
                         </Pressable>
                     </LinearGradient>
 
