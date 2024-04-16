@@ -64,7 +64,7 @@ const SearchScreen = () => {
 
     return (
         <View style={{ backgroundColor: '#cca2b7', flex: 1, paddingTop: 20 }}>
-            <Text style={{ marginLeft: 10, fontSize: 30, fontWeight: "bold", color: "#583b55" }}> Your Library </Text>
+            <Text style={{ marginLeft: 10, fontSize: 34, fontWeight: "bold", color: "#583b55" }}> Your Library </Text>
             <View style={{ backgroundColor: '#cca2b7', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 20, paddingTop: 20 }}>
                 <View style={{ flexDirection: 'row' }}>
                     <MaterialCommunityIcons
@@ -73,17 +73,17 @@ const SearchScreen = () => {
                         color="#6a5874"
                     />
 
-                    <Text style={{ color: "#6a5874", fontSize: 15, fontWeight: "bold" }}>Playlists</Text>
+                    <Text style={{ color: "#6a5874", fontSize: 17, fontWeight: "bold" }}>Playlists</Text>
                 </View>
 
                 <View style={{ flexDirection: 'row' }}>
                     <FontAwesome6
                         name="record-vinyl"
-                        size={20}
+                        size={18}
                         color="#6a5874"
                     />
 
-                    <Text style={{ color: "#6a5874", fontSize: 15, fontWeight: "bold" }}>Albums</Text>
+                    <Text style={{ color: "#6a5874", fontSize: 17, fontWeight: "bold" }}>Albums</Text>
                 </View>
 
                 <View style={{ flexDirection: 'row' }}>
@@ -93,7 +93,7 @@ const SearchScreen = () => {
                         color="#6a5874"
                     />
 
-                    <Text style={{ color: "#6a5874", fontSize: 15, fontWeight: "bold" }}>Artists</Text>
+                    <Text style={{ color: "#6a5874", fontSize: 17, fontWeight: "bold" }}>Artists</Text>
                 </View>
             </View>
 
@@ -105,17 +105,18 @@ const SearchScreen = () => {
                         alignItems: "center",
                         gap: 10,
                         flex: 1,
-                        marginLeft: 10,
+                        marginLeft: 15,
                         backgroundColor: "#cca2b7",
                         borderRadius: 4,
                         elevation: 3,
+                        marginBottom: 15
                     }}
                 >
                     <LinearGradient colors={["#33006F", "#FFFFFF"]}>
                         <Pressable
                             style={{
-                                width: 50,
-                                height: 50,
+                                width: 65,
+                                height: 65,
                                 justifyContent: "center",
                                 alignItems: "center",
                             }}
@@ -124,7 +125,7 @@ const SearchScreen = () => {
                         </Pressable>
                     </LinearGradient>
 
-                    <Text style={{ color: "#6a5874", fontSize: 13, fontWeight: "bold" }}>
+                    <Text style={{ color: "#6a5874", fontSize: 15, fontWeight: "bold" }}>
                         Liked Songs
                     </Text>
                 </Pressable>
@@ -136,177 +137,6 @@ const SearchScreen = () => {
                         <PlaylistItem item={item} />
                     )}
                 />
-
-
-                {/*
-                <Pressable
-                    style={{
-                        marginTop: 20,
-                        flexDirection: "row",
-                        alignItems: "center",
-                        gap: 10,
-                        flex: 1,
-                        marginHorizontal: 7,
-                        backgroundColor: "#cca2b7",
-                        borderRadius: 4,
-                        elevation: 3,
-                    }}
-                >
-
-                    {playlists && playlists[0] && playlists[0].images && playlists[0].images.length > 0 && (
-                        <Image
-                            source={{ uri: playlists[0].images[0].url }}
-                            style={{ width: 70, height: 70 }}
-                        />
-                    )}
-
-                    <Text style={{ color: "#6a5874", fontSize: 13, fontWeight: "bold" }}>
-                        Playlist 1
-                    </Text>
-                </Pressable>
-
-                <Pressable
-                    style={{
-                        marginTop: 20,
-                        flexDirection: "row",
-                        alignItems: "center",
-                        gap: 10,
-                        flex: 1,
-                        marginHorizontal: 7,
-                        backgroundColor: "#cca2b7",
-                        borderRadius: 4,
-                        elevation: 3,
-                    }}
-                >
-                    <Feather name="square" size={70} color="#7f6581" />
-
-                    <Text style={{ color: "#6a5874", fontSize: 13, fontWeight: "bold" }}>
-                        Playlist 2
-                    </Text>
-                </Pressable>
-
-                <Pressable
-                    style={{
-                        marginTop: 20,
-                        flexDirection: "row",
-                        alignItems: "center",
-                        gap: 10,
-                        flex: 1,
-                        marginHorizontal: 7,
-                        backgroundColor: "#cca2b7",
-                        borderRadius: 4,
-                        elevation: 3,
-                    }}
-                >
-                    <Feather name="square" size={70} color="#7f6581" />
-
-                    <Text style={{ color: "#6a5874", fontSize: 13, fontWeight: "bold" }}>
-                        Playlist 3
-                    </Text>
-                </Pressable>
-
-                <Pressable
-                    style={{
-                        marginTop: 20,
-                        flexDirection: "row",
-                        alignItems: "center",
-                        gap: 10,
-                        flex: 1,
-                        marginHorizontal: 7,
-                        backgroundColor: "#cca2b7",
-                        borderRadius: 4,
-                        elevation: 3,
-                    }}
-                >
-                    <Feather name="square" size={70} color="#7f6581" />
-
-                    <Text style={{ color: "#6a5874", fontSize: 13, fontWeight: "bold" }}>
-                        Playlist 4
-                    </Text>
-                </Pressable>
-
-                <Pressable
-                    style={{
-                        marginTop: 20,
-                        flexDirection: "row",
-                        alignItems: "center",
-                        gap: 10,
-                        flex: 1,
-                        marginHorizontal: 7,
-                        backgroundColor: "#cca2b7",
-                        borderRadius: 4,
-                        elevation: 3,
-                    }}
-                >
-                    <Feather name="square" size={70} color="#7f6581" />
-
-                    <Text style={{ color: "#6a5874", fontSize: 13, fontWeight: "bold" }}>
-                        Playlist 5
-                    </Text>
-                </Pressable>
-
-                <Pressable
-                    style={{
-                        marginTop: 20,
-                        flexDirection: "row",
-                        alignItems: "center",
-                        gap: 10,
-                        flex: 1,
-                        marginHorizontal: 7,
-                        backgroundColor: "#cca2b7",
-                        borderRadius: 4,
-                        elevation: 3,
-                    }}
-                >
-                    <Feather name="square" size={70} color="#7f6581" />
-
-                    <Text style={{ color: "#6a5874", fontSize: 13, fontWeight: "bold" }}>
-                        Playlist 6
-                    </Text>
-                </Pressable>
-
-                <Pressable
-                    style={{
-                        marginTop: 20,
-                        flexDirection: "row",
-                        alignItems: "center",
-                        gap: 10,
-                        flex: 1,
-                        marginHorizontal: 7,
-                        backgroundColor: "#cca2b7",
-                        borderRadius: 4,
-                        elevation: 3,
-                    }}
-                >
-                    <Feather name="square" size={70} color="#7f6581" />
-
-                    <Text style={{ color: "#6a5874", fontSize: 13, fontWeight: "bold" }}>
-                        Playlist 7
-                    </Text>
-                </Pressable>
-
-                <Pressable
-                    style={{
-                        marginTop: 20,
-                        flexDirection: "row",
-                        alignItems: "center",
-                        gap: 10,
-                        flex: 1,
-                        marginHorizontal: 7,
-                        backgroundColor: "#cca2b7",
-                        borderRadius: 4,
-                        elevation: 3,
-                    }}
-                >
-                    <Feather name="square" size={70} color="#7f6581" />
-
-                    <Text style={{ color: "#6a5874", fontSize: 13, fontWeight: "bold" }}>
-                        Playlist 8
-                    </Text>
-                </Pressable>
-                */}
-
-
             </ScrollView>
         </View>
     )

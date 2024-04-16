@@ -18,15 +18,16 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
         alignItems: 'center',
-        padding: 10
+        marginBottom: 15,
+        marginLeft: 15
     },
     image: {
-        width: 50,
-        height: 50,
-        marginRight: 10,
+        width: 65,
+        height: 65,
+        marginRight: 15,
     },
     text: {
-        fontSize: 13,
+        fontSize: 15,
         color: "#6a5874",
         fontWeight: "bold"
     }
