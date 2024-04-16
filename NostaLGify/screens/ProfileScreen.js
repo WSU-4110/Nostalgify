@@ -48,128 +48,113 @@ async function fetchWebApi(endpoint, method, body, token) {
 }
 
 async function getUserInfo(token) {
-    try {
-        const response = await fetch('https://api.spotify.com/v1/me', {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        });
-        return await response.json();
-    } catch (error) {
-        console.error('Error fetching user info:', error);
-        return null;
-    }
+    return await fetchWebApi(
+        'v1/me, 'GET', null, token
+    );
 }
-
-async function getRecentTracks(token) {
-    try {
-        const response = await fetch('http://api.spotify.com/v1/me/player/recently-played?limit=6', {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        });
-        return await response.json();
-    } catch (error) {
-        console.error('Error fetching recently played tracks:', error);
-        return null;
-    }
-}
-
-async function fetchCurrentUserInfo() {
-    try {
-        const accessToken = await AsyncStorage.getItem('accessToken');
-        if (accessToken) {
-            return await getUserInfo(accessToken);
-        } else {
-            console.error('Access token not found in AsyncStorage');
-            return null;
-        }
-    } catch (error) {
-        console.error('Error fetching current user info:', error);
-        return null;
-    }
-}
-
-async function fetchRecentlyPlayed() {
-    try {
-        const accessToken = await AsyncStorage.getItem('accessToken');
-        if (accessToken) {
-            const response = await getRecentTracks(accessToken);
-            if (response && response.items && response.items.length > 0) {
-                return response.items;
-            } else {
-                console.warn('No items found in recently played tracks.');
-                return [];
-            }
-        } else {
-            console.error('Access token not found in AsyncStorage');
-            return [];
-        }
-    } catch (error) {
-        console.error('Error fetching recent tracks:', error);
-        return [];
-    }
-}
-
-
-
 async function getTopTracks(token) {
     return (await fetchWebApi(
-        'v1/me/top/tracks?time_range=long_term&limit=5', 'GET', null, token
+        'v1/me/top/tracks?time_range=short_term&offset=0&limit=10', 'GET', null, token
     )).items;
 }
 
+async function getRecentlyPlayed(token) {
+    return await fetchWebApi(
+        'v1/me/player/recently-played?after=1484811043508&limit=10', 'GET', null, token
+    );
+}
+
+async function getPlaylists(token) {
+    return await fetchWebApi(
+        'v1/me/playlists?offset=0&limit=50', 'GET', null, token
+    );
+}
 const ProfileScreen = () => {
     const [userInfo, setUserInfo] = useState(null);
     const [topTracks, setTopTracks] = useState(null);
     const [recentlyPlayed, setRecentlyPlayed] = useState([]);
+    const [playlists, setPlaylists] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        const fetchUserInfo = async () => {
-            try {
-                const userData = await fetchCurrentUserInfo();
-                setUserInfo(userData);
-                setIsLoading(false);
-            } catch (error) {
-                console.error('Error fetching user info:', error);
-                setIsLoading(false);
-            }
-        };
         fetchUserInfo();
+        fetchTopTracks();
+        fetchRecentlyPlayed();
+        fetchPlaylists();
     }, []);
 
-    useEffect(() => {
-        const fetchTrackData = async () => {
-            try {
-                const accessToken = await AsyncStorage.getItem('accessToken');
-                if (accessToken) {
-                    const trackData = await getTopTracks(accessToken);
-                    setTopTracks(trackData);
+
+    const fetchUserInfo = async () => {
+        try {
+            const accessToken = await AsyncStorage.getItem('accessToken');
+            if (accessToken) {
+                const userData = await getUserInfo(accessToken);
+                if (userData?.items) {
+                    setUserInfo(userData.display_name);
+                    setUserInfo(userData.images.url);
                 } else {
-                    console.error('Access token not found in AsyncStorage');
+                    setUserInfo(null);
                 }
-            } catch (error) {
-                console.error('Error fetching current track:', error);
+            } else {
+                console.error('Access token not found in AsyncStorage');
             }
-        };
-        fetchTrackData();
-    }, []);
-    useEffect(() => {
-        const fetchRecentlyPlayedTracks = async () => {
-            try {
-                const tracks = await fetchRecentlyPlayed();
-                setRecentlyPlayed(tracks);
-            } catch (error) {
-                console.error('Error fetching recently played tracks:', error);
-            } finally {
-                setIsLoading(false);
-            }
-        };
-        fetchRecentlyPlayedTracks();
-    }, []);
+        } catch (error) {
+            console.error('Error fetching user data', error);
+        }
+    };    
     
-
+    const fetchTopTracks = async () => {
+        try {
+            const accessToken = await AsyncStorage.getItem('accessToken');
+            if (accessToken) {
+                const topTrackData = await getTopTracks(accessToken);
+                if (topTrackData?.items) {
+                    setTopTracks(topTrackData.items);
+                } else {
+                    setTopTracks(null);
+                }
+            } else {
+                console.error('Access token not found in AsyncStorage');
+            }
+        } catch (error) {
+            console.error('Error fetching top tracks', error);
+        }
+    };    
+    
+    const fetchRecentlyPlayed = async () => {
+        try {
+            const accessToken = await AsyncStorage.getItem('accessToken');
+            if (accessToken) {
+                const recentTrackData = await getRecentlyPlayed(accessToken);
+                if (recentTrackData?.items) {
+                    setRecentlyPlayed(recentTrackData.items);
+                } else {
+                    setRecentlyPlayed(null);
+                }
+            } else {
+                console.error('Access token not found in AsyncStorage');
+            }
+        } catch (error) {
+            console.error('Error fetching recently played', error);
+        }
+    };    
+    const fetchPlaylists = async () => {
+        try {
+            const accessToken = await AsyncStorage.getItem('accessToken');
+            if (accessToken) {
+                const playlistsData = await getPlaylists(accessToken);
+                if (playlistsData?.items) {
+                    setPlaylists(playlistsData.items);
+                } else {
+                    setPlaylists(null);
+                }
+            } else {
+                console.error('Access token not found in AsyncStorage');
+            }
+        } catch (error) {
+            console.error('Error fetching playlists', error);
+        }
+    };
 
     if (isLoading) {
         return (
