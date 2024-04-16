@@ -89,19 +89,15 @@ const LikedSongScreen = () => {
                 </LinearGradient>
             </View>
 
-            <Text style={{ marginTop: 30, marginLeft: 10, fontSize: 20, fontWeight: "bold", color: "#583b55" }}> Liked Songs </Text>
+                <Text style={{ marginTop: 30, marginBottom: 20, marginLeft: 10, fontSize: 20, fontWeight: "bold", color: "#583b55" }}> Liked Songs </Text>
 
-
-            <ScrollView>
-                <FlatList
-                    style = {{ flex: 1}}
-                    data={likedSongs}
-                    keyExtractor={(item) => item.id}
-                    renderItem={({ item }) => (
-                        <LikedSongItem item={item} />
-                    )}
-                />
-            </ScrollView>
+            <FlatList
+                data={likedSongs}
+                keyExtractor={(item) => item.id}
+                renderItem={({ item }) => (
+                    <LikedSongItem item={item} />
+                )}
+            />
         </View>
     )
 }

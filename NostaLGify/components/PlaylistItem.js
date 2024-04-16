@@ -7,7 +7,7 @@ const PlaylistItem = ({ item }) => {
     return (
         <Pressable style={styles.container}>
             {imageUrl && <Image style={styles.image} source={{ uri: imageUrl }} />}
-            <Text style={styles.text}>{item.name}</Text>
+            <Text style={styles.playlistName}>{item.name}</Text>
         </Pressable>
     );
 };
@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
         height: 65,
         marginRight: 15,
     },
-    text: {
+    playlistName: {
         fontSize: 15,
         color: "#6a5874",
         fontWeight: "bold"
