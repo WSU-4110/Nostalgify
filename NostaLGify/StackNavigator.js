@@ -5,7 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import HomeScreen from './screens/HomeScreen';
 import ProfileScreen from './screens/ProfileScreen';
 import LoginScreen from './screens/LoginScreen';
-import CamScreen from './screens/CamScreen';
+import CamScreen2 from './screens/CamScreen2';
 import SearchScreen from './screens/SearchScreen';
 import SettingsScreen from './screens/SettingsScreen';
 import { Entypo, AntDesign, FontAwesome, Ionicons } from '@expo/vector-icons';
@@ -67,7 +67,7 @@ const BottomTabs = () => {
       />
       <Tab.Screen
         name="Camera"
-        component={CamScreen}
+        component={CamScreen2}
         options={{
           tabBarLabel: 'Camera',
           headerShown: false,
