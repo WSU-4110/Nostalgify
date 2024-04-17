@@ -1,8 +1,10 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
-
+import { FontAwesome } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native'; // Import useNavigation hook
 // Component for displaying user information
 const UserInfo = () => {
+    const navigation = useNavigation();
     return (
         <View style={styles.userInfoContainer}>
             <Image
@@ -14,13 +16,19 @@ const UserInfo = () => {
             <TouchableOpacity style={styles.button}>
                 <Text style={styles.buttonText}>Edit Profile</Text>
             </TouchableOpacity>
+            <TouchableOpacity // Add the TouchableOpacity for settings navigation
+                style={styles.navButton}
+                onPress={() => navigation.navigate('Settings')} // Navigate to SettingsScreen
+            >
+                <FontAwesome name="cog" size={24} color="#007bff" />
+            </TouchableOpacity>
         </View>
     );
 }
 
 // Component for displaying navigation options
-// Component for displaying navigation options
 const NavigationBar = () => {
+    const navigation = useNavigation(); // Get navigation object
     const trackAnalytics = (option) => {
         console.log(`Selected option: ${option}`);
         // Replace this with actual analytics tracking code
@@ -30,13 +38,19 @@ const NavigationBar = () => {
         <View style={styles.navigationBar}>
             <TouchableOpacity
                 style={styles.navButton}
-                onPress={() => trackAnalytics('Photos')}
+                onPress={() => {
+                    trackAnalytics('Photos');
+                    navigation.navigate('Photos'); // Navigate to Photos screen
+                }}
             >
                 <Text style={styles.navButtonText}>Photos</Text>
             </TouchableOpacity>
             <TouchableOpacity
                 style={styles.navButton}
-                onPress={() => trackAnalytics('Favorite Music')}
+                onPress={() => {
+                    trackAnalytics('Favorite Music');
+                    navigation.navigate('FavoriteMusic'); // Navigate to FavoriteMusic screen
+                }}
             >
                 <Text style={styles.navButtonText}>Favorite Music</Text>
             </TouchableOpacity>
@@ -109,4 +123,3 @@ const styles = StyleSheet.create({
 });
 
 export default ProfileScreen;
-
