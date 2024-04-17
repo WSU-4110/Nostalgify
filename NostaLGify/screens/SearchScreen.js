@@ -8,6 +8,7 @@ import { Feather } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useState, useEffect } from 'react';
 import PlaylistItem from "../components/PlaylistItem";
+import AlbumItem from "../components/AlbumItem";
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
 async function fetchWebApi(endpoint, method, body, token) {
@@ -94,7 +95,7 @@ const ListPlaylistsScreen = () => {
                         </View>
                     </LinearGradient>
 
-                    <Text style={{ color: "#6a5874", fontSize: 15, fontWeight: "bold" }}>
+                    <Text style={{ color: "#6a5874", fontSize: 15, fontWeight: "bold", marginLeft: 5 }}>
                         Liked Songs
                     </Text>
                 </Pressable>
@@ -109,11 +110,46 @@ const ListPlaylistsScreen = () => {
 
 const ListAlbumsScreen = () => {
     const navigation = useNavigation();
+    async function getAlbums(token) {
+        return await fetchWebApi(
+            'v1/me/albums?offset=0&limit=50', 'GET', null, token
+        );
+    }
+
+    const [albums, setAlbums] = useState([]);
+
+    useEffect(() => {
+        fetchAlbums();
+    }, []);
+
+    const fetchAlbums = async () => {
+        try {
+            const accessToken = await AsyncStorage.getItem('accessToken');
+            if (accessToken) {
+                const albumsData = await getAlbums(accessToken);
+                if (albumsData?.items) {
+                    setAlbums(albumsData.items);
+                } else {
+                    setAlbums(null);
+                }
+            } else {
+                console.error('Access token not found in AsyncStorage');
+            }
+        } catch (error) {
+            console.error('Error fetching albums', error);
+        }
+    };
 
     return (
-        <ScrollView>
-            {/* Albums code here */}
-        </ScrollView>
+        <View style={{ backgroundColor: '#cca2b7', flex: 1, paddingTop: 20 }}>
+            <FlatList
+                data={albums}
+                keyExtractor={(item) => item.album.id}
+                renderItem={({ item }) => (
+                    <AlbumItem item={item} />
+                )}
+            />
+        </View>
     );
 };
 
@@ -131,14 +167,14 @@ const ListArtistsScreen = () => {
 const SearchScreen = () => {
     const navigation = useNavigation();
     return (
-        <View style={{ backgroundColor: '#cca2b7', flex: 1, paddingTop: 80 }}>
+        <View style={{ backgroundColor: '#dbbdcc', flex: 1, paddingTop: 80 }}>
             <Text style={{ marginLeft: 10, fontSize: 34, fontWeight: "bold", color: "#583b55", marginBottom: 10 }}> Your Library </Text>
             
             <Tab.Navigator
-                tabBarOptions={{
+                screenOptions={{
                     labelStyle: { fontSize: 17, fontWeight: 'bold', color: '#6a5874' },
                     indicatorStyle: { backgroundColor: '#6a5874' },
-                    style: { backgroundColor: '#cca2b7' },
+                    tabBarStyle: { backgroundColor: '#D6B4C5' },
                 }}
             >
                 <Tab.Screen name="Playlists" component={ListPlaylistsScreen} />
