@@ -8,6 +8,7 @@ import { Feather } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useState, useEffect } from 'react';
 import LikedSongItem from "../components/LikedSongItem";
+import { FontAwesome, FontAwesome5 } from '@expo/vector-icons';
 
 async function fetchWebApi(endpoint, method, body, token) {
     const headers = {
@@ -61,6 +62,11 @@ const LikedSongScreen = () => {
 
     return (
         <View style={{ backgroundColor: '#cca2b7', flex: 1 }}>
+            <View style={styles.header}>
+                <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+                    <FontAwesome5 name="chevron-left" size={24} color="white" />
+                </TouchableOpacity>
+            </View>
             <View
                 style={{
                     flexDirection: "row",
@@ -89,19 +95,16 @@ const LikedSongScreen = () => {
                 </LinearGradient>
             </View>
 
-            <Text style={{ marginTop: 30, marginLeft: 10, fontSize: 20, fontWeight: "bold", color: "#583b55" }}> Liked Songs </Text>
+                <Text style={{ marginTop: 30, marginBottom: 20, marginLeft: 10, fontSize: 20, fontWeight: "bold", color: "#583b55" }}> Liked Songs </Text>
 
-
-            <ScrollView>
-                <FlatList
-                    style = {{ flex: 1}}
-                    data={likedSongs}
-                    keyExtractor={(item) => item.id}
-                    renderItem={({ item }) => (
-                        <LikedSongItem item={item} />
-                    )}
-                />
-            </ScrollView>
+            <FlatList
+                data={likedSongs}
+                keyExtractor={(item) => item.track.id}
+                renderItem={({ item }) => (
+                    <LikedSongItem item={item} />
+                )}
+            />
+            
         </View>
     )
 }

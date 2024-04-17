@@ -24,12 +24,49 @@ async function fetchWebApi(endpoint, method, body, token) {
   }
   
   async function getCurrentTrack(token) {
-    // Endpoint reference: https://developer.spotify.com/documentation/web-api/reference/player/get-the-users-currently-playing-track/
-    return await fetchWebApi(
-      'v1/me/player/recently-played?limit=1', 'GET', null, token
-    );
+    return await fetchWebApi('v1/me/player/currently-playing', 'GET', null, token);
   }
   
+  async function skipToPreviousTrack(token) {
+    // Endpoint reference: https://developer.spotify.com/documentation/web-api/reference/player/get-the-users-currently-playing-track/
+    fetch("https://api.spotify.com/v1/me/player/previous", {
+      headers: {
+        Authorization: "Bearer " + token
+      },
+      method: "POST"
+    })
+  }
+  
+  async function skipToNextTrack(token) {
+    // Endpoint reference: https://developer.spotify.com/documentation/web-api/reference/player/get-the-users-currently-playing-track/
+    fetch("https://api.spotify.com/v1/me/player/next", {
+      headers: {
+        Authorization: "Bearer " + token
+      },
+      method: "POST"
+    })
+  }
+
+  async function pauseTrack(token) {
+    // Endpoint reference: https://developer.spotify.com/documentation/web-api/reference/player/get-the-users-currently-playing-track/
+    fetch("https://api.spotify.com/v1/me/player/pause", {
+      headers: {
+        Authorization: "Bearer " + token
+      },
+      method: "PUT"
+    })
+  }
+
+  async function resumeTrack(token) {
+    // Endpoint reference: https://developer.spotify.com/documentation/web-api/reference/player/get-the-users-currently-playing-track/
+    fetch("https://api.spotify.com/v1/me/player/play", {
+      headers: {
+        Authorization: "Bearer " + token
+      },
+      method: "PUT"
+    })
+  }
+
   const HomeScreen = () => {
     const [currentTrack, setCurrentTrack] = useState(null);
   
@@ -41,14 +78,25 @@ async function fetchWebApi(endpoint, method, body, token) {
       try {
         const accessToken = await AsyncStorage.getItem('accessToken');
         if (accessToken) {
+          // Resume the track
+          await resumeTrack(accessToken);
+    
+          // Wait for a short duration before pausing
+          await new Promise(resolve => setTimeout(resolve, 600));
+    
+          // Pause the track
+          await pauseTrack(accessToken);
+    
+          // Fetch the current trackc
+
           const currentTrackData = await getCurrentTrack(accessToken);
-          if (currentTrackData.items && currentTrackData.items.length > 0) {
-            setCurrentTrack(currentTrackData.items[0].track);
-            console.log("b")
+          setCurrentTrack(null)
+          if (currentTrackData && currentTrackData.item) {
+            setCurrentTrack(currentTrackData.item);
           } else {
-            setCurrentTrack(null); // Set currentTrack to null if no track is playing
-            console.log("c")
+            setCurrentTrack(null);
           }
+          
         } else {
           console.error('Access token not found in AsyncStorage');
         }
@@ -57,24 +105,74 @@ async function fetchWebApi(endpoint, method, body, token) {
       }
     };
   
+
+    const handleSkipToPrevious = async () => {
+      try {
+        const accessToken = await AsyncStorage.getItem('accessToken');
+        if (accessToken) {
+          await skipToPreviousTrack(accessToken);    
+
+          // After skipping to next track, fetch the updated current track
+          await fetchCurrentTrack();
+        } else {
+          console.error('Access token not found in AsyncStorage');
+        }
+      } catch (error) {
+        console.error('Error skipping to next track:', error);
+      }
+    };
+
+    const handleSkipToNext = async () => {
+      try {
+        const accessToken = await AsyncStorage.getItem('accessToken');
+        if (accessToken) {
+          await skipToNextTrack(accessToken);
+
+          // After skipping to next track, fetch the updated current track
+          await fetchCurrentTrack();
+
+        } else {
+          console.error('Access token not found in AsyncStorage');
+        }
+      } catch (error) {
+        console.error('Error skipping to next track:', error);
+      }
+    };
+    
+
     return (
       <View style={styles.container}>
-        {currentTrack && (
-          <View>
-            <Image
-              style={styles.albumCover}
-              source={{ uri: currentTrack.album.images[0].url }}
-            />
-            <Text style={styles.trackName}>{currentTrack.name}</Text>
-            <Text style={styles.artistName}>{currentTrack.artists.map(artist => artist.name).join(', ')}</Text>
-          </View>
-        )}
-        {!currentTrack && (
-          <Text style={styles.noTrack}>No track currently playing</Text>
-        )}
+      {/* Current track information */}
+      {currentTrack && (
+        <View>
+          <Image
+            style={styles.albumCover}
+            source={{ uri: currentTrack.album.images[0].url }}
+          />
+          <Text style={styles.trackName}>{currentTrack.name}</Text>
+          <Text style={styles.artistName}>
+            {currentTrack.artists.map((artist) => artist.name).join(', ')}
+          </Text>
+        </View>
+      )}
+
+      {/* No track message */}
+      {!currentTrack && (
+        <Text style={styles.noTrack}>No track currently playing</Text>
+      )}
+
+      {/* Buttons container */}
+      <View style={styles.buttonsContainer}>
+        <TouchableOpacity style={styles.button} onPress={handleSkipToPrevious}>
+          <Text style={styles.buttonText}>Previous</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={handleSkipToNext}>
+          <Text style={styles.buttonText}>Next</Text>
+        </TouchableOpacity>
       </View>
-    );
-  };
+    </View>
+  );
+};
   
   const styles = StyleSheet.create({
     container: {
@@ -100,6 +198,23 @@ async function fetchWebApi(endpoint, method, body, token) {
     noTrack: {
       fontSize: 18,
       color: 'white',
+    },
+    button: {
+      backgroundColor: '#4CAF50',
+      paddingVertical: 15,
+      paddingHorizontal: 40,
+      borderRadius: 30,
+      marginTop: 20,
+    },
+    buttonText: {
+      color: 'white',
+      fontSize: 16,
+      fontWeight: 'bold',
+    },
+    buttonsContainer: {
+      flexDirection: 'row',
+      justifyContent: 'space-around',
+      width: '40%',
     },
   });
   

@@ -35,6 +35,8 @@ const LoginScreen = () => {
                 'user-read-currently-playing',
                 'user-read-recently-played',
                 'playlist-read-private',
+                'user-library-read',
+                'user-modify-playback-state',
                 'user-top-read'
             ],
             usePKCE: false,
