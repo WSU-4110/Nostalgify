@@ -9,6 +9,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useState, useEffect } from 'react';
 import PlaylistItem from "../components/PlaylistItem";
 import AlbumItem from "../components/AlbumItem";
+import ArtistItem from "../components/ArtistItem";
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
 async function fetchWebApi(endpoint, method, body, token) {
@@ -155,10 +156,48 @@ const ListAlbumsScreen = () => {
 
 const ListArtistsScreen = () => {
     const navigation = useNavigation();
+    async function getArtists(token) {
+        return await fetchWebApi(
+            'v1/me/following?type=artist&offset=0&limit=50', 'GET', null, token
+        );
+    }
+
+    const [artists, setArtists] = useState([]);
+
+    useEffect(() => {
+        fetchArtists();
+    }, []);
+
+    const fetchArtists = async () => {
+        try {
+            const accessToken = await AsyncStorage.getItem('accessToken');
+            if (accessToken) {
+                const artistsData = await getArtists(accessToken);
+                if (artistsData?.items) {
+                    setArtists(artistsData.items);
+                    console.log("a");
+                } else {
+                    setArtists(null);
+                    console.log("b");
+                }
+            } else {
+                console.error('Access token not found in AsyncStorage');
+            }
+        } catch (error) {
+            console.error('Error fetching artists', error);
+        }
+    };
+
     return (
-        <ScrollView>
-            {/* Artists code here */}
-        </ScrollView>
+        <View style={{ backgroundColor: '#cca2b7', flex: 1, paddingTop: 20 }}>
+            <FlatList
+                data={artists}
+                keyExtractor={(item) => item.id}
+                renderItem={({ item }) => (
+                    <ArtistItem item={item} />
+                )}
+            />
+        </View>
     );
 };
 
