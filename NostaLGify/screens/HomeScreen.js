@@ -90,14 +90,9 @@ async function fetchWebApi(endpoint, method, body, token) {
           // Fetch the current trackc
 
           const currentTrackData = await getCurrentTrack(accessToken);
-<<<<<<< HEAD
-          if (currentTrackData.items && currentTrackData.items.length > 0) {
-            setCurrentTrack(currentTrackData.items[0].track);
-=======
           setCurrentTrack(null)
           if (currentTrackData && currentTrackData.item) {
             setCurrentTrack(currentTrackData.item);
->>>>>>> 79adef2f91964bf0bec0278a428165978173a63a
           } else {
             setCurrentTrack(null);
           }
