@@ -95,18 +95,6 @@ const BottomTabs = () => {
             ),
         }}
       />
-      <Tab.Screen
-        name="Settings"
-        component={SettingsScreen}
-        options={{
-          tabBarLabel: 'Settings',
-          headerShown: false,
-          tabBarLabelStyle: { color: 'white' },
-          tabBarIcon: ({ focused }) => (
-            <AntDesign name="setting" size={24} color="white" />
-          ),
-        }}
-      />
     </Tab.Navigator>
   );
 };
