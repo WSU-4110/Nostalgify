@@ -78,7 +78,7 @@ const ListPlaylistsScreen = () => {
                         flex: 1,
                         marginLeft: 15,
                         backgroundColor: "#cca2b7",
-                        borderRadius: 4,
+                        borderRadius: 2,
                         elevation: 3,
                         marginBottom: 15
                     }}
@@ -162,7 +162,7 @@ const ListArtistsScreen = () => {
         );
     }
 
-    const [artists, setArtists] = useState([]);
+    const [artist, setArtists] = useState([]);
 
     useEffect(() => {
         fetchArtists();
@@ -173,9 +173,9 @@ const ListArtistsScreen = () => {
             const accessToken = await AsyncStorage.getItem('accessToken');
             if (accessToken) {
                 const artistsData = await getArtists(accessToken);
-                if (artistsData?.items) {
-                    setArtists(artistsData.items);
-                    console.log("a");
+                if (artistsData?.artists) {
+                    setArtists(artistsData.artists);
+                    console.log(artist);
                 } else {
                     setArtists(null);
                     console.log("b");
@@ -191,7 +191,7 @@ const ListArtistsScreen = () => {
     return (
         <View style={{ backgroundColor: '#cca2b7', flex: 1, paddingTop: 20 }}>
             <FlatList
-                data={artists}
+                data={artist.items}
                 keyExtractor={(item) => item.id}
                 renderItem={({ item }) => (
                     <ArtistItem item={item} />
