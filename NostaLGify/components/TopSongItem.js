@@ -7,7 +7,7 @@ const TopSongItem = ({ item }) => {
     return (
         <Pressable style={styles.container}>
             {imageUrl && <Image style={styles.image} source={{ uri: imageUrl }} />}
-            <Text style={styles.text}>{item.album.name}</Text>
+            <Text style={styles.text}>{item.name}</Text>
             <Text style={styles.text}>{item.artists && item.artists.length > 0 ? item.artists[0].name : 'Unknown Artist'}</Text>
         </Pressable>
     );
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
         fontSize: 12,
         color: 'white',
         fontWeight: 'bold',
-        maxWidth: 150, 
+        maxWidth: 140, 
         marginTop: 5
     },
 });

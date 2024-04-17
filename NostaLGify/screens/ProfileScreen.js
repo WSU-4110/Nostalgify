@@ -19,7 +19,7 @@ import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import RecentSongItem from '../components/RecentSongItem';
 import TopSongItem from  '../components/TopSongItem';
-import PlaylistItem from "../components/PlaylistItem";
+import ProfilePlaylistItem from "../components/ProfilePlaylistItem";
 
 //import * as sf from './spotifyFunctions';
 // make sure to download lin grad expo, expo blur
@@ -232,7 +232,7 @@ const ProfileScreen = () => {
                             data={playlists}
                             keyExtractor={(item) => item.id}
                             renderItem={({item}) => (
-                                <PlaylistItem item={item} />
+                                <ProfilePlaylistItem item={item} />
                             )}
                             horizontal={true}
                             showsHorizontalScrollIndicator={false}

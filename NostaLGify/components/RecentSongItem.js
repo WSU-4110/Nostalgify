@@ -7,7 +7,7 @@ const RecentSongItem = ({ item }) => {
     return (
         <Pressable style={styles.container}>
             {imageUrl && <Image style={styles.image} source={{ uri: imageUrl }} />}
-            <Text style={styles.text}>{item.track.album.name}</Text>
+            <Text style={styles.text}>{item.track.name}</Text>
             <Text style={styles.text}>{item.track.album.artists && item.track.album.artists.length > 0 ? item.track.album.artists[0].name : 'Unknown Artist'}</Text>
         </Pressable>
     );
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
         fontSize: 12,
         color: 'white',
         fontWeight: 'bold',
-        maxWidth: 150, 
+        maxWidth: 140, 
         marginTop: 5
     },
 });
