@@ -1,19 +1,20 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, Pressable } from 'react-native';
 
-const PlaylistItem = ({ item }) => {
-    const imageUrl = item.images && item.images.length > 0 ? item.images[0].url : null;
+const TopSongItem = ({ item }) => {
+    const imageUrl = item.album && item.album.images && item.album.images.length > 0 ? item.album.images[0].url : null;
 
     return (
         <Pressable style={styles.container}>
             {imageUrl && <Image style={styles.image} source={{ uri: imageUrl }} />}
-            <Text style={styles.text}>{item.name}</Text>
+            <Text style={styles.text}>{item.album.name}</Text>
+            <Text style={styles.text}>{item.artists && item.artists.length > 0 ? item.artists[0].name : 'Unknown Artist'}</Text>
         </Pressable>
     );
 };
 
-export default PlaylistItem;
 
+export default TopSongItem;
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'column',

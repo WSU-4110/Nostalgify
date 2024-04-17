@@ -133,7 +133,7 @@ const Navigation = () => {
                 onPress={() => navigation.navigate('Settings')}
               />
             ),
-            headerShown: true,
+            headerShown: false,
             headerTitle: '',
             headerStyle: {
               backgroundColor: 'rgba(0,0,0,0.5)',
