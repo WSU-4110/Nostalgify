@@ -164,10 +164,10 @@ async function fetchWebApi(endpoint, method, body, token) {
       {/* Buttons container */}
       <View style={styles.buttonsContainer}>
         <TouchableOpacity style={styles.button} onPress={handleSkipToPrevious}>
-          <Text style={styles.buttonText}>Previous Track</Text>
+          <Text style={styles.buttonText}>Previous</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={handleSkipToNext}>
-          <Text style={styles.buttonText}>Next Track</Text>
+          <Text style={styles.buttonText}>Next</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -214,7 +214,7 @@ async function fetchWebApi(endpoint, method, body, token) {
     buttonsContainer: {
       flexDirection: 'row',
       justifyContent: 'space-around',
-      width: '25%',
+      width: '40%',
     },
   });
   
