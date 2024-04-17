@@ -8,6 +8,7 @@ import { Feather } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useState, useEffect } from 'react';
 import PlaylistItem from "../components/PlaylistItem";
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
 async function fetchWebApi(endpoint, method, body, token) {
     const headers = {
@@ -30,6 +31,8 @@ async function fetchWebApi(endpoint, method, body, token) {
 const Tab = createMaterialTopTabNavigator();
 
 const ListPlaylistsScreen = () => {
+    const navigation = useNavigation();
+
     async function getPlaylists(token) {
         return await fetchWebApi(
             'v1/me/playlists?offset=0&limit=50', 'GET', null, token
@@ -61,9 +64,7 @@ const ListPlaylistsScreen = () => {
     };
 
     return (
-        <View style={{ backgroundColor: '#cca2b7', flex: 1, paddingTop: 20 }}>
-            <Text style={{ marginLeft: 10, fontSize: 34, fontWeight: "bold", color: "#583b55" }}> Your Library </Text>
-
+        <View style={{ backgroundColor: '#cca2b7', flex: 1 }}>
             <ScrollView>
                 <Pressable
                     onPress={() => navigation.navigate("Liked")}
@@ -107,8 +108,8 @@ const ListPlaylistsScreen = () => {
 };
 
 const ListAlbumsScreen = () => {
+    const navigation = useNavigation();
 
-    // This will contain your Albums view
     return (
         <ScrollView>
             {/* Albums code here */}
@@ -117,7 +118,7 @@ const ListAlbumsScreen = () => {
 };
 
 const ListArtistsScreen = () => {
-    // This will contain your Artists view
+    const navigation = useNavigation();
     return (
         <ScrollView>
             {/* Artists code here */}
@@ -130,8 +131,8 @@ const ListArtistsScreen = () => {
 const SearchScreen = () => {
     const navigation = useNavigation();
     return (
-        <View style={{ backgroundColor: '#cca2b7', flex: 1, paddingTop: 20 }}>
-            <Text style={{ marginLeft: 10, fontSize: 34, fontWeight: "bold", color: "#583b55" }}> Your Library </Text>
+        <View style={{ backgroundColor: '#cca2b7', flex: 1, paddingTop: 80 }}>
+            <Text style={{ marginLeft: 10, fontSize: 34, fontWeight: "bold", color: "#583b55", marginBottom: 10 }}> Your Library </Text>
             
             <Tab.Navigator
                 tabBarOptions={{
