@@ -1,8 +1,10 @@
-import { StyleSheet, Text, View, Image, FlatList } from 'react-native'
+import { StyleSheet, Text, View, Image, FlatList, TouchableOpacity } from 'react-native'
 import React, { useEffect, useState } from "react";
 import { useRoute } from '@react-navigation/native'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import PlaylistSongItem from "../components/PlaylistSongItem";
+import {FontAwesome5 } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
 
 async function fetchWebApi(endpoint, method, body, token) {
@@ -42,6 +44,7 @@ async function getPlaylistImage(token, playlistId) {
 }
 
 const PlaylistScreen = () => {
+    const navigation = useNavigation();
     const route = useRoute();
     const playlistUrl = route?.params?.item?.uri;
     const playlistId = playlistUrl.split(":")[2];
@@ -91,7 +94,7 @@ const PlaylistScreen = () => {
         } catch (error) {
             console.error('Error fetching playlist name', error);
         }
-    };    
+    };
 
     const fetchPlaylistImage = async () => {
         try {
@@ -112,13 +115,19 @@ const PlaylistScreen = () => {
     };
 
     return (
+
         <View style={{ backgroundColor: '#cca2b7', flex: 1 }}>
+            <View style={styles.header}>
+                <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+                    <FontAwesome5 name="chevron-left" size={24} color="white" />
+                </TouchableOpacity>
+            </View>
             {playlistImageUrl && <Image source={{ uri: playlistImageUrl }} style={{
-            width: 250,
-            height: 250,
-            marginTop: 60,
-            alignSelf: 'center',
-        }} />}
+                width: 250,
+                height: 250,
+                marginTop: 60,
+                alignSelf: 'center',
+            }} />}
             <Text style={{ marginTop: 30, marginBottom: 20, marginLeft: 10, fontSize: 20, fontWeight: "bold", color: "#583b55" }}> {playlistName} </Text>
 
             <FlatList
