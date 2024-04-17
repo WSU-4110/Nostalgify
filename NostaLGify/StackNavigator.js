@@ -10,6 +10,7 @@ import SearchScreen from './screens/SearchScreen';
 import SettingsScreen from './screens/SettingsScreen';
 import { Entypo, AntDesign, FontAwesome, Ionicons } from '@expo/vector-icons';
 import LikedSongScreen from './screens/LikedSongScreen';
+import PlaylistScreen from './screens/PlaylistScreen';
 
 
 const Tab = createBottomTabNavigator();
@@ -143,6 +144,11 @@ const Navigation = () => {
         <Stack.Screen
           name="Liked"
           component={LikedSongScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Playlist"
+          component={PlaylistScreen}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

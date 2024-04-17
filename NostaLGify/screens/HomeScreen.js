@@ -44,7 +44,6 @@ async function fetchWebApi(endpoint, method, body, token) {
           const currentTrackData = await getCurrentTrack(accessToken);
           if (currentTrackData.items && currentTrackData.items.length > 0) {
             setCurrentTrack(currentTrackData.items[0].track);
-            console.log("b")
           } else {
             setCurrentTrack(null); // Set currentTrack to null if no track is playing
             console.log("c")
