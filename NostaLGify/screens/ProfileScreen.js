@@ -201,7 +201,7 @@ const ProfileScreen = () => {
                         <Text style={categoryTextStyle}>Recently Played</Text>
                         <FlatList
                             data={recentlyPlayed}
-                            keyExtractor={(item) => item.id}
+                            keyExtractor={(item) => item.track.album.id}
                             renderItem={({item}) => (
                                 <RecentSongItem item={item} />
                             )}
@@ -216,7 +216,7 @@ const ProfileScreen = () => {
                         <Text style={categoryTextStyle}>Top Tracks</Text>
                         <FlatList
                             data={topTracks}
-                            keyExtractor={(item) => item.id}
+                            keyExtractor={(item) => item.album.id}
                             renderItem={({item}) => (
                                 <TopSongItem item={item} />
                             )}
