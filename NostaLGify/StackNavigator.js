@@ -95,6 +95,7 @@ const BottomTabs = () => {
             ),
         }}
       />
+
     </Tab.Navigator>
   );
 };
@@ -131,6 +132,11 @@ const Navigation = () => {
         <Stack.Screen
           name="Liked"
           component={LikedSongScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Settings"
+          component={SettingsScreen}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>
