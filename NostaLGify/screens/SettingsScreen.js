@@ -2,6 +2,7 @@ import React from 'react';
 import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
+import { FontAwesome } from '@expo/vector-icons';
 
 const SettingsScreen = () => {
   const navigation = useNavigation();
@@ -21,9 +22,16 @@ const SettingsScreen = () => {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.button} onPress={signOut}>
-        <Text style={styles.buttonText}>Sign Out of Spotify</Text>
-      </TouchableOpacity>
+      <View style={styles.header}>
+        <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+          <FontAwesome name="chevron-left" size={24} color="white" />
+        </TouchableOpacity>
+      </View>
+      <View style={styles.content}>
+        <TouchableOpacity style={styles.button} onPress={signOut}>
+          <Text style={styles.buttonText}>Sign Out of Spotify</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -31,9 +39,27 @@ const SettingsScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#cca2b7',
+  },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 16,
+    paddingTop: 40,
+  },
+  headerText: {
+    fontSize: 20,
+    color: 'white',
+    fontWeight: 'bold',
+    marginLeft: 16,
+  },
+  backButton: {
+    paddingRight: 20,
+  },
+  content: {
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#cca2b7',
   },
   button: {
     backgroundColor: '#583b55',
@@ -41,9 +67,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     borderRadius: 5,
     marginBottom: 10,
-  },
-  buttonMargin: {
-    marginTop: 10,
   },
   buttonText: {
     color: '#cca2b7',
