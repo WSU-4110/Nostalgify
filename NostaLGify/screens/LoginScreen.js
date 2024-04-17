@@ -35,10 +35,11 @@ const LoginScreen = () => {
                 'user-read-recently-played',
                 'playlist-read-private',
                 'user-library-read',
-                'user-modify-playback-state'
+                'user-modify-playback-state',
+                'user-follow-read'
             ],
             usePKCE: false,
-            redirectUri: makeRedirectUri({ scheme: 'nostalgify', native: "exp://localhost:8081" ,native: "http://localhost:8081"}),
+            redirectUri: makeRedirectUri({ scheme: 'nostalgify', native: "exp://localhost:8081", native: "http://localhost:8081"}),
         },
         discovery
     );
