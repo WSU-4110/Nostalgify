@@ -9,8 +9,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useState, useEffect } from 'react';
 import PlaylistItem from "../components/PlaylistItem";
 
-
-
 async function fetchWebApi(endpoint, method, body, token) {
     const headers = {
         Authorization: `Bearer ${token}`,
@@ -29,14 +27,15 @@ async function fetchWebApi(endpoint, method, body, token) {
     return await res.json();
 }
 
-async function getPlaylists(token) {
-    return await fetchWebApi(
-        'v1/me/playlists?offset=0&limit=50', 'GET', null, token
-    );
-}
+const Tab = createMaterialTopTabNavigator();
 
-const SearchScreen = () => {
-    const navigation = useNavigation();
+const ListPlaylistsScreen = () => {
+    async function getPlaylists(token) {
+        return await fetchWebApi(
+            'v1/me/playlists?offset=0&limit=50', 'GET', null, token
+        );
+    }
+
     const [playlists, setPlaylists] = useState([]);
 
     useEffect(() => {
@@ -64,37 +63,6 @@ const SearchScreen = () => {
     return (
         <View style={{ backgroundColor: '#cca2b7', flex: 1, paddingTop: 20 }}>
             <Text style={{ marginLeft: 10, fontSize: 34, fontWeight: "bold", color: "#583b55" }}> Your Library </Text>
-            <View style={{ backgroundColor: '#cca2b7', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 20, paddingTop: 20 }}>
-                <View style={{ flexDirection: 'row' }}>
-                    <MaterialCommunityIcons
-                        name="playlist-music-outline"
-                        size={20}
-                        color="#6a5874"
-                    />
-
-                    <Text style={{ color: "#6a5874", fontSize: 17, fontWeight: "bold" }}>Playlists</Text>
-                </View>
-
-                <View style={{ flexDirection: 'row' }}>
-                    <FontAwesome6
-                        name="record-vinyl"
-                        size={18}
-                        color="#6a5874"
-                    />
-
-                    <Text style={{ color: "#6a5874", fontSize: 17, fontWeight: "bold" }}>Albums</Text>
-                </View>
-
-                <View style={{ flexDirection: 'row' }}>
-                    <MaterialCommunityIcons
-                        name="microphone-variant"
-                        size={20}
-                        color="#6a5874"
-                    />
-
-                    <Text style={{ color: "#6a5874", fontSize: 17, fontWeight: "bold" }}>Artists</Text>
-                </View>
-            </View>
 
             <ScrollView>
                 <Pressable
@@ -136,6 +104,49 @@ const SearchScreen = () => {
             </ScrollView>
         </View>
     )
+};
+
+const ListAlbumsScreen = () => {
+
+    // This will contain your Albums view
+    return (
+        <ScrollView>
+            {/* Albums code here */}
+        </ScrollView>
+    );
+};
+
+const ListArtistsScreen = () => {
+    // This will contain your Artists view
+    return (
+        <ScrollView>
+            {/* Artists code here */}
+        </ScrollView>
+    );
+};
+
+
+
+const SearchScreen = () => {
+    const navigation = useNavigation();
+    return (
+        <View style={{ backgroundColor: '#cca2b7', flex: 1, paddingTop: 20 }}>
+            <Text style={{ marginLeft: 10, fontSize: 34, fontWeight: "bold", color: "#583b55" }}> Your Library </Text>
+            
+            <Tab.Navigator
+                tabBarOptions={{
+                    labelStyle: { fontSize: 17, fontWeight: 'bold', color: '#6a5874' },
+                    indicatorStyle: { backgroundColor: '#6a5874' },
+                    style: { backgroundColor: '#cca2b7' },
+                }}
+            >
+                <Tab.Screen name="Playlists" component={ListPlaylistsScreen} />
+                <Tab.Screen name="Albums" component={ListAlbumsScreen} />
+                <Tab.Screen name="Artists" component={ListArtistsScreen} />
+            </Tab.Navigator>
+        </View>
+    );
+    
 };
 
 export default SearchScreen;
