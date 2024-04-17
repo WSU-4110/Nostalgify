@@ -9,23 +9,23 @@ import {
     SafeAreaView,
     ScrollView,
     StatusBar,
-    ActivityIndicator
+    ActivityIndicator,
+    Pressable,
+    FlatList
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { BlurView } from 'expo-blur';
+//import { BlurView } from 'expo-blur';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import RecentSongItem from '../components/RecentSongItem';
+import TopSongItem from  '../components/TopSongItem';
+import PlaylistItem from "../components/PlaylistItem";
+
 //import * as sf from './spotifyFunctions';
 // make sure to download lin grad expo, expo blur
 
-const userTextStyle = {
-    fontSize: 25,
-    color: '#ffffff', // Modify the color as needed
-    // Add more text styles as needed
-};
-
 const categoryTextStyle = {
-    fontSize: 20,
+    fontSize: 25,
     fontWeight: 'bold',
     color: '#ffffff', // Modify the color as needed
     // Add more text styles as needed
@@ -49,13 +49,14 @@ async function fetchWebApi(endpoint, method, body, token) {
 
 async function getUserInfo(token) {
     return await fetchWebApi(
-        'v1/me, 'GET', null, token
-    );
+        'v1/me', 'GET', null, token
+    );  
 }
+
 async function getTopTracks(token) {
-    return (await fetchWebApi(
-        'v1/me/top/tracks?time_range=short_term&offset=0&limit=10', 'GET', null, token
-    )).items;
+    return await fetchWebApi(
+        'v1/me/top/tracks?time_range=short_term&limit=10', 'GET', null, token
+    );
 }
 
 async function getRecentlyPlayed(token) {
@@ -83,15 +84,13 @@ const ProfileScreen = () => {
         fetchPlaylists();
     }, []);
 
-
     const fetchUserInfo = async () => {
         try {
             const accessToken = await AsyncStorage.getItem('accessToken');
             if (accessToken) {
                 const userData = await getUserInfo(accessToken);
-                if (userData?.items) {
-                    setUserInfo(userData.display_name);
-                    setUserInfo(userData.images.url);
+                if (userData) {
+                    setUserInfo(userData);
                 } else {
                     setUserInfo(null);
                 }
@@ -100,8 +99,11 @@ const ProfileScreen = () => {
             }
         } catch (error) {
             console.error('Error fetching user data', error);
+        } finally {
+            setIsLoading(false); // Set loading to false regardless of success or failure
         }
-    };    
+    };
+    
     
     const fetchTopTracks = async () => {
         try {
@@ -118,6 +120,8 @@ const ProfileScreen = () => {
             }
         } catch (error) {
             console.error('Error fetching top tracks', error);
+        }   finally {
+            setIsLoading(false); // Set loading to false regardless of success or failure
         }
     };    
     
@@ -136,6 +140,8 @@ const ProfileScreen = () => {
             }
         } catch (error) {
             console.error('Error fetching recently played', error);
+        }    finally {
+            setIsLoading(false); // Set loading to false regardless of success or failure
         }
     };    
     const fetchPlaylists = async () => {
@@ -153,6 +159,8 @@ const ProfileScreen = () => {
             }
         } catch (error) {
             console.error('Error fetching playlists', error);
+        }   finally {
+            setIsLoading(false); // Set loading to false regardless of success or failure
         }
     };
 
@@ -168,10 +176,11 @@ const ProfileScreen = () => {
 
     return (
 
-        <LinearGradient
-            colors={['rgba(113,77,120,1)', 'rgba(146,99,154,1)', 'rgba(181,139,188,1)']}
-            style={styles.container}
-        >
+<LinearGradient
+    colors={['#583b55', '#6a5874', '#7f6581', '#ab8ca4', '#cca2b7']}
+    style={styles.container}
+>
+
             <SafeAreaView style={styles.container}>
                 <ScrollView alwaysBounceVertical={false} alwaysBounceHorizontal={false}>
 
@@ -182,133 +191,58 @@ const ProfileScreen = () => {
                                 style={styles.profileImage}
                             />
                         )}
-                        <Text style={[styles.name, userTextStyle]}>
+                        <Text style={[styles.name]}>
                             {userInfo ? userInfo.display_name : 'Unknown User'}
                         </Text>
                     </View>
 
+
                     <View style={styles.recentlyPlayedContainer}>
                         <Text style={categoryTextStyle}>Recently Played</Text>
-                        <ScrollView horizontal={true}>
-                            <View style={styles.recentlyPlayedContainer}>
-                                {recentlyPlayed.map((track, index) => (
-                                    <Image
-                                        key={index}
-                                        source={{ uri: track.track.album.images[0].url }}
-                                        style={styles.trackImage} // Add your styles here
-                                    />
-                                ))}
-                            </View>
-                        </ScrollView>
-
-
-                    </View>
-
-                    <View style={styles.recentlyPlayedContainer}>
-                        <Text style={categoryTextStyle}>Top Songs</Text>
-                        <ScrollView
-                            style={styles.scrollView}
+                        <FlatList
+                            data={recentlyPlayed}
+                            keyExtractor={(item) => item.id}
+                            renderItem={({item}) => (
+                                <RecentSongItem item={item} />
+                            )}
                             horizontal={true}
-                        >
-                            <View style={styles.imageContainer}>
-                                <Image
-                                    source={{ uri: 'https://via.placeholder.com/150' }}
-                                    style={styles.recentImage}
-                                />
-                                <Image
-                                    source={{ uri: 'https://via.placeholder.com/150' }}
-                                    style={styles.recentImage}
-                                />
-                                <Image
-                                    source={{ uri: 'https://via.placeholder.com/150' }}
-                                    style={styles.recentImage}
-                                />
-                                <Image
-                                    source={{ uri: 'https://via.placeholder.com/150' }}
-                                    style={styles.recentImage}
-                                />
-                            </View>
-                        </ScrollView>
+                            showsHorizontalScrollIndicator={false}
+
+                        />
 
                     </View>
 
-
                     <View style={styles.recentlyPlayedContainer}>
-                        <Text style={categoryTextStyle}>More Content</Text>
-                        <ScrollView
-                            style={styles.scrollView}
+                        <Text style={categoryTextStyle}>Top Tracks</Text>
+                        <FlatList
+                            data={topTracks}
+                            keyExtractor={(item) => item.id}
+                            renderItem={({item}) => (
+                                <TopSongItem item={item} />
+                            )}
                             horizontal={true}
-                        >
-                            <View style={styles.imageContainer}>
-                                <Image
-                                    source={{ uri: 'https://via.placeholder.com/150' }}
-                                    style={styles.recentImage}
-                                />
-                                <Image
-                                    source={{ uri: 'https://via.placeholder.com/150' }}
-                                    style={styles.recentImage}
-                                />
-                                <Image
-                                    source={{ uri: 'https://via.placeholder.com/150' }}
-                                    style={styles.recentImage}
-                                />
-                                <Image
-                                    source={{ uri: 'https://via.placeholder.com/150' }}
-                                    style={styles.recentImage}
-                                />
-                            </View>
-                        </ScrollView>
+                            showsHorizontalScrollIndicator={false}
+
+                        />
 
                     </View>
-
                     <View style={styles.recentlyPlayedContainer}>
-                        <Text style={categoryTextStyle}>Memories</Text>
-                        <BlurView
-                            intensity={80}
-                            tint="dark"
-                            style={styles.blurContainer}
-                        >
-                            <ScrollView
-                                style={styles.scrollView}
-                                horizontal={true}
-                            >
-                                <View style={styles.imageContainer}>
-                                    <Image
-                                        source={{ uri: 'https://via.placeholder.com/150' }}
-                                        style={styles.recentImage}
-                                    />
-                                    <Image
-                                        source={{ uri: 'https://via.placeholder.com/150' }}
-                                        style={styles.recentImage}
-                                    />
-                                    <Image
-                                        source={{ uri: 'https://via.placeholder.com/150' }}
-                                        style={styles.recentImage}
-                                    />
-                                    <Image
-                                        source={{ uri: 'https://via.placeholder.com/150' }}
-                                        style={styles.recentImage}
-                                    />
-                                </View>
-                            </ScrollView>
-                        </BlurView>
+                        <Text style={categoryTextStyle}>Recent Playlists</Text>
+                        <FlatList
+                            data={playlists}
+                            keyExtractor={(item) => item.id}
+                            renderItem={({item}) => (
+                                <PlaylistItem item={item} />
+                            )}
+                            horizontal={true}
+                            showsHorizontalScrollIndicator={false}
+
+                        />
+
                     </View>
 
-                    <View style={styles.navigationBar}>
-                        <TouchableOpacity
-                            style={styles.navButton}
-                            onPress={() => trackAnalytics('Photos')}
-                        >
-                            <Text style={styles.navButtonText}>Photos</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            style={styles.navButton}
-                            onPress={() => trackAnalytics('Favorite Music')}
-                        >
-                            <Text style={styles.navButtonText}>Favorite Music</Text>
-                        </TouchableOpacity>
-                        {/* Add more navigation options as needed */}
-                    </View>
+
+
                 </ScrollView>
             </SafeAreaView>
         </LinearGradient>
@@ -327,15 +261,16 @@ const styles = StyleSheet.create({
         padding: 20,
     },
     profileImage: {
-        width: 100,
-        height: 100,
+        width: 130,
+        height: 130,
         borderRadius: 75,
         marginBottom: 20,
     },
     name: {
-        fontSize: 24,
+        fontSize: 30,
         fontWeight: 'bold',
         marginBottom: 10,
+        color: 'white'
     },
     bio: {
         fontSize: 18,
@@ -376,6 +311,7 @@ const styles = StyleSheet.create({
         marginTop: 20,
         marginBottom: 30,
     },
+    
     scrollView: {
         marginTop: 10,
         marginBottom: 10,
