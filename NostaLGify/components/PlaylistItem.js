@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
         fontSize: 12,
         color: 'white',
         fontWeight: 'bold',
-        maxWidth: 150, 
+        maxWidth: 140, 
         marginTop: 5
     },
 });

@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, Pressable } from 'react-native';
 
-const pftPlaylistItem = ({ item }) => {
+const PlaylistItem = ({ item }) => {
     const imageUrl = item.images && item.images.length > 0 ? item.images[0].url : null;
 
     return (
@@ -12,27 +12,27 @@ const pftPlaylistItem = ({ item }) => {
     );
 };
 
-export default pftPlaylistItem;
+export default PlaylistItem;
 
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'column',
-        alignItems: 'center', // Align items horizontally
+        alignItems: 'left', // Align items horizontally
         marginBottom: 15,
-        marginLeft: 15,
         marginTop: 20,
     },
     image: {
-        width: 100,
-        height: 100,
-        marginRight: 15,
+        width: 130,
+        height: 130,
+        marginRight: 10,
         borderRadius: 2,
     },
     text: {
-        fontSize: 15,
+        fontSize: 12,
         color: 'white',
         fontWeight: 'bold',
-        maxWidth: 150, 
+        maxWidth: 140, 
         marginTop: 5
     },
 });
+
