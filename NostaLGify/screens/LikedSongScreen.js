@@ -8,6 +8,7 @@ import { Feather } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useState, useEffect } from 'react';
 import LikedSongItem from "../components/LikedSongItem";
+import { FontAwesome, FontAwesome5 } from '@expo/vector-icons';
 
 async function fetchWebApi(endpoint, method, body, token) {
     const headers = {
@@ -61,6 +62,11 @@ const LikedSongScreen = () => {
 
     return (
         <View style={{ backgroundColor: '#cca2b7', flex: 1 }}>
+            <View style={styles.header}>
+                <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+                    <FontAwesome5 name="chevron-left" size={24} color="white" />
+                </TouchableOpacity>
+            </View>
             <View
                 style={{
                     flexDirection: "row",
@@ -98,6 +104,7 @@ const LikedSongScreen = () => {
                     <LikedSongItem item={item} />
                 )}
             />
+            
         </View>
     )
 }
