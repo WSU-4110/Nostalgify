@@ -115,7 +115,6 @@ const PlaylistScreen = () => {
     };
 
     return (
-
         <View style={{ backgroundColor: '#cca2b7', flex: 1 }}>
             <View style={styles.header}>
                 <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
