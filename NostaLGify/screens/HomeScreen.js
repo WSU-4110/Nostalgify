@@ -29,6 +29,15 @@ async function fetchWebApi(endpoint, method, body, token) {
       'v1/me/player/recently-played?limit=1', 'GET', null, token
     );
   }
+  async function skipToPreviousTrack(token) {
+    // Endpoint reference: https://developer.spotify.com/documentation/web-api/reference/player/get-the-users-currently-playing-track/
+    fetch("https://api.spotify.com/v1/me/player/previous", {
+      headers: {
+        Authorization: "Bearer " + token
+      },
+      method: "POST"
+    })
+  }
   
   const HomeScreen = () => {
     const [currentTrack, setCurrentTrack] = useState(null);
@@ -57,6 +66,22 @@ async function fetchWebApi(endpoint, method, body, token) {
       }
     };
   
+
+    const handleSkipToPrevious = async () => {
+      try {
+        const accessToken = await AsyncStorage.getItem('accessToken');
+        if (accessToken) {
+          await skipToPreviousTrack(accessToken);
+          // After skipping to previous track, fetch the updated current track
+          await fetchCurrentTrack();
+        } else {
+          console.error('Access token not found in AsyncStorage');
+        }
+      } catch (error) {
+        console.error('Error skipping to previous track:', error);
+      }
+    };
+
     return (
       <View style={styles.container}>
         {currentTrack && (
@@ -72,6 +97,9 @@ async function fetchWebApi(endpoint, method, body, token) {
         {!currentTrack && (
           <Text style={styles.noTrack}>No track currently playing</Text>
         )}
+        <TouchableOpacity style={styles.button} onPress={handleSkipToPrevious}>
+          <Text style={styles.buttonText}>Skip to Previous Track</Text>
+        </TouchableOpacity>
       </View>
     );
   };
