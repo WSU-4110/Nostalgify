@@ -23,16 +23,15 @@ export default PlaylistItem;
 
 const styles = StyleSheet.create({
     container: {
-        flexDirection: 'column',
-        alignItems: 'left', // Align items horizontally
+        flexDirection: 'row',
+        alignItems: 'center',
         marginBottom: 15,
-        marginTop: 20,
+        marginLeft: 15
     },
     image: {
-        width: 130,
-        height: 130,
-        marginRight: 10,
-        borderRadius: 2,
+        width: 65,
+        height: 65,
+        marginRight: 15,
     },
     playlistName: {
         fontSize: 15,
@@ -40,4 +39,3 @@ const styles = StyleSheet.create({
         fontWeight: "bold"
     }
 });
-
