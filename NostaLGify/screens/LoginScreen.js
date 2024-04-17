@@ -27,7 +27,7 @@ const LoginScreen = () => {
     const [request, response, promptAsync] = useAuthRequest(
         {
             // clientId: 'e1316c7324f34e9baad599caa68aadd2',
-            clientId: 'df72319c2a67411985723932d7d0ac4b', // Kevin's Client:
+            clientId: '06335027a9a548db97dae585531719dd', // Kevin's Client:
             scopes: [
                 'user-read-email',
                 'user-read-private',
@@ -55,9 +55,9 @@ const LoginScreen = () => {
                 const tokenEndpoint = 'https://accounts.spotify.com/api/token';
                 const redirectUri = makeRedirectUri({ scheme: 'nostalgify', native: "exp://localhost:8081",native: "http://localhost:8081"  });
                 //const clientId = 'e1316c7324f34e9baad599caa68aadd2';
-                const clientId = 'df72319c2a67411985723932d7d0ac4b'; // Kevin's client
+                const clientId = '06335027a9a548db97dae585531719dd'; // Kevin's client
                 //const clientSecret = '6a8d779d312a437f947755e810610357'; // Your Spotify app's client secret
-                const clientSecret = '9623064c109349db979a2a7f6c2f791a'; // Kevin's client
+                const clientSecret = '2e8ac880929b45a1a39930265e28b5ae'; // Kevin's client
                 const requestBody = {
                     grant_type: 'authorization_code',
                     code,
