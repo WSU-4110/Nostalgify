@@ -1,11 +1,18 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, Pressable } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
-const SavedAlbumItem = ({ item }) => {
+const AlbumItem = ({ item }) => {
     const imageUrl = item.album.images && item.album.images.length > 0 ? item.album.images[0].url : null;
+    const navigation = useNavigation();
 
     return (
-        <Pressable style={styles.container}>
+        
+        <Pressable style={styles.container} onPress={() =>
+            navigation.navigate("AlbumSong", {
+                item: item,
+            })
+        } >
             {imageUrl && <Image style={styles.image} source={{ uri: imageUrl }} />}
             <View>
                 <Text style={styles.albumName}>{item.album.name}</Text>
@@ -15,7 +22,7 @@ const SavedAlbumItem = ({ item }) => {
     );
 };
 
-export default SavedAlbumItem;
+export default AlbumItem;
 
 const styles = StyleSheet.create({
     container: {
@@ -28,6 +35,7 @@ const styles = StyleSheet.create({
         width: 65,
         height: 65,
         marginRight: 15,
+        borderRadius: 2
     },
     albumName: {
         fontSize: 15,

@@ -1,13 +1,14 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, Pressable } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 const LikedSongItem = ({ item }) => {
+    const navigation = useNavigation();
     const imageUrl = item.track && item.track.album && item.track.album.images && item.track.album.images.length > 0
-        ? item.track.album.images[0].url
-        : null;
+        ? item.track.album.images[0].url : null;
 
     return (
-        <Pressable style={styles.container}>
+        <Pressable style={styles.container} onPress={() => navigation.navigate("Song")}>
             {imageUrl && <Image style={styles.image} source={{ uri: imageUrl }} />}
             <View>
                 <Text style={styles.songName}>{item.track.name}</Text>
