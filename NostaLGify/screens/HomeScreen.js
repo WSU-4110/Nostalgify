@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TextInput, FlatList, TouchableOpacity, Image, Pressable } from 'react-native';
+import { StyleSheet, Text, View, ActivityIndicator, TextInput, FlatList, TouchableOpacity, Image, Pressable } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { AntDesign } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -8,7 +8,6 @@ import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import CamScreen2 from '../screens/CamScreen2'; // Import CamScreen2
 import { LinearGradient } from 'expo-linear-gradient';
-
 
 async function fetchWebApi(endpoint, method, body, token) {
   const headers = {
@@ -31,6 +30,13 @@ async function fetchWebApi(endpoint, method, body, token) {
 async function getCurrentTrack(token) {
   return await fetchWebApi('v1/me/player/currently-playing', 'GET', null, token);
 }
+
+async function getRecentlyPlayed(token) {
+  return await fetchWebApi(
+      'v1/me/player/recently-played?&limit=10', 'GET', null, token
+  );
+}
+
 
 async function skipToPreviousTrack(token) {
   // Endpoint reference: https://developer.spotify.com/documentation/web-api/reference/player/get-the-users-currently-playing-track/
@@ -72,9 +78,16 @@ async function resumeTrack(token) {
   })
 }
 
+
+
 const HomeScreen = () => {
   const [currentTrack, setCurrentTrack] = useState(null);
+  const [recentlyPlayed, setRecentlyPlayed] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
   const navigation = useNavigation();
+  
+
   const [colorPalette, setColorPalette] = useState(['#583b55', '#6a5874', '#7f6581', '#ab8ca4', '#cca2b7']);
 
   useEffect(() => {
@@ -95,8 +108,36 @@ const HomeScreen = () => {
   }, [navigation]);
 
   useEffect(() => {
+    fetchRecentlyPlayed();
     fetchCurrentTrack();
+
+
+
   }, []);
+
+  const fetchRecentlyPlayed = async () => {
+    try {
+        const accessToken = await AsyncStorage.getItem('accessToken');
+        if (accessToken) {
+            const recentTrackData = await getRecentlyPlayed(accessToken);
+            if (recentTrackData?.items) {
+                setRecentlyPlayed(recentTrackData.items);
+                AsyncStorage.setItem('recentTrackData', JSON.stringify(recentTrackData.items));
+            } else {
+                setRecentlyPlayed(null);
+            }
+        } else {
+            console.error('Access token not found in AsyncStorage');
+        }
+    } catch (error) {
+        console.error('Error fetching recently played', error);
+    }    finally {
+        setIsLoading(false); // Set loading to false regardless of success or failure
+    }
+};    
+
+
+
 
   const fetchCurrentTrack = async () => {
     try {
@@ -125,11 +166,11 @@ const HomeScreen = () => {
         console.error('Access token not found in AsyncStorage');
       }
     } catch (error) {
-      console.error('Error fetching current track:', error);
+      console.log('Error fetching current track:', error);
     }
   };
 
-
+    
   const handleSkipToPrevious = async () => {
     try {
       const accessToken = await AsyncStorage.getItem('accessToken');
@@ -164,6 +205,15 @@ const HomeScreen = () => {
   };
 
 
+  if (isLoading) {
+  return (
+      <View style={[styles.container, styles.center]}>
+          <ActivityIndicator size="large" color="#1DB954" />
+      </View>
+  );
+}
+  
+  
   return (
     <LinearGradient
       colors={colorPalette}
@@ -187,10 +237,22 @@ const HomeScreen = () => {
 
   {/* No track message */ }
   {
-    !currentTrack && (
-      <Text style={styles.noTrack}>No track currently playing</Text>
-    )
-  }
+        !currentTrack && (
+          recentlyPlayed && recentlyPlayed.length > 0 ? (
+            <View>
+              <Image
+                style={styles.albumCover}
+                source={{ uri: recentlyPlayed[0].track.album.images[0].url }}
+              />
+              <Text style={styles.trackName}>{recentlyPlayed[0].track.name}</Text>
+              <Text style={styles.artistName}>{recentlyPlayed[0].track.artists[0].name}</Text>
+            </View>
+          ) : (
+            <Text style={styles.noTrack}>No recently played track</Text>
+          )
+
+        )
+      }
 
   {/* Buttons container */ }
   <View style={styles.buttonsContainer}>
