@@ -12,7 +12,7 @@ const AlbumItem = ({ item }) => {
             navigation.navigate("AlbumSong", {
                 item: item,
             })
-        } >
+        }>
             {imageUrl && <Image style={styles.image} source={{ uri: imageUrl }} />}
             <View>
                 <Text style={styles.albumName}>{item.album.name}</Text>

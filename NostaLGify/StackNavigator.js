@@ -13,6 +13,7 @@ import LikedSongScreen from './screens/LikedSongScreen';
 import PlaylistScreen from './screens/PlaylistScreen';
 import SongScreen from './screens/SongScreen';
 import AlbumSongScreen from './screens/AlbumSongScreen';
+import ArtistScreen from './screens/ArtistScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -154,6 +155,11 @@ const Navigation = () => {
         <Stack.Screen
           name="AlbumSong"
           component={AlbumSongScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Artist"
+          component={ArtistScreen}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>
