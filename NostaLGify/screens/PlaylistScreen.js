@@ -3,9 +3,9 @@ import React, { useEffect, useState } from "react";
 import { useRoute } from '@react-navigation/native'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import PlaylistSongItem from "../components/PlaylistSongItem";
-import {FontAwesome5 } from '@expo/vector-icons';
+import { FontAwesome5 } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-
+import { LinearGradient } from 'expo-linear-gradient';
 
 async function fetchWebApi(endpoint, method, body, token) {
     const headers = {
@@ -115,8 +115,11 @@ const PlaylistScreen = () => {
     };
 
     return (
-        <View style={{ backgroundColor: '#cca2b7', flex: 1 }}>
-            <View style={styles.header}>
+        <LinearGradient
+            colors={['#dbbdcc', '#cca2b7', '#ab8ca4', '#7f6581', '#6a5874', '#583b55']}
+            style={[styles.container, { flex: 1 }]}
+        >
+            <View style={{ marginTop: 60, marginLeft: 20 }}>
                 <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
                     <FontAwesome5 name="chevron-left" size={24} color="white" />
                 </TouchableOpacity>
@@ -124,10 +127,10 @@ const PlaylistScreen = () => {
             {playlistImageUrl && <Image source={{ uri: playlistImageUrl }} style={{
                 width: 250,
                 height: 250,
-                marginTop: 60,
+                marginTop: 20,
                 alignSelf: 'center',
             }} />}
-            <Text style={{ marginTop: 30, marginBottom: 20, marginLeft: 10, fontSize: 20, fontWeight: "bold", color: "#583b55" }}> {playlistName} </Text>
+            <Text style={{ marginTop: 30, marginBottom: 20, marginLeft: 10, fontSize: 24, fontWeight: "bold", color: "white" }}> {playlistName} </Text>
 
             <FlatList
                 data={playlistItems}
@@ -136,7 +139,7 @@ const PlaylistScreen = () => {
                     <PlaylistSongItem item={item} />
                 )}
             />
-        </View>
+        </LinearGradient>
     )
 }
 

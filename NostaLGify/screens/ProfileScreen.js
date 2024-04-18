@@ -70,6 +70,7 @@ async function getPlaylists(token) {
         'v1/me/playlists?offset=0&limit=50', 'GET', null, token
     );
 }
+
 const ProfileScreen = () => {
     const [userInfo, setUserInfo] = useState(null);
     const [topTracks, setTopTracks] = useState(null);
@@ -91,7 +92,6 @@ const ProfileScreen = () => {
                 const userData = await getUserInfo(accessToken);
                 if (userData) {
                     setUserInfo(userData);
-                    console.log(userData);
                 } else {
                     setUserInfo(null);
                 }
@@ -223,7 +223,7 @@ const ProfileScreen = () => {
                         <Text style={categoryTextStyle}>Top Tracks</Text>
                         <FlatList
                             data={topTracks}
-                            keyExtractor={(item) => item.album.id}
+                            keyExtractor={(item) => item.id}
                             renderItem={({item}) => (
                                 <TopSongItem item={item} />
                             )}

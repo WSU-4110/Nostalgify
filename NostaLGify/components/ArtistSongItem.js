@@ -2,22 +2,22 @@ import React from 'react';
 import { StyleSheet, Text, View, Pressable } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-const AlbumSongItem = ({ item }) => {
+const ArtistSongItem = ({ item, index }) => {
     const navigation = useNavigation();
 
     return (
         <Pressable style={styles.container} onPress={() =>
             navigation.navigate("Song")
         } >
+            <View style={styles.numberContainer}>
+                <Text style={styles.numberText}>{index + 1}</Text>
+            </View>
             <View>
                 <Text style={styles.trackName}>{item.name}</Text>
-                <Text style={styles.artist}>{item.artists && item.artists.length > 0 ? item.artists[0].name : 'Unknown Artist'}</Text>
             </View>
         </Pressable>
     );
 };
-
-export default AlbumSongItem;
 
 const styles = StyleSheet.create({
     container: {
@@ -25,6 +25,20 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginBottom: 15,
         marginLeft: 15
+    },
+    numberContainer: {
+        width: 30,
+        height: 30,
+        borderRadius: 15,
+        backgroundColor: '#6a5874',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginRight: 10
+    },
+    numberText: {
+        fontSize: 16,
+        color: '#ffffff',
+        fontWeight: 'bold'
     },
     trackName: {
         fontSize: 15,
@@ -36,3 +50,5 @@ const styles = StyleSheet.create({
         color: "white",
     },
 });
+
+export default ArtistSongItem;

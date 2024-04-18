@@ -66,7 +66,10 @@ const ListPlaylistsScreen = () => {
     };
 
     return (
-        <View style={{ backgroundColor: '#cca2b7', flex: 1 }}>
+        <LinearGradient
+            colors={['#cca2b7', '#ab8ca4', '#7f6581', '#6a5874', '#583b55']}
+            style={[styles.container, { flex: 1 }]}
+        >
             <ScrollView>
                 <Pressable
                     onPress={() => navigation.navigate("Liked")}
@@ -77,7 +80,7 @@ const ListPlaylistsScreen = () => {
                         gap: 10,
                         flex: 1,
                         marginLeft: 15,
-                        backgroundColor: "#cca2b7",
+                        backgroundColor: "rgba(0, 0, 0, 0)",
                         borderRadius: 2,
                         elevation: 3,
                         marginBottom: 15
@@ -96,7 +99,7 @@ const ListPlaylistsScreen = () => {
                         </View>
                     </LinearGradient>
 
-                    <Text style={{ color: "#6a5874", fontSize: 15, fontWeight: "bold", marginLeft: 5 }}>
+                    <Text style={{ color: "white", fontSize: 15, fontWeight: "bold", marginLeft: 5 }}>
                         Liked Songs
                     </Text>
                 </Pressable>
@@ -105,7 +108,7 @@ const ListPlaylistsScreen = () => {
                     <PlaylistItem key={index} item={item} />
                 ))}
             </ScrollView>
-        </View>
+        </LinearGradient>
     )
 };
 
@@ -142,7 +145,10 @@ const ListAlbumsScreen = () => {
     };
 
     return (
-        <View style={{ backgroundColor: '#cca2b7', flex: 1, paddingTop: 20 }}>
+        <LinearGradient
+            colors={['#cca2b7', '#ab8ca4', '#7f6581', '#6a5874', '#583b55']}
+            style={{paddingTop: 20, flex: 1}}
+        >
             <FlatList
                 data={albums}
                 keyExtractor={(item) => item.album.id}
@@ -150,7 +156,7 @@ const ListAlbumsScreen = () => {
                     <AlbumItem item={item} />
                 )}
             />
-        </View>
+        </LinearGradient>
     );
 };
 
@@ -189,7 +195,10 @@ const ListArtistsScreen = () => {
     };
 
     return (
-        <View style={{ backgroundColor: '#cca2b7', flex: 1, paddingTop: 20 }}>
+        <LinearGradient
+            colors={['#cca2b7', '#ab8ca4', '#7f6581', '#6a5874', '#583b55']}
+            style={{paddingTop: 20, flex: 1}}
+        >
             <FlatList
                 data={artist.items}
                 keyExtractor={(item) => item.id}
@@ -197,32 +206,75 @@ const ListArtistsScreen = () => {
                     <ArtistItem item={item} />
                 )}
             />
-        </View>
+        </LinearGradient>
     );
 };
-
-
 
 const SearchScreen = () => {
     const navigation = useNavigation();
     return (
         <View style={{ backgroundColor: '#dbbdcc', flex: 1, paddingTop: 80 }}>
-            <Text style={{ marginLeft: 10, fontSize: 34, fontWeight: "bold", color: "#583b55", marginBottom: 10 }}> Your Library </Text>
-            
+            <Text style={{ marginLeft: 10, fontSize: 34, fontWeight: "bold", color: "white", marginBottom: 10 }}> Your Library </Text>
+
             <Tab.Navigator
                 screenOptions={{
-                    labelStyle: { fontSize: 17, fontWeight: 'bold', color: '#6a5874' },
                     indicatorStyle: { backgroundColor: '#6a5874' },
                     tabBarStyle: { backgroundColor: '#D6B4C5' },
                 }}
             >
-                <Tab.Screen name="Playlists" component={ListPlaylistsScreen} />
-                <Tab.Screen name="Albums" component={ListAlbumsScreen} />
-                <Tab.Screen name="Artists" component={ListArtistsScreen} />
+
+
+                <Tab.Screen
+                    name="Playlists"
+                    component={ListPlaylistsScreen}
+                    options={{
+                        tabBarLabel: ({ focused }) => (
+                            <Text style={{
+                                fontSize: 17,
+                                fontWeight: 'bold',
+                                color: 'white',
+                            }}>
+                                Playlists
+                            </Text>
+                        ),
+                    }}
+                />
+                <Tab.Screen
+                    name="Albums"
+                    component={ListAlbumsScreen}
+                    options={{
+                        tabBarLabel: ({ focused }) => (
+                            <Text style={{
+                                fontSize: 17,
+                                fontWeight: 'bold',
+                                color: 'white',
+                            }}>
+                                Albums
+                            </Text>
+                        ),
+                    }}
+                />
+                <Tab.Screen
+                    name="Artists"
+                    component={ListArtistsScreen}
+                    options={{
+                        tabBarLabel: ({ focused }) => (
+                            <Text style={{
+                                fontSize: 17,
+                                fontWeight: 'bold',
+                                color: 'white',
+                            }}>
+                                Artists
+                            </Text>
+                        ),
+                    }}
+                />
             </Tab.Navigator>
+
+
         </View>
     );
-    
+
 };
 
 export default SearchScreen;
