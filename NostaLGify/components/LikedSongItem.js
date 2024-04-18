@@ -6,9 +6,11 @@ const LikedSongItem = ({ item }) => {
     const navigation = useNavigation();
     const imageUrl = item.track && item.track.album && item.track.album.images && item.track.album.images.length > 0
         ? item.track.album.images[0].url : null;
-
     return (
-        <Pressable style={styles.container} onPress={() => navigation.navigate("Song")}>
+        <Pressable style={styles.container} onPress={() => navigation.navigate("Song", {
+            trackId: item.track.id,
+        })
+        }>
             {imageUrl && <Image style={styles.image} source={{ uri: imageUrl }} />}
             <View>
                 <Text style={styles.songName}>{item.track.name}</Text>
