@@ -38,6 +38,25 @@ const SongScreen = () => {
     const [selectedImage, setSelectedImage] = useState(null);
     const [modalVisible, setModalVisible] = useState(false);
 
+    const [colorPalette, setColorPalette] = useState(['#583b55', '#6a5874', '#7f6581', '#ab8ca4', '#cca2b7']);
+
+  useEffect(() => {
+    const getColorPalette = async () => {
+      const savedColorPalette = await AsyncStorage.getItem('colorPalette');
+      if (savedColorPalette) {
+        setColorPalette(JSON.parse(savedColorPalette));
+      }
+    };
+
+    getColorPalette();
+    const unsubscribe = navigation.addListener('focus', () => {
+      // Fetch the updated color palette when the SettingsScreen is focused
+      getColorPalette();
+    });
+
+    return unsubscribe;
+  }, [navigation]);
+
     useEffect(() => {
         const fetchImages = async () => {
             try {
@@ -99,7 +118,7 @@ const SongScreen = () => {
 
     return (
         <LinearGradient
-            colors={['#cca2b7', '#ab8ca4', '#7f6581', '#6a5874', '#583b55']}
+            colors={colorPalette}
             style={[styles.container, { flex: 1 }]}
         >
             <View style={{ marginTop: 60, marginLeft: 20 }}>
@@ -153,7 +172,7 @@ export default SongScreen;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        //backgroundColor: '#fff',
     },
     galleryContainer: {
         position: 'absolute',
