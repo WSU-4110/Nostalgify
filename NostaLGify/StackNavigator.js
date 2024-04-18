@@ -11,7 +11,8 @@ import SettingsScreen from './screens/SettingsScreen';
 import { Entypo, AntDesign, FontAwesome, Ionicons } from '@expo/vector-icons';
 import LikedSongScreen from './screens/LikedSongScreen';
 import PlaylistScreen from './screens/PlaylistScreen';
-
+import SongScreen from './screens/SongScreen';
+import AlbumSongScreen from './screens/AlbumSongScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -139,6 +140,16 @@ const Navigation = () => {
         <Stack.Screen
           name="Settings"
           component={SettingsScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Song"
+          component={SongScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="AlbumSong"
+          component={AlbumSongScreen}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>
