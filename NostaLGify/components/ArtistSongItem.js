@@ -6,9 +6,10 @@ const ArtistSongItem = ({ item, index }) => {
     const navigation = useNavigation();
 
     return (
-        <Pressable style={styles.container} onPress={() =>
-            navigation.navigate("Song")
-        } >
+        <Pressable style={styles.container} onPress={() => navigation.navigate("Song", {
+            trackId: item.id,
+        })
+        }>
             <View style={styles.numberContainer}>
                 <Text style={styles.numberText}>{index + 1}</Text>
             </View>
