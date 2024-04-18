@@ -32,9 +32,9 @@ const BottomTabs = () => {
           elevation: 0,
           // borderTopWidth: 5,
           // borderTopColor: 'rgba(0,0,0,0.3)',
-          paddingTop: 5,
-          paddingBottom: 5,
-          height: 63,
+          paddingTop: 10,
+          paddingBottom: 10,
+          height: 75,
         },
       }}>
       <Tab.Screen
