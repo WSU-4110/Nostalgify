@@ -4,11 +4,104 @@ import { Camera } from 'expo-camera';
 import * as ImagePicker from 'expo-image-picker';
 import { listFiles, uploadToFirebase } from '../firebase-config';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as FileSystem from 'expo-file-system'; // Import FileSystem
 
-const [myList, setMyList] = useState([]);
+async function fetchWebApi(endpoint, method, body, token) {
+    const headers = {
+        Authorization: `Bearer ${token}`,
+      };
+      let url = `https://api.spotify.com/${endpoint}`;
+      if (method === 'GET' && body) {
+        // If it's a GET request and there's a body, encode it into the URL
+        const queryParams = new URLSearchParams(body).toString();
+        url += `?${queryParams}`;
+      }
+      const res = await fetch(url, {
+        headers,
+        method,
+        body: method !== 'GET' ? JSON.stringify(body) : undefined, // Only include body for non-GET requests
+      });
+      return await res.json();
+  }
+  
+  async function getCurrentTrack(token) {
+    // Endpoint reference: https://developer.spotify.com/documentation/web-api/reference/player/get-the-users-currently-playing-track/
+    return await fetchWebApi(
+      'v1/me/player/recently-played?limit=1', 'GET', null, token
+    );
+  }
 
 
 const CamScreen2 = () => {
+    const [trackId, setTrackId] = useState(null); // State for track ID
+
+    useEffect(() => {
+      fetchCurrentTrack();
+    }, []);
+  
+    const fetchCurrentTrack = async () => {
+      try {
+        const accessToken = await AsyncStorage.getItem('accessToken');
+        if (accessToken) {
+          const currentTrackData = await getCurrentTrack(accessToken);
+          if (currentTrackData.items && currentTrackData.items.length > 0) {
+            const track = currentTrackData.items[0].track;
+            setTrackId(track.id); // Set the track ID
+            console.log("Track ID:", track.id);
+          } else {
+            setTrackId(null); // Set trackId to null if no track is playing
+            console.log("No track currently playing");
+          }
+        } else {
+          console.error('Access token not found in AsyncStorage');
+        }
+      } catch (error) {
+        console.error('Error fetching current track:', error);
+      }
+    };
+
+
+
+    const writeToTextFile = async (trackId, fileName) => {
+        try {
+            const directory = FileSystem.documentDirectory + 'data/'; // Get the document directory path and specify the data directory
+            const filename = 'trackList.txt'; // Specify the file name
+    
+            // Create the content string with trackId and fileName
+            const content = `${trackId} ${fileName}\n`;
+    
+            // Check if the directory exists, if not, create it
+            const dirInfo = await FileSystem.getInfoAsync(directory);
+            if (!dirInfo.exists) {
+                await FileSystem.makeDirectoryAsync(directory, { intermediates: true }); // Create directory recursively
+            }
+    
+            // Append content to existing file or create new file if not exists
+            await FileSystem.writeAsStringAsync(directory + filename, content, { encoding: FileSystem.EncodingType.UTF8, append: true });
+            
+            console.log('Content has been written to the file.');
+        } catch (error) {
+            console.error('Error writing to file:', error);
+        }
+    };
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  const [myList, setMyList] = useState([]);
   const [hasPermission, setHasPermission] = useState(null);
   const [cameraType, setCameraType] = useState(Camera.Constants.Type.back);
   const [files, setFiles] = useState([]);
@@ -38,9 +131,10 @@ const CamScreen2 = () => {
       if (!cameraRef.current) return;
 
       let photo = await cameraRef.current.takePictureAsync();
-      await uploadToFirebase(photo.uri, `photo_${Date.now()}.jpg`);
-      setMyList(prevList => [...prevList, photo.uri]);
-      console.log(myList);
+      const fileName = `photo_${Date.now()}.jpg`;
+      await uploadToFirebase(photo.uri, fileName);
+      setMyList(prevList => [...prevList, [trackId,fileName]]);
+      writeToTextFile(trackId,fileName);
       fetchImages();
     } catch (error) {
       Alert.alert('Error', 'Failed to take photo. Please try again.');
