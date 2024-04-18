@@ -302,26 +302,7 @@ const SearchScreen = () => {
     return (
         <LinearGradient
             colors={colorPalette} style={{flex: 1, paddingTop: 80 }}>
-            <TouchableOpacity
-                style={{
-                    flexDirection:"row",
-                    alignItems:"center",
-                    gap:10,
-                    backgroundColor:"rgba(0, 0, 0, 0.3)",
-                    padding: 5,
-                    borderRadius: 3,
-                    marginHorizontal: 10,
-                }
-            }>
-                <AntDesign name="search1" size={22} color="white" />
-                <TextInput
-                    value={input}
-                    onChangeText={(text) => handleInputChange(text)}
-                    placeholder="Search tag(s)"
-                    placeholderTextColor="rgba(255, 255, 255, 0.7)"
-                    style={{fontWeight:"500", color: "white", fontSize: 17, flex: 1, padding: 0, margin: 0}}
-                />
-            </TouchableOpacity>
+
 
             <Text style={{ marginLeft: 10, fontSize: 34, fontWeight: "bold", color: "white", marginTop: 15, marginBottom: 15 }}> Your Library </Text>
 
