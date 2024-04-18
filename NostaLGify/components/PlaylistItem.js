@@ -14,7 +14,11 @@ const PlaylistItem = ({ item }) => {
             }
             style={styles.container}>
             {imageUrl && <Image style={styles.image} source={{ uri: imageUrl }} />}
-            <Text style={styles.playlistName}>{item.name}</Text>
+            <Text
+                style={styles.playlistName}
+                numberOfLines={2} // Set the numberOfLines prop here
+                ellipsizeMode="tail" // Set the ellipsizeMode prop here
+            >{item.name}</Text>
         </Pressable>
     );
 };
