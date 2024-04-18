@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 const ArtistItem = ({ item }) => {
     const imageUrl = item.images && item.images.length > 0 ? item.images[0].url : null;
     const navigation = useNavigation();
-    
+
     return (
         <Pressable style={styles.container} onPress={() =>
             navigation.navigate("Artist", {
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     },
     artistName: {
         fontSize: 15,
-        color: "#6a5874",
+        color: "white",
         fontWeight: "bold"
     }
 });
