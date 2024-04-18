@@ -14,7 +14,7 @@ import PlaylistScreen from './screens/PlaylistScreen';
 import SongScreen from './screens/SongScreen';
 import AlbumSongScreen from './screens/AlbumSongScreen';
 import ArtistScreen from './screens/ArtistScreen';
-import { MaterialIcons } from '@expo/vector-icons';
+import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -24,15 +24,17 @@ const BottomTabs = () => {
     <Tab.Navigator
       screenOptions={{
         tabBarStyle: {
-          backgroundColor: 'rgba(0,0,0,0)',
+          backgroundColor: 'rgba(0,0,0,0.3)',
           position: 'absolute',
-          bottom: 5,
+          bottom: 0,
           left: 0,
           right: 0,
           elevation: 0,
-          //borderTopWidth: 6,
-          borderTopColor: 'rgba(0,0,0,0)',
+          // borderTopWidth: 5,
+          // borderTopColor: 'rgba(0,0,0,0.3)',
           paddingTop: 5,
+          paddingBottom: 5,
+          height: 63,
         },
       }}>
       <Tab.Screen
@@ -41,12 +43,12 @@ const BottomTabs = () => {
         options={{
           tabBarLabel: 'Home',
           headerShown: false,
-          tabBarLabelStyle: { color: 'rgba(0, 0, 0, 0.7)', fontWeight: 'bold', fontSize: 12},
+          tabBarLabelStyle: { color: 'white', fontWeight: 'bold', fontSize: 12},
           tabBarIcon: ({ focused }) =>
             focused ? (
-              <Entypo name="home" size={24} color="rgba(0, 0, 0, 0.7)" />
+              <Entypo name="home" size={30} color="white" />
             ) : (
-              <AntDesign name="home" size={24} color="rgba(0, 0, 0, 0.7)" />
+              <AntDesign name="home" size={30} color="white" />
             ),
         }}
       />
@@ -56,12 +58,12 @@ const BottomTabs = () => {
         options={{
           tabBarLabel: 'Library',
           headerShown: false,
-          tabBarLabelStyle: {  color: 'rgba(0, 0, 0, 0.7)', fontWeight: 'bold', fontSize: 12 },
+          tabBarLabelStyle: {  color: 'white', fontWeight: 'bold', fontSize: 12 },
           tabBarIcon: ({ focused }) =>
             focused ? (
-              <MaterialIcons name="library-music" size={24} color="rgba(0, 0, 0, 0.7)" />
+              <MaterialCommunityIcons name="music-box-multiple" size={30} color="white" />
             ) : (
-              <MaterialIcons name="library-music" size={24} color="rgba(0, 0, 0, 0.7)" />
+              <MaterialCommunityIcons name="music-box-multiple-outline" size={30} color="white" />
             ),
         }}
       />
@@ -72,12 +74,12 @@ const BottomTabs = () => {
         options={{
           tabBarLabel: 'Profile',
           headerShown: false,
-          tabBarLabelStyle: {  color: 'rgba(0, 0, 0, 0.7)', fontWeight: 'bold', fontSize: 12},
+          tabBarLabelStyle: {  color: 'white', fontWeight: 'bold', fontSize: 12},
           tabBarIcon: ({ focused }) =>
             focused ? (
-              <FontAwesome name="user-circle" size={24} color="rgba(0, 0, 0, 0.7)" />
+              <FontAwesome name="user-circle" size={30} color="white" />
             ) : (
-              <FontAwesome name="user-circle-o" size={24} color="rgba(0, 0, 0, 0.7)" />
+              <FontAwesome name="user-circle-o" size={30} color="white" />
             ),
         }}
       />
