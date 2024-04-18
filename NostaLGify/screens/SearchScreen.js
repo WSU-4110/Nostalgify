@@ -11,6 +11,7 @@ import PlaylistItem from "../components/PlaylistItem";
 import AlbumItem from "../components/AlbumItem";
 import ArtistItem from "../components/ArtistItem";
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { debounce } from "lodash";
 
 async function fetchWebApi(endpoint, method, body, token) {
     const headers = {
@@ -212,9 +213,42 @@ const ListArtistsScreen = () => {
 
 const SearchScreen = () => {
     const navigation = useNavigation();
+    const [input, setInput] = useState("");
+
+    const debouncedSearch = debounce(handleSearch, 500);
+
+    function handleSearch(text) {
+        // Search here
+    }
+
+    const handleInputChange = (text) => {
+        setInput(text);
+        debouncedSearch(text);
+    }
+
     return (
-        <View style={{ backgroundColor: '#dbbdcc', flex: 1, paddingTop: 80 }}>
-            <Text style={{ marginLeft: 10, fontSize: 34, fontWeight: "bold", color: "white", marginBottom: 10 }}> Your Library </Text>
+        <View style={{ backgroundColor: '#dbbdcc', flex: 1, paddingTop: 60 }}>
+            <Pressable
+                style={{
+                    flexDirection:"row",
+                    alignItems:"center",
+                    gap:10,
+                    backgroundColor:"#dcdcdc",
+                    padding: 5,
+                    borderRadius: 3,
+                    marginHorizontal: 10,
+                }
+            }>
+                <AntDesign name="search1" size={20} color="white" />
+                <TextInput
+                    value={input}
+                    onChangeText={(text) => handleInputChange(text)}
+                    placeholder="Search tag(s)"
+                    style={{fontWeight:"500"}}
+                />
+            </Pressable>
+
+            <Text style={{ marginLeft: 10, fontSize: 34, fontWeight: "bold", color: "white", marginTop: 15, marginBottom: 15 }}> Your Library </Text>
 
             <Tab.Navigator
                 screenOptions={{
@@ -223,12 +257,11 @@ const SearchScreen = () => {
                 }}
             >
 
-
                 <Tab.Screen
                     name="Playlists"
                     component={ListPlaylistsScreen}
                     options={{
-                        tabBarLabel: ({ focused }) => (
+                        tabBarLabel: ({}) => (
                             <Text style={{
                                 fontSize: 17,
                                 fontWeight: 'bold',
@@ -243,7 +276,7 @@ const SearchScreen = () => {
                     name="Albums"
                     component={ListAlbumsScreen}
                     options={{
-                        tabBarLabel: ({ focused }) => (
+                        tabBarLabel: ({}) => (
                             <Text style={{
                                 fontSize: 17,
                                 fontWeight: 'bold',
@@ -258,7 +291,7 @@ const SearchScreen = () => {
                     name="Artists"
                     component={ListArtistsScreen}
                     options={{
-                        tabBarLabel: ({ focused }) => (
+                        tabBarLabel: ({}) => (
                             <Text style={{
                                 fontSize: 17,
                                 fontWeight: 'bold',
