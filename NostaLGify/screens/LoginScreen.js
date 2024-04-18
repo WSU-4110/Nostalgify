@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { StyleSheet, Text, View, SafeAreaView, Pressable, Linking } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, Pressable, Linking , Image} from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Entypo } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
@@ -92,56 +92,73 @@ const LoginScreen = () => {
     }, [response]);
 
     return (
-        <LinearGradient colors={['#040306', '#131624']} style={{ flex: 1 }}>
+        <LinearGradient colors={['#131624', '#6a5874']} style={{ flex: 1 }}>
             <SafeAreaView>
-                <View style={{ height: 80 }} />
-                <Entypo
-                    style={{ textAlign: 'center' }}
-                    name="spotify"
-                    size={80}
-                    color="white"
-                />
+                <View 
+                style={{
+                flex: 1,
+                justifyContent: 'center', // Center vertically
+                alignItems: 'center', // Center horizontally
+                height: 80,
+                marginTop: 200,
+                marginBottom: 70
+
+                }}>
+                <Image 
+                    source={require('../assets/blt.png')}
+                    style={{
+                        width: 150,
+                        height: 150, 
+                        resizeMode: 'contain',
+                    }}/>
+                    </View>
                 <Text
                     style={{
                         color: 'white',
                         fontSize: 40,
                         fontWeight: 'bold',
                         textAlign: 'center',
-                        marginTop: 40,
+                        marginTop: 10,
                     }}>
                     Nostalgify
                 </Text>
 
-                <View style={{ height: 80 }} />
+                <View 
+                style={{ 
+                    height: 80,
+                    flexDirection: 'column',
+                    gap: 15,
+                    marginTop: 50 }} >
                 <Pressable
                     onPress={() => promptAsync()} // Dummy onPress handler
                     style={{
-                        backgroundColor: '#1DB954',
+                        backgroundColor: '#857593',
                         padding: 10,
                         marginLeft: 'auto',
                         marginRight: 'auto',
-                        width: 300,
+                        width: 275,
                         borderRadius: 25,
                         alignItems: 'center',
                         justifyContent: 'center',
                         marginBottom: 20,
                     }}>
-                    <Text>Sign In with Spotify</Text>
+                    <Text style={{color: 'white', fontWeight: 'bold', fontSize: 20}}>Sign In with Spotify</Text>
                 </Pressable>
                 <Pressable
                     onPress={navigateToMain} // Dummy onPress handler
                     style={{
-                        backgroundColor: '#1DB954',
+                        backgroundColor: '#857593',
                         padding: 10,
                         marginLeft: 'auto',
                         marginRight: 'auto',
-                        width: 300,
+                        width: 275,
                         borderRadius: 25,
                         alignItems: 'center',
                         justifyContent: 'center',
                     }}>
-                    <Text>Guest</Text>
+                    <Text style={{color: 'white', fontWeight: 'bold', fontSize: 20}}>Guest</Text>
                 </Pressable>
+                </View>
             </SafeAreaView>
         </LinearGradient>
     );
