@@ -166,7 +166,7 @@ const HomeScreen = () => {
         console.error('Access token not found in AsyncStorage');
       }
     } catch (error) {
-      console.error('Error fetching current track:', error);
+      console.log('Error fetching current track:', error);
     }
   };
 

@@ -167,7 +167,6 @@ const ProfileScreen = () => {
             if (data) {
                 const recent = JSON.parse(data);
                 setRecent(recent);
-                console.log('Recently Played Data:', recent);
             } else {
                 console.log('No recent track data found');
             }
