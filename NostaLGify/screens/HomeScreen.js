@@ -177,20 +177,20 @@ const HomeScreen = () => {
 
   {/* Buttons container */ }
   <View style={styles.buttonsContainer}>
-    <Pressable style={styles.button} onPress={handleSkipToPrevious}>
+    <TouchableOpacity style={styles.button} onPress={handleSkipToPrevious}>
       <Ionicons name="play-skip-back" size={24} color="white" />
-    </Pressable>
-    <Pressable style={styles.iconContainer} onPress={() =>
+    </TouchableOpacity>
+    <TouchableOpacity style={styles.iconContainer} onPress={() =>
       navigation.navigate('Camera')
     }>
       <FontAwesome6 name='camera' size={24} color='white' />
-    </Pressable>
-    <Pressable style={styles.iconContainer}>
+    </TouchableOpacity>
+    <TouchableOpacity style={styles.iconContainer}>
       <FontAwesome6 name='tag' size={24} color='white' />
-    </Pressable>
-    <Pressable style={styles.button} onPress={handleSkipToNext}>
+    </TouchableOpacity>
+    <TouchableOpacity style={styles.button} onPress={handleSkipToNext}>
       <Ionicons name="play-skip-forward" size={24} color="white" />
-    </Pressable>
+    </TouchableOpacity>
 
 
 

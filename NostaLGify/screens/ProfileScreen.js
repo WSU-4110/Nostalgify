@@ -15,11 +15,12 @@ import {
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 //import { BlurView } from 'expo-blur';
-import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import RecentSongItem from '../components/RecentSongItem';
 import TopSongItem from  '../components/TopSongItem';
 import ProfilePlaylistItem from "../components/ProfilePlaylistItem";
+import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
 //import * as sf from './spotifyFunctions';
 // make sure to download lin grad expo, expo blur
@@ -77,6 +78,7 @@ const ProfileScreen = () => {
     const [recentlyPlayed, setRecentlyPlayed] = useState([]);
     const [playlists, setPlaylists] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const navigation = useNavigation();
 
     useEffect(() => {
         fetchUserInfo();
@@ -248,7 +250,13 @@ const ProfileScreen = () => {
 
                     </View>
 
-
+                    {/* Settings Button */}
+                    <TouchableOpacity
+                        style={styles.settingsButton}
+                        onPress={() => navigation.navigate('Settings')}
+                    >
+                        <Ionicons name="settings-outline" size={24} color="white" />
+                    </TouchableOpacity>
 
                 </ScrollView>
             </SafeAreaView>
@@ -339,6 +347,13 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: '#007bff',
     },
+    settingsButton: {
+        position: 'absolute',
+        top: 20,
+        right: 20,
+        zIndex: 999,
+    },
+    
 });
 
 
