@@ -65,7 +65,7 @@ const CamScreen2 = () => {
 
     const writeToTextFile = async (trackId, fileName) => {
         try {
-            const directory = FileSystem.documentDirectory + 'data/'; // Get the document directory path and specify the data directory
+            const directory = FileSystem.documentDirectory; // Get the document directory path and specify the data directory
             const filename = 'trackList.txt'; // Specify the file name
     
             // Create the content string with trackId and fileName
