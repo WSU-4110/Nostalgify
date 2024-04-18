@@ -91,6 +91,7 @@ const ProfileScreen = () => {
                 const userData = await getUserInfo(accessToken);
                 if (userData) {
                     setUserInfo(userData);
+                    console.log(userData);
                 } else {
                     setUserInfo(null);
                 }
@@ -185,11 +186,17 @@ const ProfileScreen = () => {
                 <ScrollView alwaysBounceVertical={false} alwaysBounceHorizontal={false}>
 
                     <View style={styles.userInfoContainer}>
-                        {userInfo && userInfo.images && userInfo.images.length > 0 && (
+                        {userInfo && userInfo.images && userInfo.images.length > 0 ? (
                             <Image
                                 source={{ uri: userInfo.images[0].url }}
                                 style={styles.profileImage}
                             />
+                        ): (
+                            <Image
+    source={require('../assets/defpfp.jpg')}
+    style={styles.profileImage}
+/>
+
                         )}
                         <Text style={[styles.name]}>
                             {userInfo ? userInfo.display_name : 'Unknown User'}

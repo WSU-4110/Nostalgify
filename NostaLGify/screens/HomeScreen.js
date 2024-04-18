@@ -1,9 +1,11 @@
-import { StyleSheet, Text, View, TextInput, FlatList, TouchableOpacity, Image } from 'react-native';
+import { StyleSheet, Text, View, TextInput, FlatList, TouchableOpacity, Image, Pressable } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { AntDesign } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { FontAwesome6 } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Ionicons } from '@expo/vector-icons';
+
 
 async function fetchWebApi(endpoint, method, body, token) {
     const headers = {
@@ -159,17 +161,26 @@ async function fetchWebApi(endpoint, method, body, token) {
       {/* No track message */}
       {!currentTrack && (
         <Text style={styles.noTrack}>No track currently playing</Text>
-      )}
+        )}
 
-      {/* Buttons container */}
-      <View style={styles.buttonsContainer}>
-        <TouchableOpacity style={styles.button} onPress={handleSkipToPrevious}>
-          <Text style={styles.buttonText}>Previous</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={handleSkipToNext}>
-          <Text style={styles.buttonText}>Next</Text>
-        </TouchableOpacity>
-      </View>
+        {/* Buttons container */}
+        <View style={styles.buttonsContainer}>
+          <Pressable style={styles.button} onPress={handleSkipToPrevious}>
+            <Ionicons name="play-skip-back" size={24} color="white" />
+          </Pressable>
+          <Pressable style={styles.iconContainer}>
+            <FontAwesome6 name='camera' size={24} color='#725876' />
+          </Pressable>
+          <Pressable style={styles.iconContainer}>
+            <FontAwesome6 name='tag' size={24} color='#725876' />
+          </Pressable>
+          <Pressable style={styles.button} onPress={handleSkipToNext}>
+            <Ionicons name="play-skip-forward" size={24} color="white" />
+          </Pressable>
+
+
+
+        </View>
     </View>
   );
 };
@@ -183,27 +194,34 @@ async function fetchWebApi(endpoint, method, body, token) {
       justifyContent: 'center',
     },
     albumCover: {
-      width: 200,
-      height: 200,
+      width: 300,
+      height: 300,
       marginBottom: 20,
+      borderRadius: 5,
+
     },
+    
     trackName: {
-      fontSize: 20,
+      fontSize: 27,
       fontWeight: 'bold',
       marginBottom: 10,
+      color: 'white',
+      maxWidth: 250,
     },
     artistName: {
-      fontSize: 16,
+      fontSize: 18,
+      fontWeight: 'bold',
+      color: 'white'
     },
     noTrack: {
       fontSize: 18,
       color: 'white',
     },
     button: {
-      backgroundColor: '#4CAF50',
+      backgroundColor: 'rgba(237, 229, 238, .7)',
       paddingVertical: 15,
-      paddingHorizontal: 40,
-      borderRadius: 30,
+      paddingHorizontal: 20,
+      borderRadius: 50,
       marginTop: 20,
     },
     buttonText: {
@@ -214,8 +232,15 @@ async function fetchWebApi(endpoint, method, body, token) {
     buttonsContainer: {
       flexDirection: 'row',
       justifyContent: 'space-around',
-      width: '40%',
+      width: '30%',
+      gap: 220,
+      marginBottom: 20
     },
+    
+    iconContainer: {
+      flexDirection: 'row',
+      marginTop: 35, 
+    }
   });
   
   export default HomeScreen;
