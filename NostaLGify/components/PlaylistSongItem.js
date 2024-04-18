@@ -3,9 +3,9 @@ import { StyleSheet, Text, View, Image, Pressable } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 const PlaylistSongItem = ({ item }) => {
-    const navigation = useNavigation();
     const imageUrl = item.track && item.track.album && item.track.album.images && item.track.album.images.length > 0
         ? item.track.album.images[0].url : null;
+        const navigation = useNavigation();
 
     return (
         <Pressable style={styles.container} onPress={() => navigation.navigate("Song")}>
