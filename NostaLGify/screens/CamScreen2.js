@@ -5,6 +5,9 @@ import * as ImagePicker from 'expo-image-picker';
 import { listFiles, uploadToFirebase } from '../firebase-config';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
+const [myList, setMyList] = useState([]);
+
+
 const CamScreen2 = () => {
   const [hasPermission, setHasPermission] = useState(null);
   const [cameraType, setCameraType] = useState(Camera.Constants.Type.back);
@@ -36,6 +39,8 @@ const CamScreen2 = () => {
 
       let photo = await cameraRef.current.takePictureAsync();
       await uploadToFirebase(photo.uri, `photo_${Date.now()}.jpg`);
+      setMyList(prevList => [...prevList, photo.uri]);
+      console.log(myList);
       fetchImages();
     } catch (error) {
       Alert.alert('Error', 'Failed to take photo. Please try again.');
@@ -89,11 +94,14 @@ const CamScreen2 = () => {
         <Camera style={styles.camera} type={cameraType} ref={cameraRef} />
         <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.button} onPress={takePhoto}>
-            <Text style={styles.buttonText}>Take Photo</Text>
+            <Text style={styles.buttonText}>TakePhoto</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.button} onPress={pickImage}>
             <Text style={styles.buttonText}>Pick Image</Text>
           </TouchableOpacity>
+          <TouchableOpacity style={styles.button} onPress={() => console.log(myList)}>
+          <Text style={styles.buttonText}>Display myList</Text>
+        </TouchableOpacity>
         </View>
       </View>
       <ScrollView horizontal style={styles.galleryContainer}>
@@ -208,3 +216,4 @@ const styles = StyleSheet.create({
 });
 
 export default CamScreen2;
+
