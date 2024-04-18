@@ -1,34 +1,45 @@
-import { initializeApp, getApp } from 'firebase/app';
-import { getFirestore, collection, getDocs } from 'firebase/firestore';
+import { initializeApp, getApp, getApps } from 'firebase/app';
+import { getStorage, ref, uploadBytesResumable, getDownloadURL, listAll } from "firebase/storage";
 import {
     FIREBASE_API_KEY,
     FIREBASE_APP_ID,
-    FIREBASE_PROJECT_ID,
-    FIREBASE_AUTH_DOMAIN
+    FIREBASE_STORAGE_BUCKET,
+    FIREBASE_AUTH_DOMAIN,
+    FIREBASE_PROJECT_ID
 } from "@env";
 
 // Initialize Firebase
 const firebaseConfig = {
     apiKey: FIREBASE_API_KEY,
-    authDomain: FIREBASE_AUTH_DOMAIN,
-    projectId: FIREBASE_PROJECT_ID,
-    appId: FIREBASE_APP_ID
+    storageBucket: FIREBASE_STORAGE_BUCKET,
+    appId: FIREBASE_APP_ID,
+    projectID: FIREBASE_PROJECT_ID,
+    authDomain: FIREBASE_AUTH_DOMAIN
 };
 
-if (!getApp().length) {
+if (getApps().length === 0) {
     initializeApp(firebaseConfig);
 }
 
-const firestore = getFirestore();
+const fbApp = getApp();
+const fbStorage = getStorage();
 
 const listFiles = async () => {
+    const storage = getStorage();
+    const listRef = ref(storage, 'images');
+
     try {
-        const querySnapshot = await getDocs(collection(firestore, 'photosConnectedToSongs'));
-        const files = querySnapshot.docs.map(doc => ({
-            name: doc.id,
-            uri: doc.data().uri // Adjust this line based on your document structure
-        }));
-        return files;
+        const listResp = await listAll(listRef);
+        const filePromises = listResp.items.map(async (item) => {
+            const downloadURL = await getDownloadURL(item);
+            return {
+                name: item.name,
+                uri: downloadURL,
+            };
+        });
+
+        // Wait for all file promises to resolve
+        return await Promise.all(filePromises);
     } catch (error) {
         console.error('Error listing files:', error);
         return [];
@@ -64,6 +75,8 @@ const uploadToFirebase = async (uri, name, onprogress) => {
 };
 
 export {
+    fbApp,
+    fbStorage,
     uploadToFirebase,
     listFiles
 };
