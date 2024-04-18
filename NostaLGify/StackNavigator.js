@@ -23,19 +23,15 @@ const BottomTabs = () => {
     <Tab.Navigator
       screenOptions={{
         tabBarStyle: {
-          backgroundColor: 'rgba(0,0,0,0.5)',
+          backgroundColor: '#413244',
           position: 'absolute',
           bottom: 0,
           left: 0,
           right: 0,
-          shadowOpacity: 4,
-          shadowRadius: 4,
           elevation: 4,
-          shadowOffset: {
-            width: 0,
-            height: -4,
-          },
-          borderTopWidth: 0,
+          borderTopWidth: 6,
+          borderTopColor: '#725876',
+          paddingTop: 10
         },
       }}>
       <Tab.Screen
@@ -68,21 +64,7 @@ const BottomTabs = () => {
             ),
         }}
       />
-      <Tab.Screen
-        name="Camera"
-        component={CamScreen2}
-        options={{
-          tabBarLabel: 'Camera',
-          headerShown: false,
-          tabBarLabelStyle: { color: 'white' },
-          tabBarIcon: ({ focused }) =>
-            focused ? (
-              <AntDesign name="camera" size={24} color="white" />
-            ) : (
-              <AntDesign name="camerao" size={24} color="white" />
-            ),
-        }}
-      />
+
       <Tab.Screen
         name="Profile"
         component={ProfileScreen}
@@ -147,6 +129,13 @@ const Navigation = () => {
           component={SettingsScreen}
           options={{ headerShown: false }}
         />
+
+        <Stack.Screen
+          name="Camera"
+          component={CamScreen2}
+          options={{headerShown: false }}
+        />
+  
         <Stack.Screen
           name="Song"
           component={SongScreen}
