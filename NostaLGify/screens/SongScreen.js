@@ -5,6 +5,7 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { LinearGradient } from 'expo-linear-gradient';
 import { listFiles, deleteFile } from '../firebase-config';
+import { AntDesign } from '@expo/vector-icons';
 
 async function fetchWebApi(endpoint, method, body, token) {
     const headers = {
