@@ -61,7 +61,10 @@ const LikedSongScreen = () => {
     };
 
     return (
-        <View style={{ backgroundColor: '#cca2b7', flex: 1 }}>
+        <LinearGradient
+            colors={['#cca2b7', '#ab8ca4', '#7f6581', '#6a5874', '#583b55']}
+            style={[styles.container, { flex: 1 }]} // Added flex: 1 here
+        >
             <View style={styles.header}>
                 <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
                     <FontAwesome5 name="chevron-left" size={24} color="white" />
@@ -73,7 +76,6 @@ const LikedSongScreen = () => {
                     alignItems: "center",
                     justifyContent: "center",
                     gap: 10,
-                    backgroundColor: "#cca2b7",
                     borderRadius: 4,
                     elevation: 3,
                     marginTop: 60
@@ -95,7 +97,7 @@ const LikedSongScreen = () => {
                 </LinearGradient>
             </View>
 
-                <Text style={{ marginTop: 30, marginBottom: 20, marginLeft: 10, fontSize: 20, fontWeight: "bold", color: "#583b55" }}> Liked Songs </Text>
+            <Text style={{ marginTop: 30, marginBottom: 20, marginLeft: 10, fontSize: 20, fontWeight: "bold", color: "white" }}> Liked Songs </Text>
 
             <FlatList
                 data={likedSongs}
@@ -104,8 +106,8 @@ const LikedSongScreen = () => {
                     <LikedSongItem item={item} />
                 )}
             />
-            
-        </View>
+
+        </LinearGradient>
     )
 }
 
