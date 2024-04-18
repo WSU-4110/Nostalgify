@@ -14,6 +14,7 @@ import PlaylistScreen from './screens/PlaylistScreen';
 import SongScreen from './screens/SongScreen';
 import AlbumSongScreen from './screens/AlbumSongScreen';
 import ArtistScreen from './screens/ArtistScreen';
+import { MaterialIcons } from '@expo/vector-icons';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -31,7 +32,7 @@ const BottomTabs = () => {
           elevation: 4,
           borderTopWidth: 6,
           borderTopColor: '#725876',
-          paddingTop: 10
+          paddingTop: 5,
         },
       }}>
       <Tab.Screen
@@ -40,7 +41,7 @@ const BottomTabs = () => {
         options={{
           tabBarLabel: 'Home',
           headerShown: false,
-          tabBarLabelStyle: { color: 'white' },
+          tabBarLabelStyle: { color: 'white', fontWeight: 'bold', fontSize: 12},
           tabBarIcon: ({ focused }) =>
             focused ? (
               <Entypo name="home" size={24} color="white" />
@@ -55,12 +56,12 @@ const BottomTabs = () => {
         options={{
           tabBarLabel: 'Library',
           headerShown: false,
-          tabBarLabelStyle: { color: 'white' },
+          tabBarLabelStyle: {  color: 'white', fontWeight: 'bold', fontSize: 12 },
           tabBarIcon: ({ focused }) =>
             focused ? (
-              <Ionicons name="search-circle-sharp" size={24} color="white" />
+              <MaterialIcons name="library-music" size={24} color="white" />
             ) : (
-              <Ionicons name="search-circle-outline" size={24} color="white" />
+              <MaterialIcons name="library-music" size={24} color="white" />
             ),
         }}
       />
@@ -71,7 +72,7 @@ const BottomTabs = () => {
         options={{
           tabBarLabel: 'Profile',
           headerShown: false,
-          tabBarLabelStyle: { color: 'white' },
+          tabBarLabelStyle: {  color: 'white', fontWeight: 'bold', fontSize: 12},
           tabBarIcon: ({ focused }) =>
             focused ? (
               <FontAwesome name="user-circle" size={24} color="white" />
