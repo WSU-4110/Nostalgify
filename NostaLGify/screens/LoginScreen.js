@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, SafeAreaView, Pressable, Linking , Image} from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Entypo } from '@expo/vector-icons';
@@ -13,6 +13,25 @@ const LoginScreen = () => {
     //console.log(AuthSession.getRedirectUrl());
     const navigation = useNavigation();
 
+    const [colorPalette, setColorPalette] = useState(['#583b55', '#6a5874', '#7f6581', '#ab8ca4', '#cca2b7']);
+
+    useEffect(() => {
+      const getColorPalette = async () => {
+        const savedColorPalette = await AsyncStorage.getItem('colorPalette');
+        if (savedColorPalette) {
+          setColorPalette(JSON.parse(savedColorPalette));
+        }
+      };
+  
+      getColorPalette();
+      const unsubscribe = navigation.addListener('focus', () => {
+        // Fetch the updated color palette when the SettingsScreen is focused
+        getColorPalette();
+      });
+  
+      return unsubscribe;
+}, [navigation]);
+
     const navigateToMain = () => {
         navigation.navigate('Main');
     };
@@ -26,8 +45,8 @@ const LoginScreen = () => {
     // Define the authentication request
     const [request, response, promptAsync] = useAuthRequest(
         {
-            // clientId: 'e1316c7324f34e9baad599caa68aadd2',
-            clientId: '06335027a9a548db97dae585531719dd', // Kevin's Client:
+            clientId: 'e1316c7324f34e9baad599caa68aadd2',
+            //clientId: '06335027a9a548db97dae585531719dd', // Kevin's Client:
             scopes: [
                 'user-read-email',
                 'user-read-private',
@@ -54,10 +73,10 @@ const LoginScreen = () => {
                 // Exchange the authorization code for an access token
                 const tokenEndpoint = 'https://accounts.spotify.com/api/token';
                 const redirectUri = makeRedirectUri({ scheme: 'nostalgify', native: "exp://localhost:8081",native: "http://localhost:8081"  });
-                //const clientId = 'e1316c7324f34e9baad599caa68aadd2';
-                const clientId = '06335027a9a548db97dae585531719dd'; // Kevin's client
-                //const clientSecret = '6a8d779d312a437f947755e810610357'; // Your Spotify app's client secret
-                const clientSecret = '2e8ac880929b45a1a39930265e28b5ae'; // Kevin's client
+                const clientId = 'e1316c7324f34e9baad599caa68aadd2';
+                //const clientId = '06335027a9a548db97dae585531719dd'; // Kevin's client
+                const clientSecret = '6a8d779d312a437f947755e810610357'; // Your Spotify app's client secret
+                //const clientSecret = '2e8ac880929b45a1a39930265e28b5ae'; // Kevin's client
                 const requestBody = {
                     grant_type: 'authorization_code',
                     code,
@@ -92,7 +111,7 @@ const LoginScreen = () => {
     }, [response]);
 
     return (
-        <LinearGradient colors={['#131624', '#6a5874']} style={{ flex: 1 }}>
+        <LinearGradient colors={colorPalette} style={{ flex: 1 }}>
             <SafeAreaView>
                 <View 
                 style={{
@@ -132,7 +151,7 @@ const LoginScreen = () => {
                 <Pressable
                     onPress={() => promptAsync()} // Dummy onPress handler
                     style={{
-                        backgroundColor: '#857593',
+                        backgroundColor: 'rgba(0, 0, 0, 0.3)',
                         padding: 10,
                         marginLeft: 'auto',
                         marginRight: 'auto',
@@ -147,7 +166,7 @@ const LoginScreen = () => {
                 <Pressable
                     onPress={navigateToMain} // Dummy onPress handler
                     style={{
-                        backgroundColor: '#857593',
+                        backgroundColor: 'rgba(0, 0, 0, 0.3)',
                         padding: 10,
                         marginLeft: 'auto',
                         marginRight: 'auto',

@@ -23,14 +23,14 @@ const BottomTabs = () => {
     <Tab.Navigator
       screenOptions={{
         tabBarStyle: {
-          backgroundColor: '#413244',
+          backgroundColor: 'rgba(0,0,0,0)',
           position: 'absolute',
-          bottom: 0,
+          bottom: 5,
           left: 0,
           right: 0,
-          elevation: 4,
-          borderTopWidth: 6,
-          borderTopColor: '#725876',
+          elevation: 0,
+          //borderTopWidth: 6,
+          borderTopColor: 'rgba(0,0,0,0)',
           paddingTop: 10
         },
       }}>
@@ -40,12 +40,12 @@ const BottomTabs = () => {
         options={{
           tabBarLabel: 'Home',
           headerShown: false,
-          tabBarLabelStyle: { color: 'white' },
+          tabBarLabelStyle: { color: 'rgba(0, 0, 0, 0.7)' },
           tabBarIcon: ({ focused }) =>
             focused ? (
-              <Entypo name="home" size={24} color="white" />
+              <Entypo name="home" size={24} color="rgba(0, 0, 0, 0.7)" />
             ) : (
-              <AntDesign name="home" size={24} color="white" />
+              <AntDesign name="home" size={24} color="rgba(0, 0, 0, 0.7)" />
             ),
         }}
       />
@@ -55,12 +55,12 @@ const BottomTabs = () => {
         options={{
           tabBarLabel: 'Library',
           headerShown: false,
-          tabBarLabelStyle: { color: 'white' },
+          tabBarLabelStyle: { color: 'rgba(0, 0, 0, 0.7)' },
           tabBarIcon: ({ focused }) =>
             focused ? (
-              <Ionicons name="search-circle-sharp" size={24} color="white" />
+              <Ionicons name="search-circle-sharp" size={24} color="rgba(0, 0, 0, 0.7)" />
             ) : (
-              <Ionicons name="search-circle-outline" size={24} color="white" />
+              <Ionicons name="search-circle-outline" size={24} color="rgba(0, 0, 0, 0.7)" />
             ),
         }}
       />
@@ -71,12 +71,12 @@ const BottomTabs = () => {
         options={{
           tabBarLabel: 'Profile',
           headerShown: false,
-          tabBarLabelStyle: { color: 'white' },
+          tabBarLabelStyle: { color: 'rgba(0, 0, 0, 0.7)' },
           tabBarIcon: ({ focused }) =>
             focused ? (
-              <FontAwesome name="user-circle" size={24} color="white" />
+              <FontAwesome name="user-circle" size={24} color="rgba(0, 0, 0, 0.7)" />
             ) : (
-              <FontAwesome name="user-circle-o" size={24} color="white" />
+              <FontAwesome name="user-circle-o" size={24} color="rgba(0, 0, 0, 0.7)" />
             ),
         }}
       />

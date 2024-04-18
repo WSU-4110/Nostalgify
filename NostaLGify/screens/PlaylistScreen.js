@@ -53,6 +53,25 @@ const PlaylistScreen = () => {
     const [playlistImageUrl, setPlaylistImageUrl] = useState(null);
     const [playlistName, setPlaylistName] = useState('');
 
+    const [colorPalette, setColorPalette] = useState(['#583b55', '#6a5874', '#7f6581', '#ab8ca4', '#cca2b7']);
+
+    useEffect(() => {
+      const getColorPalette = async () => {
+        const savedColorPalette = await AsyncStorage.getItem('colorPalette');
+        if (savedColorPalette) {
+          setColorPalette(JSON.parse(savedColorPalette));
+        }
+      };
+  
+      getColorPalette();
+      const unsubscribe = navigation.addListener('focus', () => {
+        // Fetch the updated color palette when the SettingsScreen is focused
+        getColorPalette();
+      });
+  
+      return unsubscribe;
+    }, [navigation]);
+
     useEffect(() => {
         fetchPlaylistItems();
         fetchPlaylistImage();
@@ -116,7 +135,7 @@ const PlaylistScreen = () => {
 
     return (
         <LinearGradient
-            colors={['#dbbdcc', '#cca2b7', '#ab8ca4', '#7f6581', '#6a5874', '#583b55']}
+            colors={colorPalette}
             style={[styles.container, { flex: 1 }]}
         >
             <View style={{ marginTop: 60, marginLeft: 20 }}>
