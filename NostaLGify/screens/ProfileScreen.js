@@ -60,11 +60,6 @@ async function getTopTracks(token) {
     );
 }
 
-async function getRecentlyPlayed(token) {
-    return await fetchWebApi(
-        'v1/me/player/recently-played?after=1484811043508&limit=10', 'GET', null, token
-    );
-}
 
 async function getPlaylists(token) {
     return await fetchWebApi(
@@ -75,7 +70,7 @@ async function getPlaylists(token) {
 const ProfileScreen = () => {
     const [userInfo, setUserInfo] = useState(null);
     const [topTracks, setTopTracks] = useState(null);
-    const [recentlyPlayed, setRecentlyPlayed] = useState([]);
+    const [recentlyPlayed,  setRecent] = useState([]);
     const [playlists, setPlaylists] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const navigation = useNavigation();
@@ -100,8 +95,8 @@ const ProfileScreen = () => {
 
     useEffect(() => {
         fetchUserInfo();
+        getRecent();
         fetchTopTracks();
-        fetchRecentlyPlayed();
         fetchPlaylists();
     }, []);
 
@@ -146,25 +141,7 @@ const ProfileScreen = () => {
         }
     };    
     
-    const fetchRecentlyPlayed = async () => {
-        try {
-            const accessToken = await AsyncStorage.getItem('accessToken');
-            if (accessToken) {
-                const recentTrackData = await getRecentlyPlayed(accessToken);
-                if (recentTrackData?.items) {
-                    setRecentlyPlayed(recentTrackData.items);
-                } else {
-                    setRecentlyPlayed(null);
-                }
-            } else {
-                console.error('Access token not found in AsyncStorage');
-            }
-        } catch (error) {
-            console.error('Error fetching recently played', error);
-        }    finally {
-            setIsLoading(false); // Set loading to false regardless of success or failure
-        }
-    };    
+
     const fetchPlaylists = async () => {
         try {
             const accessToken = await AsyncStorage.getItem('accessToken');
@@ -184,7 +161,22 @@ const ProfileScreen = () => {
             setIsLoading(false); // Set loading to false regardless of success or failure
         }
     };
-
+    const getRecent = async () => {
+        try {
+            const data = await AsyncStorage.getItem('recentTrackData');
+            if (data) {
+                const recent = JSON.parse(data);
+                setRecent(recent);
+                console.log('Recently Played Data:', recent);
+            } else {
+                console.log('No recent track data found');
+            }
+        } catch (error) {
+            console.error('Error retrieving recent track data:', error);
+        }
+    };
+    
+      
     if (isLoading) {
         return (
             <View style={[styles.container, styles.center]}>
@@ -192,7 +184,6 @@ const ProfileScreen = () => {
             </View>
         );
     }
-
 
 
     return (
@@ -223,34 +214,32 @@ const ProfileScreen = () => {
                         </Text>
                     </View>
 
-
                     <View style={styles.recentlyPlayedContainer}>
-                        <Text style={categoryTextStyle}>Recently Played</Text>
-                        <FlatList
-                            data={recentlyPlayed}
-                            keyExtractor={(item) => item.track.album.id}
-                            renderItem={({item}) => (
-                                <RecentSongItem item={item} />
-                            )}
-                            horizontal={true}
-                            showsHorizontalScrollIndicator={false}
+    <Text style={categoryTextStyle}>Recently Played</Text>
+    <FlatList
+    data={recentlyPlayed}
+    keyExtractor={(item, index) => `recent_${item.track.album.id}_${index}`}
+    renderItem={({item}) => (
+        <RecentSongItem item={item} />
+    )}
+    horizontal={true}
+    showsHorizontalScrollIndicator={false}
+/>
 
-                        />
-
-                    </View>
+</View>
 
                     <View style={styles.recentlyPlayedContainer}>
                         <Text style={categoryTextStyle}>Top Tracks</Text>
                         <FlatList
-                            data={topTracks}
-                            keyExtractor={(item) => item.id}
-                            renderItem={({item}) => (
-                                <TopSongItem item={item} />
-                            )}
-                            horizontal={true}
-                            showsHorizontalScrollIndicator={false}
+    data={topTracks}
+    keyExtractor={(item, index) => `top_${item.album.id}_${index}`}
+    renderItem={({item}) => (
+        <TopSongItem item={item} />
+    )}
+    horizontal={true}
+    showsHorizontalScrollIndicator={false}
+/>
 
-                        />
 
                     </View>
                     <View style={styles.recentlyPlayedContainer}>
