@@ -5,7 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import HomeScreen from './screens/HomeScreen';
 import ProfileScreen from './screens/ProfileScreen';
 import LoginScreen from './screens/LoginScreen';
-import CamScreen2 from './screens/CamScreen2';
+import CamScreen from './screens/CamScreen';
 import SearchScreen from './screens/SearchScreen';
 import SettingsScreen from './screens/SettingsScreen';
 import { Entypo, AntDesign, FontAwesome, Ionicons } from '@expo/vector-icons';
@@ -133,7 +133,7 @@ const Navigation = () => {
 
         <Stack.Screen
           name="Camera"
-          component={CamScreen2}
+          component={CamScreen}
           options={{headerShown: false }}
         />
   
