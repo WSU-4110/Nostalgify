@@ -101,14 +101,21 @@ const CamScreen2 = () => {
 
   const fetchImages = async () => {
     try {
-      const fileList = await listFiles();
-      setFiles(fileList);
-      console.log(fileList)
+      const fileList = await listFiles(); // Get the list of files
+  
+      // Filter the fileList based on trackId and image name
+      const newFilesList = fileList.filter(file => {
+        // Check if the file's name exists in myList and its trackId matches the current trackId
+        return myList.some(([trackID, imageName]) => trackID === trackId && file.name === imageName);
+      });
+  
+      setFiles(newFilesList); // Set the filtered files list
+      console.log(newFilesList);
     } catch (error) {
       console.error('Error fetching images:', error);
     }
   };
-
+  
 
 
   
