@@ -96,15 +96,22 @@ const CamScreen2 = () => {
     fetchImages();
   }, []);
 
+
+
+
   const fetchImages = async () => {
     try {
       const fileList = await listFiles();
       setFiles(fileList);
+      console.log(fileList)
     } catch (error) {
       console.error('Error fetching images:', error);
     }
   };
 
+
+
+  
   const takePhoto = async () => {
     try {
       if (!cameraRef.current) return;
