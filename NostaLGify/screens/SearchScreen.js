@@ -307,18 +307,19 @@ const SearchScreen = () => {
                     flexDirection:"row",
                     alignItems:"center",
                     gap:10,
-                    backgroundColor:"#dcdcdc",
+                    backgroundColor:"rgba(0, 0, 0, 0.3)",
                     padding: 5,
                     borderRadius: 3,
                     marginHorizontal: 10,
                 }
             }>
-                <AntDesign name="search1" size={20} color="white" />
+                <AntDesign name="search1" size={22} color="white" />
                 <TextInput
                     value={input}
                     onChangeText={(text) => handleInputChange(text)}
                     placeholder="Search tag(s)"
-                    style={{fontWeight:"500"}}
+                    placeholderTextColor="rgba(255, 255, 255, 0.7)"
+                    style={{fontWeight:"500", color: "white", fontSize: 17, flex: 1, padding: 0, margin: 0}}
                 />
             </TouchableOpacity>
 
