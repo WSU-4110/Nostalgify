@@ -2,7 +2,8 @@ import React from 'react';
 import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
-import { FontAwesome } from '@expo/vector-icons';
+import { FontAwesome5 } from '@expo/vector-icons';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const SettingsScreen = () => {
   const navigation = useNavigation();
@@ -21,10 +22,14 @@ const SettingsScreen = () => {
   };
 
   return (
+    <LinearGradient
+      colors={['#583b55', '#6a5874', '#7f6581', '#ab8ca4', '#cca2b7']}
+      style={styles.container}
+    >
     <View style={styles.container}>
-      <View style={styles.header}>
+      <View style={{ marginTop: 60, marginLeft: 20 }}>
         <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
-          <FontAwesome name="chevron-left" size={24} color="white" />
+          <FontAwesome5 name="chevron-left" size={24} color="white" />
         </TouchableOpacity>
       </View>
       <View style={styles.content}>
@@ -33,13 +38,13 @@ const SettingsScreen = () => {
         </TouchableOpacity>
       </View>
     </View>
+    </LinearGradient>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#cca2b7',
   },
   header: {
     flexDirection: 'row',
@@ -62,14 +67,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   button: {
-    backgroundColor: '#583b55',
+    backgroundColor: 'rgba(237, 229, 238, .7)',
     paddingVertical: 12,
     paddingHorizontal: 24,
     borderRadius: 5,
     marginBottom: 10,
   },
   buttonText: {
-    color: '#cca2b7',
+    color: 'white',
     fontSize: 16,
     fontWeight: 'bold',
     textAlign: 'center',
