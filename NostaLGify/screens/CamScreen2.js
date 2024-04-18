@@ -5,7 +5,6 @@ import * as ImagePicker from 'expo-image-picker';
 import { listFiles, uploadToFirebase } from '../firebase-config';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import * as FileSystem from 'expo-file-system'; // Import FileSystem
 
 async function fetchWebApi(endpoint, method, body, token) {
     const headers = {
@@ -63,28 +62,7 @@ const CamScreen2 = () => {
 
 
 
-    const writeToTextFile = async (trackId, fileName) => {
-        try {
-            const directory = FileSystem.documentDirectory + 'data/'; // Get the document directory path and specify the data directory
-            const filename = 'trackList.txt'; // Specify the file name
     
-            // Create the content string with trackId and fileName
-            const content = `${trackId} ${fileName}\n`;
-    
-            // Check if the directory exists, if not, create it
-            const dirInfo = await FileSystem.getInfoAsync(directory);
-            if (!dirInfo.exists) {
-                await FileSystem.makeDirectoryAsync(directory, { intermediates: true }); // Create directory recursively
-            }
-    
-            // Append content to existing file or create new file if not exists
-            await FileSystem.writeAsStringAsync(directory + filename, content, { encoding: FileSystem.EncodingType.UTF8, append: true });
-            
-            console.log('Content has been written to the file.');
-        } catch (error) {
-            console.error('Error writing to file:', error);
-        }
-    };
     
     
 
@@ -135,7 +113,6 @@ const CamScreen2 = () => {
       const fileName = `photo_${Date.now()}.jpg`;
       await uploadToFirebase(photo.uri, fileName);
       setMyList(prevList => [...prevList, [trackId,fileName]]);
-      writeToTextFile(trackId,fileName);
       fetchImages();
     } catch (error) {
       Alert.alert('Error', 'Failed to take photo. Please try again.');
