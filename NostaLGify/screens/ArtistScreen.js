@@ -5,6 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import ArtistSongItem from "../components/ArtistSongItem";
 import { FontAwesome5 } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import { LinearGradient } from 'expo-linear-gradient';
 
 
 async function fetchWebApi(endpoint, method, body, token) {
@@ -95,7 +96,10 @@ const ArtistScreen = () => {
     };
 
     return (
-        <View style={{ backgroundColor: '#cca2b7', flex: 1 }}>
+        <LinearGradient
+            colors={['#cca2b7', '#ab8ca4', '#7f6581', '#6a5874', '#583b55']}
+            style={[styles.container, { flex: 1 }]} // Added flex: 1 here
+        >
             <View style={styles.header}>
                 <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
                     <FontAwesome5 name="chevron-left" size={24} color="white" />
@@ -112,7 +116,7 @@ const ArtistScreen = () => {
                     }}
                 />
             )}
-            <Text style={{ marginTop: 30, marginBottom: 20, marginLeft: 10, fontSize: 20, fontWeight: "bold", color: "#583b55" }}> {artistName}'s Top Tracks</Text>
+            <Text style={{ marginTop: 30, marginBottom: 20, marginLeft: 10, fontSize: 20, fontWeight: "bold", color: "white" }}> {artistName}'s Top Tracks</Text>
 
             <FlatList
                 data={artistItems}
@@ -121,7 +125,7 @@ const ArtistScreen = () => {
                     <ArtistSongItem item={item} index={index} />
                 )}
             />
-        </View>
+        </LinearGradient>
     )
 }
 

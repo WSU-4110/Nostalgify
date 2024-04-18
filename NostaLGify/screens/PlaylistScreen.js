@@ -3,9 +3,9 @@ import React, { useEffect, useState } from "react";
 import { useRoute } from '@react-navigation/native'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import PlaylistSongItem from "../components/PlaylistSongItem";
-import {FontAwesome5 } from '@expo/vector-icons';
+import { FontAwesome5 } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-
+import { LinearGradient } from 'expo-linear-gradient';
 
 async function fetchWebApi(endpoint, method, body, token) {
     const headers = {
@@ -115,7 +115,10 @@ const PlaylistScreen = () => {
     };
 
     return (
-        <View style={{ backgroundColor: '#cca2b7', flex: 1 }}>
+        <LinearGradient
+            colors={['#cca2b7', '#ab8ca4', '#7f6581', '#6a5874', '#583b55']}
+            style={[styles.container, { flex: 1 }]} // Added flex: 1 here
+        >
             <View style={styles.header}>
                 <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
                     <FontAwesome5 name="chevron-left" size={24} color="white" />
@@ -127,7 +130,7 @@ const PlaylistScreen = () => {
                 marginTop: 60,
                 alignSelf: 'center',
             }} />}
-            <Text style={{ marginTop: 30, marginBottom: 20, marginLeft: 10, fontSize: 20, fontWeight: "bold", color: "#583b55" }}> {playlistName} </Text>
+            <Text style={{ marginTop: 30, marginBottom: 20, marginLeft: 10, fontSize: 20, fontWeight: "bold", color: "white" }}> {playlistName} </Text>
 
             <FlatList
                 data={playlistItems}
@@ -136,7 +139,7 @@ const PlaylistScreen = () => {
                     <PlaylistSongItem item={item} />
                 )}
             />
-        </View>
+        </LinearGradient>
     )
 }
 

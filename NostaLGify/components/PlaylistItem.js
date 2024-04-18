@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     },
     playlistName: {
         fontSize: 15,
-        color: "#6a5874",
+        color: "white",
         fontWeight: "bold"
     }
 });

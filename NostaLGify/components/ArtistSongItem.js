@@ -42,12 +42,12 @@ const styles = StyleSheet.create({
     },
     trackName: {
         fontSize: 15,
-        color: "#6a5874",
+        color: "white",
         fontWeight: "bold"
     },
     artist: {
         fontSize: 13,
-        color: "#6a5874",
+        color: "white",
     },
 });
 
