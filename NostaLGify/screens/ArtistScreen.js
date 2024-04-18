@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, Image, FlatList, TouchableOpacity } from 'react
 import React, { useEffect, useState } from "react";
 import { useRoute } from '@react-navigation/native'
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import AlbumSongItem from "../components/AlbumSongItem";
+import ArtistSongItem from "../components/ArtistSongItem";
 import { FontAwesome5 } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -26,53 +26,72 @@ async function fetchWebApi(endpoint, method, body, token) {
     return await res.json();
 }
 
-async function getAlbumItems(token, albumId) {
+async function getArtistItems(token, artistId) {
     return await fetchWebApi(
-        `v1/albums/${albumId}`, 'GET', null, token
+        `v1/artists/${artistId}/top-tracks`, 'GET', null, token
     );
 }
 
-const AlbumSongScreen = () => {
+async function getArtistImageAndName(token, artistId) {
+    return await fetchWebApi(
+        `v1/artists/${artistId}`, 'GET', null, token
+    );
+}
+
+const ArtistScreen = () => {
     const navigation = useNavigation();
     const route = useRoute();
-    const albumUrl = route?.params?.item?.album?.uri;
-    const albumId = albumUrl.split(":")[2];
+    const artistUrl = route?.params?.item?.uri;
+    const artistId = artistUrl.split(":")[2];
 
-    const [albumItems, setAlbumItems] = useState([]);
-    const [albumImage, setAlbumImage] = useState([]);
-    const [albumName, setAlbumName] = useState([]);
+    const [artistItems, setArtistItems] = useState([]);
+    const [artistImage, setArtistImage] = useState([]);
+    const [artistName, setArtistName] = useState([]);
 
     useEffect(() => {
-        fetchAlbumItems();
+        fetchArtistItems();
+        fetchArtistImageAndName();
     }, []);
 
-    const fetchAlbumItems = async () => {
+    const fetchArtistItems = async () => {
         try {
             const accessToken = await AsyncStorage.getItem('accessToken');
             if (accessToken) {
-                const albumItemsData = await getAlbumItems(accessToken, albumId);
-                if (albumItemsData?.tracks) {
-                    setAlbumItems(albumItemsData.tracks);
+                const artistItemsData = await getArtistItems(accessToken, artistId);
+                if (artistItemsData?.tracks) {
+                    setArtistItems(artistItemsData.tracks);
                 } else {
-                    setAlbumItems(null);
-                }
-
-                if (albumItemsData?.images) {
-                    setAlbumImage(albumItemsData.images);
-                } else {
-                    setAlbumImage(null);
-                }
-
-                if (albumItemsData?.name) {
-                    setAlbumName(albumItemsData.name);
-                } else {
-                    setAlbumName(null);
+                    setArtistItems(null);
                 }
             } else {
                 console.error('Access token not found in AsyncStorage');
             }
         } catch (error) {
-            console.error('Error fetching album items', error);
+            console.error('Error fetching artist items', error);
+        }
+    };
+
+    const fetchArtistImageAndName = async () => {
+        try {
+            const accessToken = await AsyncStorage.getItem('accessToken');
+            if (accessToken) {
+                const artistImageAndNameData = await getArtistImageAndName(accessToken, artistId);
+                if (artistImageAndNameData?.images) {
+                    setArtistImage(artistImageAndNameData.images);
+                } else {
+                    setArtistImage(null);
+                }
+
+                if (artistImageAndNameData?.name) {
+                    setArtistName(artistImageAndNameData.name);
+                } else {
+                    setArtistName(null);
+                }
+            } else {
+                console.error('Access token not found in AsyncStorage');
+            }
+        } catch (error) {
+            console.error('Error fetching artist image and name', error);
         }
     };
 
@@ -86,9 +105,9 @@ const AlbumSongScreen = () => {
                     <FontAwesome5 name="chevron-left" size={24} color="white" />
                 </TouchableOpacity>
             </View>
-            {albumImage && albumImage.length > 0 && (
+            {artistImage && artistImage.length > 0 && (
                 <Image
-                    source={{ uri: albumImage[0]?.url }}
+                    source={{ uri: artistImage[0]?.url }}
                     style={{
                         width: 250,
                         height: 250,
@@ -97,18 +116,18 @@ const AlbumSongScreen = () => {
                     }}
                 />
             )}
-            <Text style={{ marginTop: 30, marginBottom: 20, marginLeft: 10, fontSize: 24, fontWeight: "bold", color: "white" }}> {albumName} </Text>
+            <Text style={{ marginTop: 30, marginBottom: 20, marginLeft: 10, fontSize: 24, fontWeight: "bold", color: "white" }}> {artistName}'s Top Tracks</Text>
 
             <FlatList
-                data={albumItems.items}
-                keyExtractor={(item) => item.id}
-                renderItem={({ item }) => (
-                    <AlbumSongItem item={item} />
+                data={artistItems}
+                keyExtractor={(item) => item.id.toString()} // Make sure to convert id to string
+                renderItem={({ item, index }) => (
+                    <ArtistSongItem item={item} index={index} />
                 )}
             />
         </LinearGradient>
     )
 }
 
-export default AlbumSongScreen
+export default ArtistScreen
 const styles = StyleSheet.create({})
