@@ -68,7 +68,7 @@ const ListPlaylistsScreen = () => {
     return (
         <LinearGradient
             colors={['#cca2b7', '#ab8ca4', '#7f6581', '#6a5874', '#583b55']}
-            style={[styles.container, { flex: 1 }]} // Added flex: 1 here
+            style={[styles.container, { flex: 1 }]}
         >
             <ScrollView>
                 <Pressable
@@ -145,7 +145,10 @@ const ListAlbumsScreen = () => {
     };
 
     return (
-        <View style={{ backgroundColor: '#cca2b7', flex: 1, paddingTop: 20 }}>
+        <LinearGradient
+            colors={['#cca2b7', '#ab8ca4', '#7f6581', '#6a5874', '#583b55']}
+            style={{paddingTop: 20, flex: 1}}
+        >
             <FlatList
                 data={albums}
                 keyExtractor={(item) => item.album.id}
@@ -153,7 +156,7 @@ const ListAlbumsScreen = () => {
                     <AlbumItem item={item} />
                 )}
             />
-        </View>
+        </LinearGradient>
     );
 };
 
@@ -192,7 +195,10 @@ const ListArtistsScreen = () => {
     };
 
     return (
-        <View style={{ backgroundColor: '#cca2b7', flex: 1, paddingTop: 20 }}>
+        <LinearGradient
+            colors={['#cca2b7', '#ab8ca4', '#7f6581', '#6a5874', '#583b55']}
+            style={{paddingTop: 20, flex: 1}}
+        >
             <FlatList
                 data={artist.items}
                 keyExtractor={(item) => item.id}
@@ -200,7 +206,7 @@ const ListArtistsScreen = () => {
                     <ArtistItem item={item} />
                 )}
             />
-        </View>
+        </LinearGradient>
     );
 };
 
