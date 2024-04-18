@@ -63,21 +63,7 @@ const BottomTabs = () => {
             ),
         }}
       />
-      <Tab.Screen
-        name="Camera"
-        component={CamScreen2}
-        options={{
-          tabBarLabel: 'Camera',
-          headerShown: false,
-          tabBarLabelStyle: { color: 'white' },
-          tabBarIcon: ({ focused }) =>
-            focused ? (
-              <AntDesign name="camera" size={24} color="white" />
-            ) : (
-              <AntDesign name="camerao" size={24} color="white" />
-            ),
-        }}
-      />
+
       <Tab.Screen
         name="Profile"
         component={ProfileScreen}
@@ -142,6 +128,13 @@ const Navigation = () => {
           component={SettingsScreen}
           options={{ headerShown: false }}
         />
+
+        <Stack.Screen
+          name="Camera"
+          component={CamScreen2}
+          options={{headerShown: false }}
+        />
+  
         <Stack.Screen
           name="Song"
           component={SongScreen}

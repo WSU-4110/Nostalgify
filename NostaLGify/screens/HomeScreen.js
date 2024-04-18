@@ -5,6 +5,8 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { FontAwesome6 } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
+import CamScreen2 from '../screens/CamScreen2'; // Import CamScreen2
 
 
 async function fetchWebApi(endpoint, method, body, token) {
@@ -71,7 +73,9 @@ async function fetchWebApi(endpoint, method, body, token) {
 
   const HomeScreen = () => {
     const [currentTrack, setCurrentTrack] = useState(null);
+    const navigation = useNavigation();
   
+
     useEffect(() => {
       fetchCurrentTrack();
     }, []);
@@ -168,7 +172,9 @@ async function fetchWebApi(endpoint, method, body, token) {
           <Pressable style={styles.button} onPress={handleSkipToPrevious}>
             <Ionicons name="play-skip-back" size={24} color="white" />
           </Pressable>
-          <Pressable style={styles.iconContainer}>
+          <Pressable style={styles.iconContainer} onPress={() =>
+            navigation.navigate('Camera')
+          }>
             <FontAwesome6 name='camera' size={24} color='#725876' />
           </Pressable>
           <Pressable style={styles.iconContainer}>
