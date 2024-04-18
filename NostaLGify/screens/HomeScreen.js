@@ -33,7 +33,7 @@ async function getCurrentTrack(token) {
 
 async function getRecentlyPlayed(token) {
   return await fetchWebApi(
-      'v1/me/player/recently-played?&limit=10', 'GET', null, token
+    'v1/me/player/recently-played?&limit=10', 'GET', null, token
   );
 }
 
@@ -84,27 +84,28 @@ const HomeScreen = () => {
   const [currentTrack, setCurrentTrack] = useState(null);
   const [recentlyPlayed, setRecentlyPlayed] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-
+  const [tagInputVisible, setTagInputVisible] = useState(false); // State to manage input visibility
+  const [tagText, setTagText] = useState(''); // State to store tag text
   const navigation = useNavigation();
-  
+
 
   const [colorPalette, setColorPalette] = useState(['#583b55', '#6a5874', '#7f6581', '#ab8ca4', '#cca2b7']);
 
   useEffect(() => {
-      const getColorPalette = async () => {
-        const savedColorPalette = await AsyncStorage.getItem('colorPalette');
-        if (savedColorPalette) {
-          setColorPalette(JSON.parse(savedColorPalette));
-        }
-      };
-  
+    const getColorPalette = async () => {
+      const savedColorPalette = await AsyncStorage.getItem('colorPalette');
+      if (savedColorPalette) {
+        setColorPalette(JSON.parse(savedColorPalette));
+      }
+    };
+
+    getColorPalette();
+    const unsubscribe = navigation.addListener('focus', () => {
+      // Fetch the updated color palette when the SettingsScreen is focused
       getColorPalette();
-      const unsubscribe = navigation.addListener('focus', () => {
-        // Fetch the updated color palette when the SettingsScreen is focused
-        getColorPalette();
-      });
-  
-      return unsubscribe;
+    });
+
+    return unsubscribe;
   }, [navigation]);
 
   useEffect(() => {
@@ -117,24 +118,24 @@ const HomeScreen = () => {
 
   const fetchRecentlyPlayed = async () => {
     try {
-        const accessToken = await AsyncStorage.getItem('accessToken');
-        if (accessToken) {
-            const recentTrackData = await getRecentlyPlayed(accessToken);
-            if (recentTrackData?.items) {
-                setRecentlyPlayed(recentTrackData.items);
-                AsyncStorage.setItem('recentTrackData', JSON.stringify(recentTrackData.items));
-            } else {
-                setRecentlyPlayed(null);
-            }
+      const accessToken = await AsyncStorage.getItem('accessToken');
+      if (accessToken) {
+        const recentTrackData = await getRecentlyPlayed(accessToken);
+        if (recentTrackData?.items) {
+          setRecentlyPlayed(recentTrackData.items);
+          AsyncStorage.setItem('recentTrackData', JSON.stringify(recentTrackData.items));
         } else {
-            console.error('Access token not found in AsyncStorage');
+          setRecentlyPlayed(null);
         }
+      } else {
+        console.error('Access token not found in AsyncStorage');
+      }
     } catch (error) {
-        console.error('Error fetching recently played', error);
-    }    finally {
-        setIsLoading(false); // Set loading to false regardless of success or failure
+      console.error('Error fetching recently played', error);
+    } finally {
+      setIsLoading(false); // Set loading to false regardless of success or failure
     }
-};    
+  };
 
 
 
@@ -170,7 +171,7 @@ const HomeScreen = () => {
     }
   };
 
-    
+
   const handleSkipToPrevious = async () => {
     try {
       const accessToken = await AsyncStorage.getItem('accessToken');
@@ -204,39 +205,48 @@ const HomeScreen = () => {
     }
   };
 
+  const handleTagIconPress = () => {
+    // Toggle the visibility of the input area
+    setTagInputVisible(!tagInputVisible);
+  };
+
+  const handleTagInputChange = (text) => {
+    // Update the tag text as the user types
+    setTagText(text);
+  };
 
   if (isLoading) {
-  return (
+    return (
       <View style={[styles.container, styles.center]}>
-          <ActivityIndicator size="large" color="#1DB954" />
+        <ActivityIndicator size="large" color="#1DB954" />
       </View>
-  );
-}
-  
-  
+    );
+  }
+
+
   return (
     <LinearGradient
       colors={colorPalette}
       style={styles.container}
     >
-      {/* Current track information */ }
-  {
-    currentTrack && (
-      <View>
-        <Image
-          style={styles.albumCover}
-          source={{ uri: currentTrack.album.images[0].url }}
-        />
-        <Text style={styles.trackName}>{currentTrack.name}</Text>
-        <Text style={styles.artistName}>
-          {currentTrack.artists.map((artist) => artist.name).join(', ')}
-        </Text>
-      </View>
-    )
-  }
+      {/* Current track information */}
+      {
+        currentTrack && (
+          <View>
+            <Image
+              style={styles.albumCover}
+              source={{ uri: currentTrack.album.images[0].url }}
+            />
+            <Text style={styles.trackName}>{currentTrack.name}</Text>
+            <Text style={styles.artistName}>
+              {currentTrack.artists.map((artist) => artist.name).join(', ')}
+            </Text>
+          </View>
+        )
+      }
 
-  {/* No track message */ }
-  {
+      {/* No track message */}
+      {
         !currentTrack && (
           recentlyPlayed && recentlyPlayed.length > 0 ? (
             <View>
@@ -254,26 +264,40 @@ const HomeScreen = () => {
         )
       }
 
-  {/* Buttons container */ }
-  <View style={styles.buttonsContainer}>
-    <TouchableOpacity style={styles.button} onPress={handleSkipToPrevious}>
-      <Ionicons name="play-skip-back" size={24} color="white" />
-    </TouchableOpacity>
-    <TouchableOpacity style={styles.iconContainer} onPress={() =>
-      navigation.navigate('Camera')
-    }>
-      <FontAwesome6 name='camera' size={24} color='white' />
-    </TouchableOpacity>
-    <TouchableOpacity style={styles.iconContainer}>
-      <FontAwesome6 name='tag' size={24} color='white' />
-    </TouchableOpacity>
-    <TouchableOpacity style={styles.button} onPress={handleSkipToNext}>
-      <Ionicons name="play-skip-forward" size={24} color="white" />
-    </TouchableOpacity>
+      {/* Buttons container */}
+      <View style={styles.buttonsContainer}>
+        <TouchableOpacity style={styles.button} onPress={handleSkipToPrevious}>
+          <Ionicons name="play-skip-back" size={24} color="white" />
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.iconContainer} onPress={() =>
+          navigation.navigate('Camera')
+        }>
+          <FontAwesome6 name='camera' size={24} color='white' />
+        </TouchableOpacity>
+        {/* Tag icon wrapped in Pressable */}
+        <View style={styles.tagContainer}>
+          {/* Tag icon wrapped in Pressable */}
+          <Pressable style={styles.iconContainer} onPress={handleTagIconPress}>
+            <FontAwesome6 name='tag' size={24} color='white' />
+          </Pressable>
+          {/* Input area */}
+          {tagInputVisible && (
+            <TextInput
+              style={styles.tagInput}
+              placeholder="Enter tag"
+              onChangeText={handleTagInputChange}
+              value={tagText}
+            />
+          )}
+        </View>
+        <TouchableOpacity style={styles.button} onPress={handleSkipToNext}>
+          <Ionicons name="play-skip-forward" size={24} color="white" />
+        </TouchableOpacity>
 
 
 
-  </View>
+      </View>
     </LinearGradient >
   );
 };
@@ -333,7 +357,19 @@ const styles = StyleSheet.create({
   iconContainer: {
     flexDirection: 'row',
     marginTop: 35,
-  }
+  },
+  tagContainer: {
+    
+    alignItems: 'center',
+  },
+  tagInput: {
+    backgroundColor: 'white',
+    paddingHorizontal: 15, // Increased padding
+    paddingVertical: 10, // Increased padding
+    borderRadius: 5,
+    marginTop: 10,
+    fontSize: 16, // Increased font size
+  },
 });
 
 export default HomeScreen;
