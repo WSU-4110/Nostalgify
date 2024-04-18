@@ -38,6 +38,25 @@ const LikedSongScreen = () => {
     const navigation = useNavigation();
     const [likedSongs, setLikedSongs] = useState([]);
 
+    const [colorPalette, setColorPalette] = useState(['#583b55', '#6a5874', '#7f6581', '#ab8ca4', '#cca2b7']);
+
+    useEffect(() => {
+      const getColorPalette = async () => {
+        const savedColorPalette = await AsyncStorage.getItem('colorPalette');
+        if (savedColorPalette) {
+          setColorPalette(JSON.parse(savedColorPalette));
+        }
+      };
+  
+      getColorPalette();
+      const unsubscribe = navigation.addListener('focus', () => {
+        // Fetch the updated color palette when the SettingsScreen is focused
+        getColorPalette();
+      });
+  
+      return unsubscribe;
+    }, [navigation]);
+
     useEffect(() => {
         fetchLikedSongs();
     }, []);
@@ -62,7 +81,7 @@ const LikedSongScreen = () => {
 
     return (
         <LinearGradient
-            colors={['#dbbdcc','#cca2b7', '#ab8ca4', '#7f6581', '#6a5874', '#583b55']}
+            colors={colorPalette}
             style={[styles.container, { flex: 1 }]} // Added flex: 1 here
         >
             <View style={{marginTop: 60, marginLeft: 20}}>
@@ -77,12 +96,12 @@ const LikedSongScreen = () => {
                     justifyContent: "center",
                     gap: 10,
                     borderRadius: 4,
-                    elevation: 3,
+                    elevation: 0,
                     marginTop: 20
 
                 }}
             >
-                <LinearGradient colors={["#33006F", "#FFFFFF"]}>
+                <LinearGradient colors={colorPalette}>
                     <View
                         onPress={() => navigation.navigate("Liked")}
                         style={{

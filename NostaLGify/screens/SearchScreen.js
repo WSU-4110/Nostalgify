@@ -34,6 +34,24 @@ const Tab = createMaterialTopTabNavigator();
 
 const ListPlaylistsScreen = () => {
     const navigation = useNavigation();
+    const [colorPalette, setColorPalette] = useState(['#583b55', '#6a5874', '#7f6581', '#ab8ca4', '#cca2b7']);
+
+    useEffect(() => {
+      const getColorPalette = async () => {
+        const savedColorPalette = await AsyncStorage.getItem('colorPalette');
+        if (savedColorPalette) {
+          setColorPalette(JSON.parse(savedColorPalette));
+        }
+      };
+  
+      getColorPalette();
+      const unsubscribe = navigation.addListener('focus', () => {
+        // Fetch the updated color palette when the SettingsScreen is focused
+        getColorPalette();
+      });
+  
+      return unsubscribe;
+    }, [navigation]);
 
     async function getPlaylists(token) {
         return await fetchWebApi(
@@ -67,11 +85,11 @@ const ListPlaylistsScreen = () => {
 
     return (
         <LinearGradient
-            colors={['#cca2b7', '#ab8ca4', '#7f6581', '#6a5874', '#583b55']}
+            colors={colorPalette}
             style={[styles.container, { flex: 1 }]}
         >
             <ScrollView>
-                <Pressable
+                <TouchableOpacity
                     onPress={() => navigation.navigate("Liked")}
                     style={{
                         marginTop: 20,
@@ -82,11 +100,11 @@ const ListPlaylistsScreen = () => {
                         marginLeft: 15,
                         backgroundColor: "rgba(0, 0, 0, 0)",
                         borderRadius: 2,
-                        elevation: 3,
+                        elevation: 0,
                         marginBottom: 15
                     }}
                 >
-                    <LinearGradient colors={["#33006F", "#FFFFFF"]}>
+                    <LinearGradient colors={colorPalette}>
                         <View
                             style={{
                                 width: 65,
@@ -102,7 +120,7 @@ const ListPlaylistsScreen = () => {
                     <Text style={{ color: "white", fontSize: 15, fontWeight: "bold", marginLeft: 5 }}>
                         Liked Songs
                     </Text>
-                </Pressable>
+                </TouchableOpacity>
 
                 {playlists.map((item, index) => (
                     <PlaylistItem key={index} item={item} />
@@ -121,6 +139,25 @@ const ListAlbumsScreen = () => {
     }
 
     const [albums, setAlbums] = useState([]);
+
+    const [colorPalette, setColorPalette] = useState(['#583b55', '#6a5874', '#7f6581', '#ab8ca4', '#cca2b7']);
+
+    useEffect(() => {
+      const getColorPalette = async () => {
+        const savedColorPalette = await AsyncStorage.getItem('colorPalette');
+        if (savedColorPalette) {
+          setColorPalette(JSON.parse(savedColorPalette));
+        }
+      };
+  
+      getColorPalette();
+      const unsubscribe = navigation.addListener('focus', () => {
+        // Fetch the updated color palette when the SettingsScreen is focused
+        getColorPalette();
+      });
+  
+      return unsubscribe;
+    }, [navigation]);
 
     useEffect(() => {
         fetchAlbums();
@@ -146,7 +183,7 @@ const ListAlbumsScreen = () => {
 
     return (
         <LinearGradient
-            colors={['#cca2b7', '#ab8ca4', '#7f6581', '#6a5874', '#583b55']}
+            colors={colorPalette}
             style={{paddingTop: 20, flex: 1}}
         >
             <FlatList
@@ -169,6 +206,24 @@ const ListArtistsScreen = () => {
     }
 
     const [artist, setArtists] = useState([]);
+    const [colorPalette, setColorPalette] = useState(['#583b55', '#6a5874', '#7f6581', '#ab8ca4', '#cca2b7']);
+
+    useEffect(() => {
+      const getColorPalette = async () => {
+        const savedColorPalette = await AsyncStorage.getItem('colorPalette');
+        if (savedColorPalette) {
+          setColorPalette(JSON.parse(savedColorPalette));
+        }
+      };
+  
+      getColorPalette();
+      const unsubscribe = navigation.addListener('focus', () => {
+        // Fetch the updated color palette when the SettingsScreen is focused
+        getColorPalette();
+      });
+  
+      return unsubscribe;
+    }, [navigation]);
 
     useEffect(() => {
         fetchArtists();
@@ -196,7 +251,7 @@ const ListArtistsScreen = () => {
 
     return (
         <LinearGradient
-            colors={['#cca2b7', '#ab8ca4', '#7f6581', '#6a5874', '#583b55']}
+            colors={colorPalette}
             style={{paddingTop: 20, flex: 1}}
         >
             <FlatList
@@ -212,17 +267,36 @@ const ListArtistsScreen = () => {
 
 const SearchScreen = () => {
     const navigation = useNavigation();
+    const [colorPalette, setColorPalette] = useState(['#583b55', '#6a5874', '#7f6581', '#ab8ca4', '#cca2b7']);
+
+    useEffect(() => {
+      const getColorPalette = async () => {
+        const savedColorPalette = await AsyncStorage.getItem('colorPalette');
+        if (savedColorPalette) {
+          setColorPalette(JSON.parse(savedColorPalette));
+        }
+      };
+  
+      getColorPalette();
+      const unsubscribe = navigation.addListener('focus', () => {
+        // Fetch the updated color palette when the SettingsScreen is focused
+        getColorPalette();
+      });
+  
+      return unsubscribe;
+    }, [navigation]);
+
     return (
-        <View style={{ backgroundColor: '#dbbdcc', flex: 1, paddingTop: 80 }}>
+        <LinearGradient
+            colors={colorPalette} style={{flex: 1, paddingTop: 80 }}>
             <Text style={{ marginLeft: 10, fontSize: 34, fontWeight: "bold", color: "white", marginBottom: 10 }}> Your Library </Text>
 
             <Tab.Navigator
                 screenOptions={{
-                    indicatorStyle: { backgroundColor: '#6a5874' },
-                    tabBarStyle: { backgroundColor: '#D6B4C5' },
+                    indicatorStyle: { backgroundColor: 'rgba(0,0,0,0)' },
+                    tabBarStyle: { backgroundColor: 'rgba(0,0,0,0)', elevation: 0 },
                 }}
             >
-
 
                 <Tab.Screen
                     name="Playlists"
@@ -272,7 +346,7 @@ const SearchScreen = () => {
             </Tab.Navigator>
 
 
-        </View>
+        </LinearGradient>
     );
 
 };

@@ -79,6 +79,24 @@ const ProfileScreen = () => {
     const [playlists, setPlaylists] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const navigation = useNavigation();
+    const [colorPalette, setColorPalette] = useState(['#583b55', '#6a5874', '#7f6581', '#ab8ca4', '#cca2b7']);
+
+    useEffect(() => {
+        const getColorPalette = async () => {
+          const savedColorPalette = await AsyncStorage.getItem('colorPalette');
+          if (savedColorPalette) {
+            setColorPalette(JSON.parse(savedColorPalette));
+          }
+        };
+    
+        getColorPalette();
+        const unsubscribe = navigation.addListener('focus', () => {
+            // Fetch the updated color palette when the SettingsScreen is focused
+            getColorPalette();
+          });
+      
+          return unsubscribe;
+    }, [navigation]);
 
     useEffect(() => {
         fetchUserInfo();
@@ -180,7 +198,7 @@ const ProfileScreen = () => {
     return (
 
 <LinearGradient
-    colors={['#583b55', '#6a5874', '#7f6581', '#ab8ca4', '#cca2b7']}
+    colors={colorPalette}
     style={styles.container}
 >
 
@@ -195,9 +213,9 @@ const ProfileScreen = () => {
                             />
                         ): (
                             <Image
-    source={require('../assets/defpfp.jpg')}
-    style={styles.profileImage}
-/>
+                                source={require('../assets/defpfp.jpg')}
+                                style={styles.profileImage}
+                            />
 
                         )}
                         <Text style={[styles.name]}>
@@ -255,7 +273,7 @@ const ProfileScreen = () => {
                         style={styles.settingsButton}
                         onPress={() => navigation.navigate('Settings')}
                     >
-                        <Ionicons name="settings-outline" size={24} color="white" />
+                        <Ionicons name="settings-outline" size={30} color="white" />
                     </TouchableOpacity>
 
                 </ScrollView>

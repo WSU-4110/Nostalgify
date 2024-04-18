@@ -42,6 +42,25 @@ const AlbumSongScreen = () => {
     const [albumImage, setAlbumImage] = useState([]);
     const [albumName, setAlbumName] = useState([]);
 
+    const [colorPalette, setColorPalette] = useState(['#583b55', '#6a5874', '#7f6581', '#ab8ca4', '#cca2b7']);
+
+    useEffect(() => {
+      const getColorPalette = async () => {
+        const savedColorPalette = await AsyncStorage.getItem('colorPalette');
+        if (savedColorPalette) {
+          setColorPalette(JSON.parse(savedColorPalette));
+        }
+      };
+  
+      getColorPalette();
+      const unsubscribe = navigation.addListener('focus', () => {
+        // Fetch the updated color palette when the SettingsScreen is focused
+        getColorPalette();
+      });
+  
+      return unsubscribe;
+    }, [navigation]);
+
     useEffect(() => {
         fetchAlbumItems();
     }, []);
@@ -78,8 +97,8 @@ const AlbumSongScreen = () => {
 
     return (
         <LinearGradient
-            colors={['#dbbdcc', '#cca2b7', '#ab8ca4', '#7f6581', '#6a5874', '#583b55']}
-            style={[styles.container, { flex: 1 }]} // Added flex: 1 here
+            colors={colorPalette}
+            style={{ flex: 1 }} // Added flex: 1 here
         >
             <View style={{ marginTop: 60, marginLeft: 20 }}>
                 <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>

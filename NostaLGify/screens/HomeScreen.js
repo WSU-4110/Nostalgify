@@ -75,7 +75,24 @@ async function resumeTrack(token) {
 const HomeScreen = () => {
   const [currentTrack, setCurrentTrack] = useState(null);
   const navigation = useNavigation();
+  const [colorPalette, setColorPalette] = useState(['#583b55', '#6a5874', '#7f6581', '#ab8ca4', '#cca2b7']);
 
+  useEffect(() => {
+      const getColorPalette = async () => {
+        const savedColorPalette = await AsyncStorage.getItem('colorPalette');
+        if (savedColorPalette) {
+          setColorPalette(JSON.parse(savedColorPalette));
+        }
+      };
+  
+      getColorPalette();
+      const unsubscribe = navigation.addListener('focus', () => {
+        // Fetch the updated color palette when the SettingsScreen is focused
+        getColorPalette();
+      });
+  
+      return unsubscribe;
+  }, [navigation]);
 
   useEffect(() => {
     fetchCurrentTrack();
@@ -149,7 +166,7 @@ const HomeScreen = () => {
 
   return (
     <LinearGradient
-      colors={['#583b55', '#6a5874', '#7f6581', '#ab8ca4', '#cca2b7']}
+      colors={colorPalette}
       style={styles.container}
     >
       {/* Current track information */ }
@@ -232,7 +249,7 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   button: {
-    backgroundColor: 'rgba(237, 229, 238, .7)',
+    backgroundColor: 'rgba(0, 0, 0, 0.3)',
     paddingVertical: 15,
     paddingHorizontal: 20,
     borderRadius: 50,
