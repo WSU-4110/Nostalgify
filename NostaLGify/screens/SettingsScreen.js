@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
-import { FontAwesome } from '@expo/vector-icons';
+import { FontAwesome5 } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 
 const SettingsScreen = () => {
@@ -44,7 +44,7 @@ const SettingsScreen = () => {
       <View style={styles.container}>
         <View style={styles.header}>
           <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
-            <FontAwesome name="chevron-left" size={24} color="white" />
+            <FontAwesome5 name="chevron-left" size={24} color="white" />
           </TouchableOpacity>
         </View>
         <View style={styles.content}>

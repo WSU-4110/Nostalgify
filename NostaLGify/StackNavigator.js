@@ -14,6 +14,7 @@ import PlaylistScreen from './screens/PlaylistScreen';
 import SongScreen from './screens/SongScreen';
 import AlbumSongScreen from './screens/AlbumSongScreen';
 import ArtistScreen from './screens/ArtistScreen';
+import { MaterialIcons } from '@expo/vector-icons';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -31,7 +32,7 @@ const BottomTabs = () => {
           elevation: 0,
           //borderTopWidth: 6,
           borderTopColor: 'rgba(0,0,0,0)',
-          paddingTop: 10
+          paddingTop: 5,
         },
       }}>
       <Tab.Screen
@@ -40,7 +41,7 @@ const BottomTabs = () => {
         options={{
           tabBarLabel: 'Home',
           headerShown: false,
-          tabBarLabelStyle: { color: 'rgba(0, 0, 0, 0.7)' },
+          tabBarLabelStyle: { color: 'rgba(0, 0, 0, 0.7)', fontWeight: 'bold', fontSize: 12},
           tabBarIcon: ({ focused }) =>
             focused ? (
               <Entypo name="home" size={24} color="rgba(0, 0, 0, 0.7)" />
@@ -55,12 +56,12 @@ const BottomTabs = () => {
         options={{
           tabBarLabel: 'Library',
           headerShown: false,
-          tabBarLabelStyle: { color: 'rgba(0, 0, 0, 0.7)' },
+          tabBarLabelStyle: {  color: 'rgba(0, 0, 0, 0.7)', fontWeight: 'bold', fontSize: 12 },
           tabBarIcon: ({ focused }) =>
             focused ? (
-              <Ionicons name="search-circle-sharp" size={24} color="rgba(0, 0, 0, 0.7)" />
+              <MaterialIcons name="library-music" size={24} color="rgba(0, 0, 0, 0.7)" />
             ) : (
-              <Ionicons name="search-circle-outline" size={24} color="rgba(0, 0, 0, 0.7)" />
+              <MaterialIcons name="library-music" size={24} color="rgba(0, 0, 0, 0.7)" />
             ),
         }}
       />
@@ -71,7 +72,7 @@ const BottomTabs = () => {
         options={{
           tabBarLabel: 'Profile',
           headerShown: false,
-          tabBarLabelStyle: { color: 'rgba(0, 0, 0, 0.7)' },
+          tabBarLabelStyle: {  color: 'rgba(0, 0, 0, 0.7)', fontWeight: 'bold', fontSize: 12},
           tabBarIcon: ({ focused }) =>
             focused ? (
               <FontAwesome name="user-circle" size={24} color="rgba(0, 0, 0, 0.7)" />

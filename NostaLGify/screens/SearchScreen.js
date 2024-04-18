@@ -11,6 +11,7 @@ import PlaylistItem from "../components/PlaylistItem";
 import AlbumItem from "../components/AlbumItem";
 import ArtistItem from "../components/ArtistItem";
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { debounce } from "lodash";
 
 async function fetchWebApi(endpoint, method, body, token) {
     const headers = {
@@ -268,7 +269,10 @@ const ListArtistsScreen = () => {
 const SearchScreen = () => {
     const navigation = useNavigation();
     const [colorPalette, setColorPalette] = useState(['#583b55', '#6a5874', '#7f6581', '#ab8ca4', '#cca2b7']);
+    const [input, setInput] = useState("");
 
+    const debouncedSearch = debounce(handleSearch, 500);
+    
     useEffect(() => {
       const getColorPalette = async () => {
         const savedColorPalette = await AsyncStorage.getItem('colorPalette');
@@ -286,10 +290,39 @@ const SearchScreen = () => {
       return unsubscribe;
     }, [navigation]);
 
+    function handleSearch(text) {
+        // Search here
+    }
+
+    const handleInputChange = (text) => {
+        setInput(text);
+        debouncedSearch(text);
+    }
+
     return (
         <LinearGradient
             colors={colorPalette} style={{flex: 1, paddingTop: 80 }}>
-            <Text style={{ marginLeft: 10, fontSize: 34, fontWeight: "bold", color: "white", marginBottom: 10 }}> Your Library </Text>
+            <TouchableOpacity
+                style={{
+                    flexDirection:"row",
+                    alignItems:"center",
+                    gap:10,
+                    backgroundColor:"#dcdcdc",
+                    padding: 5,
+                    borderRadius: 3,
+                    marginHorizontal: 10,
+                }
+            }>
+                <AntDesign name="search1" size={20} color="white" />
+                <TextInput
+                    value={input}
+                    onChangeText={(text) => handleInputChange(text)}
+                    placeholder="Search tag(s)"
+                    style={{fontWeight:"500"}}
+                />
+            </TouchableOpacity>
+
+            <Text style={{ marginLeft: 10, fontSize: 34, fontWeight: "bold", color: "white", marginTop: 15, marginBottom: 15 }}> Your Library </Text>
 
             <Tab.Navigator
                 screenOptions={{
@@ -302,7 +335,7 @@ const SearchScreen = () => {
                     name="Playlists"
                     component={ListPlaylistsScreen}
                     options={{
-                        tabBarLabel: ({ focused }) => (
+                        tabBarLabel: ({}) => (
                             <Text style={{
                                 fontSize: 17,
                                 fontWeight: 'bold',
@@ -317,7 +350,7 @@ const SearchScreen = () => {
                     name="Albums"
                     component={ListAlbumsScreen}
                     options={{
-                        tabBarLabel: ({ focused }) => (
+                        tabBarLabel: ({}) => (
                             <Text style={{
                                 fontSize: 17,
                                 fontWeight: 'bold',
@@ -332,7 +365,7 @@ const SearchScreen = () => {
                     name="Artists"
                     component={ListArtistsScreen}
                     options={{
-                        tabBarLabel: ({ focused }) => (
+                        tabBarLabel: ({}) => (
                             <Text style={{
                                 fontSize: 17,
                                 fontWeight: 'bold',
