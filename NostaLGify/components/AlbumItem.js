@@ -7,7 +7,7 @@ const AlbumItem = ({ item }) => {
     const navigation = useNavigation();
 
     return (
-        
+
         <Pressable style={styles.container} onPress={() =>
             navigation.navigate("AlbumSong", {
                 item: item,
@@ -15,7 +15,15 @@ const AlbumItem = ({ item }) => {
         }>
             {imageUrl && <Image style={styles.image} source={{ uri: imageUrl }} />}
             <View>
-                <Text style={styles.albumName}>{item.album.name}</Text>
+                <Text
+                    style={styles.albumName}
+                    numberOfLines={2} // Set the numberOfLines prop here
+                    ellipsizeMode="tail" // Set the ellipsizeMode prop here
+                >
+                    {item.album.name}
+                </Text>
+
+
                 <Text style={styles.artist}>{item.album.artists && item.album.artists.length > 0 ? item.album.artists[0].name : 'Unknown Artist'}</Text>
             </View>
         </Pressable>
@@ -40,7 +48,8 @@ const styles = StyleSheet.create({
     albumName: {
         fontSize: 15,
         color: "white",
-        fontWeight: "bold"
+        fontWeight: "bold",
+        maxWidth: 270
     },
     artist: {
         fontSize: 13,
