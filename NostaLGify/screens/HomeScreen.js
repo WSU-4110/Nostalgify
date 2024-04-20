@@ -276,7 +276,22 @@ const HomeScreen = () => {
           <FontAwesome6 name='camera' size={24} color='white' />
         </TouchableOpacity>
         
-
+        {/* Tag icon wrapped in Pressable */}
+        <View style={styles.tagContainer}>
+          {/* Tag icon wrapped in Pressable */}
+          <Pressable style={styles.iconContainer} onPress={handleTagIconPress}>
+            <FontAwesome6 name='tag' size={24} color='white' />
+          </Pressable>
+          {/* Input area */}
+          {tagInputVisible && (
+            <TextInput
+              style={styles.tagInput}
+              placeholder="Enter tag"
+              onChangeText={handleTagInputChange}
+              value={tagText}
+            />
+          )}
+        </View>
 
         <TouchableOpacity style={styles.button} onPress={handleSkipToNext}>
           <Ionicons name="play-skip-forward" size={24} color="white" />
