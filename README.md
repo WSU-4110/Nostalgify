@@ -1,28 +1,12 @@
 # Nostalgify
-A new way to organize memories via music.
 
-***
+Nostalgify is a mobile app that allows users to save and organize pictures based off their favorite playlists, artists, and albums from Spotify.​ A new way to preserve and capture nostalgia and memories from songs.
 
-## To run the app:
+Users will be able to sign into the app using their Spotify account. They can find their currently playing Spotify tracks, conveniently showcased in the Home page, and take pictures to save them under that song. Users can also view their Spotify playlists, albums, and artists in the Library page. The Profile page displays the user's Spotify profile and recent history, as well as a Settings screen for changing the app's color theme or signing out of their Spotify account.
 
-* Insure you have downloaded ***Node.js*** on your device before running the project
-
-### Libraries need:
-
-1) npm install -g yarn
-2) yarn add expo
-3) yarn add react-native@0.73.6
-4) yarn install
-5) yarn add @react-native-async-storage/async-storage@1.21.0
-6) yarn add expo-auth-session
-7) npm install react-native-dotenv
-8) npm install expo-camera
-9) npm install firebase
-10) npm install firebase-config
-
-* To run the project navigate to the application Desktop>Nostalgify>Nostalgify>
-* Run: ***npm expo start***
-
-
-
-
+Proud contributors:
+Kevin Zheng
+Audi Woodside
+Parham Marzban
+Kassem Ataya
+Rasheed Al-shwaf
