@@ -48,6 +48,7 @@ const styles = StyleSheet.create({
     },
     album: {
         fontSize: 13,
-        color: "white"
+        color: "white",
+        maxWidth:270
     }
 });

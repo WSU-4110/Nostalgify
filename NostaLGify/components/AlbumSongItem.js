@@ -6,9 +6,10 @@ const AlbumSongItem = ({ item }) => {
     const navigation = useNavigation();
 
     return (
-        <Pressable style={styles.container} onPress={() =>
-            navigation.navigate("Song")
-        } >
+        <Pressable style={styles.container} onPress={() => navigation.navigate("Song", {
+            trackId: item.id,
+        })
+        }>
             <View>
                 <Text style={styles.trackName}>{item.name}</Text>
                 <Text style={styles.artist}>{item.artists && item.artists.length > 0 ? item.artists[0].name : 'Unknown Artist'}</Text>

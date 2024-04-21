@@ -116,7 +116,20 @@ const AlbumSongScreen = () => {
                     }}
                 />
             )}
-            <Text style={{ marginTop: 30, marginBottom: 20, marginLeft: 10, fontSize: 24, fontWeight: "bold", color: "white" }}> {albumName} </Text>
+<Text 
+  style={{ 
+    marginTop: 30, 
+    marginBottom: 20, 
+    marginLeft: 10, 
+    fontSize: 24, 
+    fontWeight: "bold", 
+    color: "white" 
+  }} 
+  numberOfLines={2}  // Set the numberOfLines prop here
+  ellipsizeMode="tail" // Set the ellipsizeMode prop here
+>
+  {albumName}
+</Text>
 
             <FlatList
                 data={albumItems.items}

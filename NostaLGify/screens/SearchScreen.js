@@ -38,20 +38,20 @@ const ListPlaylistsScreen = () => {
     const [colorPalette, setColorPalette] = useState(['#583b55', '#6a5874', '#7f6581', '#ab8ca4', '#cca2b7']);
 
     useEffect(() => {
-      const getColorPalette = async () => {
-        const savedColorPalette = await AsyncStorage.getItem('colorPalette');
-        if (savedColorPalette) {
-          setColorPalette(JSON.parse(savedColorPalette));
-        }
-      };
-  
-      getColorPalette();
-      const unsubscribe = navigation.addListener('focus', () => {
-        // Fetch the updated color palette when the SettingsScreen is focused
+        const getColorPalette = async () => {
+            const savedColorPalette = await AsyncStorage.getItem('colorPalette');
+            if (savedColorPalette) {
+                setColorPalette(JSON.parse(savedColorPalette));
+            }
+        };
+
         getColorPalette();
-      });
-  
-      return unsubscribe;
+        const unsubscribe = navigation.addListener('focus', () => {
+            // Fetch the updated color palette when the SettingsScreen is focused
+            getColorPalette();
+        });
+
+        return unsubscribe;
     }, [navigation]);
 
     async function getPlaylists(token) {
@@ -144,20 +144,20 @@ const ListAlbumsScreen = () => {
     const [colorPalette, setColorPalette] = useState(['#583b55', '#6a5874', '#7f6581', '#ab8ca4', '#cca2b7']);
 
     useEffect(() => {
-      const getColorPalette = async () => {
-        const savedColorPalette = await AsyncStorage.getItem('colorPalette');
-        if (savedColorPalette) {
-          setColorPalette(JSON.parse(savedColorPalette));
-        }
-      };
-  
-      getColorPalette();
-      const unsubscribe = navigation.addListener('focus', () => {
-        // Fetch the updated color palette when the SettingsScreen is focused
+        const getColorPalette = async () => {
+            const savedColorPalette = await AsyncStorage.getItem('colorPalette');
+            if (savedColorPalette) {
+                setColorPalette(JSON.parse(savedColorPalette));
+            }
+        };
+
         getColorPalette();
-      });
-  
-      return unsubscribe;
+        const unsubscribe = navigation.addListener('focus', () => {
+            // Fetch the updated color palette when the SettingsScreen is focused
+            getColorPalette();
+        });
+
+        return unsubscribe;
     }, [navigation]);
 
     useEffect(() => {
@@ -185,7 +185,7 @@ const ListAlbumsScreen = () => {
     return (
         <LinearGradient
             colors={colorPalette}
-            style={{paddingTop: 20, flex: 1}}
+            style={{ paddingTop: 20, flex: 1 }}
         >
             <FlatList
                 data={albums}
@@ -210,20 +210,20 @@ const ListArtistsScreen = () => {
     const [colorPalette, setColorPalette] = useState(['#583b55', '#6a5874', '#7f6581', '#ab8ca4', '#cca2b7']);
 
     useEffect(() => {
-      const getColorPalette = async () => {
-        const savedColorPalette = await AsyncStorage.getItem('colorPalette');
-        if (savedColorPalette) {
-          setColorPalette(JSON.parse(savedColorPalette));
-        }
-      };
-  
-      getColorPalette();
-      const unsubscribe = navigation.addListener('focus', () => {
-        // Fetch the updated color palette when the SettingsScreen is focused
+        const getColorPalette = async () => {
+            const savedColorPalette = await AsyncStorage.getItem('colorPalette');
+            if (savedColorPalette) {
+                setColorPalette(JSON.parse(savedColorPalette));
+            }
+        };
+
         getColorPalette();
-      });
-  
-      return unsubscribe;
+        const unsubscribe = navigation.addListener('focus', () => {
+            // Fetch the updated color palette when the SettingsScreen is focused
+            getColorPalette();
+        });
+
+        return unsubscribe;
     }, [navigation]);
 
     useEffect(() => {
@@ -253,7 +253,7 @@ const ListArtistsScreen = () => {
     return (
         <LinearGradient
             colors={colorPalette}
-            style={{paddingTop: 20, flex: 1}}
+            style={{ paddingTop: 20, flex: 1 }}
         >
             <FlatList
                 data={artist.items}
@@ -272,22 +272,22 @@ const SearchScreen = () => {
     const [input, setInput] = useState("");
 
     const debouncedSearch = debounce(handleSearch, 500);
-    
+
     useEffect(() => {
-      const getColorPalette = async () => {
-        const savedColorPalette = await AsyncStorage.getItem('colorPalette');
-        if (savedColorPalette) {
-          setColorPalette(JSON.parse(savedColorPalette));
-        }
-      };
-  
-      getColorPalette();
-      const unsubscribe = navigation.addListener('focus', () => {
-        // Fetch the updated color palette when the SettingsScreen is focused
+        const getColorPalette = async () => {
+            const savedColorPalette = await AsyncStorage.getItem('colorPalette');
+            if (savedColorPalette) {
+                setColorPalette(JSON.parse(savedColorPalette));
+            }
+        };
+
         getColorPalette();
-      });
-  
-      return unsubscribe;
+        const unsubscribe = navigation.addListener('focus', () => {
+            // Fetch the updated color palette when the SettingsScreen is focused
+            getColorPalette();
+        });
+
+        return unsubscribe;
     }, [navigation]);
 
     function handleSearch(text) {
@@ -301,25 +301,26 @@ const SearchScreen = () => {
 
     return (
         <LinearGradient
-            colors={colorPalette} style={{flex: 1, paddingTop: 80 }}>
+            colors={colorPalette} style={{ flex: 1, paddingTop: 80 }}>
+
             <TouchableOpacity
                 style={{
-                    flexDirection:"row",
-                    alignItems:"center",
-                    gap:10,
-                    backgroundColor:"rgba(0, 0, 0, 0.3)",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    gap: 10,
+                    backgroundColor: "rgba(0, 0, 0, 0.3)",
                     padding: 5,
                     borderRadius: 3,
                     marginHorizontal: 10,
                 }
-            }>
+                }>
                 <AntDesign name="search1" size={22} color="white" />
                 <TextInput
                     value={input}
                     onChangeText={(text) => handleInputChange(text)}
                     placeholder="Search tag(s)"
                     placeholderTextColor="rgba(255, 255, 255, 0.7)"
-                    style={{fontWeight:"500", color: "white", fontSize: 17, flex: 1, padding: 0, margin: 0}}
+                    style={{ fontWeight: "500", color: "white", fontSize: 17, flex: 1, padding: 0, margin: 0 }}
                 />
             </TouchableOpacity>
 
@@ -336,7 +337,7 @@ const SearchScreen = () => {
                     name="Playlists"
                     component={ListPlaylistsScreen}
                     options={{
-                        tabBarLabel: ({}) => (
+                        tabBarLabel: ({ }) => (
                             <Text style={{
                                 fontSize: 17,
                                 fontWeight: 'bold',
@@ -351,7 +352,7 @@ const SearchScreen = () => {
                     name="Albums"
                     component={ListAlbumsScreen}
                     options={{
-                        tabBarLabel: ({}) => (
+                        tabBarLabel: ({ }) => (
                             <Text style={{
                                 fontSize: 17,
                                 fontWeight: 'bold',
@@ -366,7 +367,7 @@ const SearchScreen = () => {
                     name="Artists"
                     component={ListArtistsScreen}
                     options={{
-                        tabBarLabel: ({}) => (
+                        tabBarLabel: ({ }) => (
                             <Text style={{
                                 fontSize: 17,
                                 fontWeight: 'bold',

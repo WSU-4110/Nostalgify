@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, ScrollView, TouchableOpacity, Image, Text, Alert, StyleSheet, Modal } from 'react-native';
+import { View, ScrollView, TouchableOpacity, Image, StyleSheet, Modal, Text } from 'react-native';
 import { Camera } from 'expo-camera';
 import * as ImagePicker from 'expo-image-picker';
+import { AntDesign } from '@expo/vector-icons';
 import { listFiles, uploadToFirebase } from '../firebase-config';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-const CamScreen2 = () => {
+const CamScreen = () => {
   const [hasPermission, setHasPermission] = useState(null);
-  const [cameraType, setCameraType] = useState(Camera.Constants.Type.back);
   const [files, setFiles] = useState([]);
   const [selectedImageIndex, setSelectedImageIndex] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -38,8 +38,8 @@ const CamScreen2 = () => {
       await uploadToFirebase(photo.uri, `photo_${Date.now()}.jpg`);
       fetchImages();
     } catch (error) {
-      Alert.alert('Error', 'Failed to take photo. Please try again.');
       console.error('Error taking photo:', error);
+      Alert.alert('Error', 'Failed to take photo. Please try again.');
     }
   };
 
@@ -56,8 +56,8 @@ const CamScreen2 = () => {
         fetchImages();
       }
     } catch (error) {
-      Alert.alert('Error', 'Failed to pick image. Please try again.');
       console.error('Error picking image:', error);
+      Alert.alert('Error', 'Failed to pick image. Please try again.');
     }
   };
 
@@ -86,7 +86,7 @@ const CamScreen2 = () => {
   return (
     <View style={styles.container}>
       <View style={styles.cameraContainer}>
-        <Camera style={styles.camera} type={cameraType} ref={cameraRef} />
+        <Camera style={styles.camera} ref={cameraRef} />
         <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.button} onPress={takePhoto}>
             <Text style={styles.buttonText}>Take Photo</Text>
@@ -109,14 +109,14 @@ const CamScreen2 = () => {
             <Image source={{ uri: files[selectedImageIndex]?.uri }} style={styles.modalImage} />
             <View style={styles.modalButtons}>
               <TouchableOpacity onPress={handlePreviousImage} disabled={selectedImageIndex === 0}>
-                <MaterialCommunityIcons name="chevron-left" size={24} color="black" />
+                <AntDesign name="caretleft" size={24} color="black" />
               </TouchableOpacity>
               <TouchableOpacity onPress={handleNextImage} disabled={selectedImageIndex === files.length - 1}>
-                <MaterialCommunityIcons name="chevron-right" size={24} color="black" />
+                <AntDesign name="caretright" size={24} color="black" />
               </TouchableOpacity>
             </View>
             <TouchableOpacity style={styles.closeButton} onPress={closeModal}>
-              <Text style={styles.closeButtonText}>X</Text>
+              <MaterialCommunityIcons name="close" size={24} color="black" />
             </TouchableOpacity>
           </View>
         </View>
@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     position: 'absolute',
-    bottom: 70,
+    bottom: 20,
     left: 0,
     right: 0,
     flexDirection: 'row',
@@ -151,14 +151,10 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     borderRadius: 8,
     marginHorizontal: 10,
-    marginBottom: 20,
-    elevation: 0,
   },
   buttonText: {
     color: 'white',
     fontSize: 16,
-    //fontWeight: 'bold',
-    textAlign: 'center',
   },
   galleryContainer: {
     position: 'absolute',
@@ -171,7 +167,7 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
     resizeMode: 'cover',
-    margin: 10,
+    marginHorizontal: 5,
   },
   modalContainer: {
     flex: 1,
@@ -193,7 +189,15 @@ const styles = StyleSheet.create({
   modalButtons: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginVertical: 10,
+    alignItems: 'center',
+    width: '100%',
+    paddingHorizontal: 20,
+    marginTop: 20,
+  },
+  navigationText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#000',
   },
   closeButton: {
     position: 'absolute',
@@ -207,4 +211,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CamScreen2;
+export default CamScreen;
