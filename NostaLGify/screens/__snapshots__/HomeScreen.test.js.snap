@@ -1,0 +1,52 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`HomeScreen Styles should match snapshot 1`] = `
+<View
+  style={
+    {
+      "alignItems": "center",
+      "backgroundColor": "#cca2b7",
+      "flex": 1,
+      "justifyContent": "center",
+      "paddingTop": 50,
+    }
+  }
+>
+  <View>
+    <Image
+      source={
+        {
+          "uri": "mockedUrl",
+        }
+      }
+      style={
+        {
+          "height": 200,
+          "marginBottom": 20,
+          "width": 200,
+        }
+      }
+    />
+    <Text
+      style={
+        {
+          "fontSize": 20,
+          "fontWeight": "bold",
+          "marginBottom": 10,
+        }
+      }
+    >
+      Mocked Track
+    </Text>
+    <Text
+      style={
+        {
+          "fontSize": 16,
+        }
+      }
+    >
+      Artist
+    </Text>
+  </View>
+</View>
+`;
