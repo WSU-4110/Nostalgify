@@ -5,7 +5,7 @@ A new way to organize memories via music.
 
 ## To run the app:
 
-* Insure you have donloaded ***Node.js*** on your device before running the project
+* Insure you have downloaded ***Node.js*** on your device before running the project
 
 ### Libraries need:
 
