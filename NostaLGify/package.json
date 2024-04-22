@@ -15,7 +15,6 @@
       "node_modules/(?!((jest-)?react-native|@react-native(-community)?)|expo(nent)?|@expo(nent)?/.*|@expo-google-fonts/.*|react-navigation|@react-navigation/.*|@unimodules/.*|unimodules|sentry-expo|native-base|react-native-svg|expo-linear-gradient|@expo/vector-icons|expo-auth-session|expo-web-browser|@react-native-async-storage/async-storage)"
     ]
   },
-  
   "dependencies": {
     "@babel/preset-env": "^7.24.4",
     "@expo/metro-runtime": "~3.1.3",
